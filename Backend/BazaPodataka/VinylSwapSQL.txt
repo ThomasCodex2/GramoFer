@@ -1,11 +1,11 @@
 CREATE TABLE KorisnickiRacun
 (
   idKorisnika INT NOT NULL,
-  username VARCHAR(30) NOT NULL,
-  email VARCHAR(50) NOT NULL,
-  lozinka VARCHAR(30) NOT NULL,
-  ime VARCHAR(20) NOT NULL,
-  prezime VARCHAR(30) NOT NULL,
+  username VARCHAR(31) NOT NULL,
+  email VARCHAR(63) NOT NULL,
+  lozinka VARCHAR(31) NOT NULL,
+  ime VARCHAR(31) NOT NULL,
+  prezime VARCHAR(31) NOT NULL,
   jeAdmin INT NOT NULL,
   datumRegistracije DATE NOT NULL,
   PRIMARY KEY (idKorisnika),
@@ -16,50 +16,54 @@ CREATE TABLE KorisnickiRacun
 CREATE TABLE zanr
 (
   idZanra INT NOT NULL,
-  nazivZanra VARCHAR(100) NOT NULL,
+  nazivZanra VARCHAR(30) NOT NULL,
   PRIMARY KEY (idZanra)
 );
 
 CREATE TABLE zamjena
 (
   idZamjene INT NOT NULL,
-  status VARCHAR(40) NOT NULL,
+  status VARCHAR(15) NOT NULL,
   datum DATE NOT NULL,
   idKorisnika INT NOT NULL,
-  primateljidKorisnika INT NOT NULL,
+  zamjenjuje_idKorisnika INT,
   PRIMARY KEY (idZamjene),
   FOREIGN KEY (idKorisnika) REFERENCES KorisnickiRacun(idKorisnika),
-  FOREIGN KEY (primateljidKorisnika) REFERENCES KorisnickiRacun(idKorisnika)
+  FOREIGN KEY (zamjenjuje_idKorisnika) REFERENCES KorisnickiRacun(idKorisnika)
 );
 
-CREATE TABLE listaZelja
+CREATE TABLE zelja
 (
-  idListeZelja INT NOT NULL,
-  zeliNazivAlbuma VARCHAR(100) NOT NULL,
-  zeliIzvodjaca VARCHAR(100) NOT NULL,
+  idZelje INT NOT NULL,
+  zeliNazivAlbuma VARCHAR(255) NOT NULL,
+  zeliIzvodjaca VARCHAR(255) NOT NULL,
   idKorisnika INT NOT NULL,
-  PRIMARY KEY (idListeZelja),
+  PRIMARY KEY (idZelje),
   FOREIGN KEY (idKorisnika) REFERENCES KorisnickiRacun(idKorisnika)
 );
 
 CREATE TABLE PLOCA
 (
   idPloce INT NOT NULL,
-  oznakaIzdanja VARCHAR(100) NOT NULL,
-  nazivAlbuma VARCHAR(100) NOT NULL,
+  oznakaIzdanja VARCHAR(127) NOT NULL,
+  nazivAlbuma VARCHAR(255) NOT NULL,
   godinaIzdavanja INT NOT NULL,
-  stanjePloce VARCHAR(20) NOT NULL,
-  stanjeOmota VARCHAR(20) NOT NULL,
+  stanjePloce VARCHAR(31) NOT NULL,
+  stanjeOmota VARCHAR(31) NOT NULL,
   lokacija VARCHAR(255) NOT NULL,
   opis VARCHAR(255),
-  izvodjac VARCHAR(100) NOT NULL,
-  pathPloca1 VARCHAR(255) NOT NULL,
+  izvodjac VARCHAR(127) NOT NULL,
+  pathPloca1 VARCHAR(255),
   pathPloca2 VARCHAR(255),
   pathOmot1 VARCHAR(255) NOT NULL,
-  pathOmot2 VARCHAR(255),
+  pathOmot2 VARCHAR(255) NOT NULL,
   idKorisnika INT NOT NULL,
+  idZamjene INT,
+  se_nudi_idZamjene INT NOT NULL,
   PRIMARY KEY (idPloce),
-  FOREIGN KEY (idKorisnika) REFERENCES KorisnickiRacun(idKorisnika)
+  FOREIGN KEY (idKorisnika) REFERENCES KorisnickiRacun(idKorisnika),
+  FOREIGN KEY (idZamjene) REFERENCES zamjena(idZamjene),
+  FOREIGN KEY (se_nudi_idZamjene) REFERENCES zamjena(idZamjene)
 );
 
 CREATE TABLE pripadaZanru
@@ -69,13 +73,4 @@ CREATE TABLE pripadaZanru
   PRIMARY KEY (idPloce, idZanra),
   FOREIGN KEY (idPloce) REFERENCES PLOCA(idPloce),
   FOREIGN KEY (idZanra) REFERENCES zanr(idZanra)
-);
-
-CREATE TABLE ukljucujePlocu
-(
-  idZamjene INT NOT NULL,
-  idPloce INT NOT NULL,
-  PRIMARY KEY (idZamjene, idPloce),
-  FOREIGN KEY (idZamjene) REFERENCES zamjena(idZamjene),
-  FOREIGN KEY (idPloce) REFERENCES PLOCA(idPloce)
 );
