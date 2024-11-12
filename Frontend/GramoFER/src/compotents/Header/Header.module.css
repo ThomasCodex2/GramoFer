@@ -1,4 +1,4 @@
-.header{
+.header {
   margin-left: 4vw;
   margin-right: 4vw;
   width: 1fr;
@@ -12,48 +12,54 @@
   font-family: 'Open Sans', sans-serif;
   padding-bottom: 20px;
 }
-.main_column{
-  font-family: 'Open Sans', sans-serif;
-  text-align: center;
-}
-.main_column > *{
-  margin: 0;
-}
-.main_column > h1 {
-  text-align:right;
-  color: white;
-  -webkit-text-stroke: 1px black;
-  font-size: 36px;
-  transition: text-shadow 0.35s ease;
-}
-.main_column > h1:hover{
-  text-shadow: rgba(240, 255, 255, 0.751) 1px 0 10px;
-  cursor: pointer;
-}
-.row{
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-}
+
 .site_links {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 5px;
+  align-items: center; /* Center all items vertically */
   height: fit-content;
   color: black;
-  gap: 5px;
-  display: grid;
-  grid-template-columns: 33% 33% 33%;
 }
-.site_links > div { 
+
+.site_links > div {
   transition: border-right 0.35s ease, border-left 0.35s ease, text-shadow 0.35s ease; 
 }
+
+/* Wrapper for Google button to adjust its vertical alignment */
+.google-login-button-wrapper {
+  display: flex;
+  align-items: center;
+}
+
+/* Google Login button styling */
+.google-login-button {
+  font-size: 1em;
+  padding: 5px 10px;
+  border-radius: 4px;
+  border: 1px solid #d9d9d9;
+  background-color: white;
+  margin-top: 5px; /* Adjust to fine-tune positioning */
+}
+
+.google-login-button:hover {
+  background-color: #357ae8;
+  color: white;
+}
+
+/* For other site links */
 .site_links > div > h2 {
   border-right: 1px solid black;
   border-left: 1px solid black;
+  padding: 5px 10px;
 }
+
 .site_links > div:hover {
   text-shadow: rgba(240, 255, 255, 0.751) 1px 0 10px;
   cursor: pointer;
 }
-button{
+
+button {
   font-weight: 500;
   margin-left: 10px;
   align-self: center;
@@ -62,7 +68,8 @@ button{
   background-color: white;
   border-radius: 5px;
 }
-button:hover{
+
+button:hover {
   cursor: pointer;
 }
 
