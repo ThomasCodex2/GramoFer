@@ -1,8 +1,45 @@
 
-.filter_row{
-  overflow-x: auto;
-  height: 80%;
+.container {
+  position: relative;
   display: flex;
-  flex-direction: row;
-  gap: 10px;
+  align-items: center;
+}
+
+.filter_row {
+  display: flex;
+  gap: 2vw;
+  overflow: hidden;
+  scroll-behavior: smooth;
+  width: 100vw;
+}
+
+.arrowButton {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-70%);
+  background-color: rgba(255, 255, 255, 0.5);
+  width: 50px;
+  height: 50px;
+  border-radius: 100%;
+  color: white;
+  border: none;
+  font-size: 2rem;
+  cursor: pointer;
+  z-index: 10;
+  user-select: none;
+  padding-top: 8px;
+}
+.arrowButton > img{
+width: 90%;
+}
+.arrowButton:hover {
+  background-color: rgba(255, 255, 255, 0.8);
+}
+
+.leftArrow {
+  left: 0;
+}
+
+.rightArrow {
+  right: 0;
 }

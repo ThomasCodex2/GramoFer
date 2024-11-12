@@ -1,15 +1,19 @@
 .header {
-  margin-left: 4vw;
-  margin-right: 4vw;
+  background-color: #2F2D2E;
+  border-left: 1px solid black;
+  border-right: 1px solid black;
+  padding-left: 3.5vw;
+  padding-right: 3.5vw;
+  margin-left: 4.9vw;
+  margin-right: 4.9vw;
   width: 1fr;
   height: 12vh;
   display: grid;
-  grid-template-columns: 20% 20% 1fr;
+  grid-template-columns: 20% 10% 1fr;
   gap: 10px;
   color: black;
   align-items: center;
-  border-bottom: 1px solid black;
-  font-family: 'Open Sans', sans-serif;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
   padding-bottom: 20px;
 }
 
@@ -17,29 +21,26 @@
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 5px;
-  align-items: center; /* Center all items vertically */
+  align-items: center; 
   height: fit-content;
   color: black;
 }
-
 .site_links > div {
-  transition: border-right 0.35s ease, border-left 0.35s ease, text-shadow 0.35s ease; 
+  transition: color 0.35s ease, text-shadow 0.35s ease; 
 }
 
-/* Wrapper for Google button to adjust its vertical alignment */
 .google-login-button-wrapper {
   display: flex;
   align-items: center;
 }
 
-/* Google Login button styling */
 .google-login-button {
   font-size: 1em;
   padding: 5px 10px;
   border-radius: 4px;
   border: 1px solid #d9d9d9;
   background-color: white;
-  margin-top: 5px; /* Adjust to fine-tune positioning */
+  margin-top: 5px; 
 }
 
 .google-login-button:hover {
@@ -47,15 +48,16 @@
   color: white;
 }
 
-/* For other site links */
-.site_links > div > h2 {
-  border-right: 1px solid black;
-  border-left: 1px solid black;
-  padding: 5px 10px;
+.site_links > div > h3 {
+  color: #357ae8;
+  text-align: center;
+  border-right: 1px solid #1b6aea;
+  padding: 5px 0px;
 }
 
 .site_links > div:hover {
-  text-shadow: rgba(240, 255, 255, 0.751) 1px 0 10px;
+  color: black;
+  text-shadow: rgba(240, 255, 255, 0.751) 0px 5px 10px;
   cursor: pointer;
 }
 
