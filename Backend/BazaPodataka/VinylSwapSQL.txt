@@ -75,3 +75,4 @@ CREATE TABLE pripadaZanru
   FOREIGN KEY (idZanra) REFERENCES zanr(idZanra)
 );
 
+Test
