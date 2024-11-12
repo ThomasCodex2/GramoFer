@@ -74,5 +74,3 @@ CREATE TABLE pripadaZanru
   FOREIGN KEY (idPloce) REFERENCES PLOCA(idPloce),
   FOREIGN KEY (idZanra) REFERENCES zanr(idZanra)
 );
-
-Test
