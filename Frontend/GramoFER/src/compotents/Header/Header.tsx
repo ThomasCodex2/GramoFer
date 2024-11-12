@@ -14,7 +14,11 @@ function Header() {
   return (
     <div className={styles.header}>
       <div className={[styles.row].join(" ")}>
-        <h1>GramoFER</h1>
+        <img
+          src="/images/logo_reversed_no_bg.png"
+          alt=""
+          className={styles.logo}
+        />
       </div>
       <div></div>
       <div className={[styles.row, styles.site_links].join(" ")}>
