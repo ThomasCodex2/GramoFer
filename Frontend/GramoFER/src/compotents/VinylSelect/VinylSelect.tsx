@@ -11,35 +11,45 @@ const VinylSelect = () => {
       <div className={styles.welcome_banner}>
         <div className={styles.image_crop}></div>
         <div className={styles.banner_text}>
-          <h1>Welcome to our website</h1>
-          <p>saepe ratione earum voluptat</p>
+          <h1>Welcome to GramoFER</h1>
+          <p>
+            Your go-to hub for vinyl discovery and distribution — find, share,
+            and celebrate the world of gramophone records with enthusiast alike!
+          </p>
         </div>
       </div>
-      <div className={styles.filter}>
-        <div className={styles.row}>
-          <h2>Najnovije ploče</h2>
-        </div>
-        <VinylBox by_genre={false} color={"random"}></VinylBox>
-      </div>
-      <div className={styles.filter}>
-        <div className={styles.row}>
-          <h2>Filtriraj po žanru</h2>
-          <div className={styles.genre_select}>
-            <label htmlFor="options">Odaberi žanr: </label>
-            <select
-              id="options"
-              name="options"
-              className={styles.select}
-              value={selectedGenre}
-              onChange={handleGenreChange}
-            >
-              <option value="Rock">Rock</option>
-              <option value="Blues">Blues</option>
-              <option value="Pop">Pop</option>
-            </select>
+      <div className={styles.content_bg}>
+        <div className={styles.filter}>
+          <div className={styles.row}>
+            <h2>
+              The <u>newest</u> additions:
+            </h2>
           </div>
+          <VinylBox by_genre={false} color={"random"}></VinylBox>
         </div>
-        <VinylBox by_genre={true} color={selectedGenre}></VinylBox>
+        <hr></hr>
+        <div className={styles.filter}>
+          <div className={styles.row}>
+            <h2>
+              Got the <i>groove</i> but not the note? Try by genre:
+            </h2>
+            <div className={styles.genre_select}>
+              <label htmlFor="options">select genre: </label>
+              <select
+                id="options"
+                name="options"
+                className={styles.select}
+                value={selectedGenre}
+                onChange={handleGenreChange}
+              >
+                <option value="Rock">Rock</option>
+                <option value="Blues">Blues</option>
+                <option value="Pop">Pop</option>
+              </select>
+            </div>
+          </div>
+          <VinylBox by_genre={true} color={selectedGenre}></VinylBox>
+        </div>
       </div>
     </div>
   );

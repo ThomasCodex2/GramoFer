@@ -45,7 +45,7 @@ const VinylBox: React.FC<Vinyl_color> = ({ by_genre, color }) => {
     }
   } else {
     number = 6;
-    V_count = 7;
+    V_count = 4;
   }
   let vinylclass = `vinylBox_${number}`;
   const scrollLeft = () => {

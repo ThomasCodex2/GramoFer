@@ -1,5 +1,6 @@
 import styles from "./Header.module.css";
 import { GoogleLogin } from "@react-oauth/google";
+import { Link } from "react-router-dom";
 
 function Header() {
   const handleLoginSuccess = (response: any) => {
@@ -20,18 +21,18 @@ function Header() {
           className={styles.logo}
         />
       </div>
-      <div></div>
+      <div className={styles.temp}></div>
       <div className={[styles.row, styles.site_links].join(" ")}>
-        <div>
-          <h3>Ponude</h3>
-        </div>
-        <div>
-          <h3>Moje ploče</h3>
-        </div>
-        <div>
-          <h3>Moje zamjene</h3>
-        </div>
-        <div>
+        <Link to="/" className={styles.link}>
+          <h3>Offers</h3>
+        </Link>
+        <Link to="/my-vinyls" className={styles.link}>
+          <h3>My Vinyls</h3>
+        </Link>
+        <Link to="/my-exchanges" className={styles.link}>
+          <h3>My Exchanges</h3>
+        </Link>
+        <div className={styles.google_btn}>
           <GoogleLogin
             onSuccess={handleLoginSuccess}
             onError={handleLoginFailure}

@@ -8,8 +8,7 @@
   margin-right: 4.9vw;
   padding-right: 3.5vw;
   height: fit-content;
-  width: 1fr ;
-
+  width: 1fr;
   border: 1px solid black;
   padding-left: 3.5vw;
   font-family: Verdana, Geneva, Tahoma, sans-serif;
@@ -17,7 +16,7 @@
 .welcome_banner{
   margin-bottom: 10px;
   width: 1fr;
-  height: 30vh;
+  height: fit-content;
   color: white;
   display: grid;
   grid-template-columns: 50% 50%;
@@ -31,12 +30,20 @@
   overflow: hidden;     
 }
 .banner_text{
+  min-height: 30vh;
+  height: auto;
+  display: flex;
+  flex-direction: column;
   background-color: #2F2D2E;
-  padding-top: 5px;
+  justify-content:top;
   padding-left: 10px;
+  padding-right: 20px;
+}
+.banner_text > p{
+  font-family: Tahoma;
+  font-size: 1.2rem;
 }
 .filter{
-  background-color: #7ea9b8;
   padding-left: 10px;
   padding-right: 10px;
   height: fit-content;
@@ -66,6 +73,26 @@ input[type="search"] {
   flex-direction: row;
   align-items: center;
 }
+.row > h2{
+  color: white;
+  font-family: Tahoma;
+  font-size: 1.5rem;
+}
 .genre_select{
+  color: white;
   margin-left: auto;
+}
+u{
+  color: #DB162F;
+}
+i{
+  color: #8CB369;
+}
+.content_bg{
+  background-color: #2F2D2E;
+}
+hr{
+  margin-top: 50px;
+  border-color: white;
+  width: 50%;
 }

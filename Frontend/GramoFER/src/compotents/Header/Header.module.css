@@ -9,7 +9,7 @@
   width: 1fr;
   height: 12vh;
   display: grid;
-  grid-template-columns: 20% 10% 1fr;
+  grid-template-columns: 20% 1% 1fr;
   gap: 10px;
   color: black;
   align-items: center;
@@ -21,13 +21,41 @@
   padding-top: 10px;
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 5px;
   align-items: center; 
   height: fit-content;
   color: black;
 }
-.site_links > div {
-  transition: color 0.35s ease, text-shadow 0.35s ease; 
+
+.site_links > div:hover {
+  color: black;
+  text-shadow: 
+  0px 8px 4px #b0423eb6,
+  8px 0px 4px #629460af,
+  0px -8px 4px #81d6e3a8,
+  -8px 0px 4px #f2bf78ae;
+  cursor: pointer;
+}
+.link {
+  text-decoration: none;
+  display: flex; 
+  align-items: center;
+  transition: all 0.35s ease;
+}
+.link:hover {
+  color: black;
+  text-shadow: 
+    0px 8px 4px #b0423eb6,
+    8px 0px 4px #629460af,
+    0px -8px 4px #81d6e3a8,
+    -8px 0px 4px #f2bf78ae;
+  cursor: pointer;
+}
+.site_links > .link > h3 {
+  width: 100%;
+  color: white;
+  text-align: center;
+  border-right: 1px solid white;
+  padding: 5px 0px;
 }
 
 .google-login-button-wrapper {
@@ -48,23 +76,12 @@
   background-color: #357ae8;
   color: white;
 }
+.google_btn{
+  margin-left: auto;
+}
 .logo{
   width: 15vw;
-
 }
-.site_links > div > h3 {
-  color: #357ae8;
-  text-align: center;
-  border-right: 1px solid #1b6aea;
-  padding: 5px 0px;
-}
-
-.site_links > div:hover {
-  color: black;
-  text-shadow: rgba(240, 255, 255, 0.751) 0px 5px 10px;
-  cursor: pointer;
-}
-
 button {
   font-weight: 500;
   margin-left: 10px;
@@ -81,8 +98,32 @@ button:hover {
 
 @media (max-width: 600px) {
   .header {
-    width: 100%;
-    height: 60vh;
+    padding-top: 4vh;
+    height: 65vh;
     grid-template-columns: 1fr; 
+    grid-template-rows: 20% 1fr;
+  }
+  .site_links{
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: repeat(4, 1fr);
+  }
+  .site_links > div{
+    padding-top: 10px;
+  }
+  .site_links > div > h3 {
+    margin-top: 0;
+    color: white;
+    text-align: center;
+    border-right: none;
+    border-bottom: 1px solid white;
+    padding: 5px 0px;
+    padding-bottom: 20px;
+  }
+  .logo{
+    width: 100%;
+  }
+  .temp{
+    display: none;
   }
 }
