@@ -399,3 +399,5 @@ FodyWeavers.xsd
 
 #ignore node modules for frontend
 GramoFER/node_modules
+
+GramoFER/target
