@@ -34,6 +34,8 @@ public class Ploce_Service {
         repoPloce.deleteById(id);
     }
 
+    ddaf
+
     public List<Korisnickiracun> dohvati_sve_korisnike() {
         return repoKorisnici.findAll();
     }
