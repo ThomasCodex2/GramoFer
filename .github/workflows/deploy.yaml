@@ -1,0 +1,60 @@
+name: Auto Deploy on Azure
+
+on:
+  push:
+    branches:
+      - main
+jobs:
+  deploy:
+    name: Deploy
+    permissions:
+      deployments: write
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: 'actions/checkout@v4'
+        with:
+          ref: main
+          token: ${{ github.token }}
+      - name: Create GitHub deployment
+        uses: chrnorm/deployment-action@v2
+        id: deployment
+        with:
+          token: '${{ github.token }}'
+          environment-url: ${{ vars.MY_APP }}
+          environment: production
+      - name: SSH to VPS and Deploy
+        uses: appleboy/ssh-action@master
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        with:
+          host: ${{ secrets.VM_IP }}
+          username: ${{ secrets.VM_USERNAME }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          port: 22
+          script: |
+            export GOOGLE_CLIENT_ID=${{ secrets.GOOGLE_CLIENT_ID }}
+            export GOOGLE_CLIENT_SECRET=${{ secrets.GOOGLE_CLIENT_SECRET }}
+            export AIVEN_PASSWORD=${{ secrets.AIVEN_PASSWORD }}
+            cd GramoFer/IzvorniKod/Backend
+            kill $(cat /home/${{ secrets.VM_USERNAME }}/backend.pid) || true
+            nohup ./mvnw spring-boot:run > /dev/null 2>&1 & echo $! > /home/${{ secrets.VM_USERNAME }}/backend.pid
+            cd ../..
+            git pull origin main
+      - name: Update deployment Status (success)
+        if: success()
+        uses: chrnorm/deployment-status@v2
+        with:
+          token: '${{ github.token }}'
+          environment-url: ${{ vars.MY_APP }}
+          state: 'success'
+          deployment-id: ${{ steps.deployment.outputs.deployment_id }}
+      - name: Update deployment status (failure)
+        if: failure()
+        uses: chrnorm/deployment-status@v2
+        with:
+          token: '${{ github.token }}'
+          environment-url: ${{ vars.MY_APP }}
+          state: 'failure'
+          deployment-id: ${{ steps.deployment.outputs.deployment_id }}
+

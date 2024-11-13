@@ -1,0 +1,11 @@
+/home/azureuser/GramoFer/Backend/src/main/java/com/example/gramofer/GramoferApplication.java
+/home/azureuser/GramoFer/Backend/src/main/java/com/example/gramofer/config/SecurityConfig.java
+/home/azureuser/GramoFer/Backend/src/main/java/com/example/gramofer/contoller/Home_Controller.java
+/home/azureuser/GramoFer/Backend/src/main/java/com/example/gramofer/contoller/KorisnikController.java
+/home/azureuser/GramoFer/Backend/src/main/java/com/example/gramofer/contoller/Ploce_Controller.java
+/home/azureuser/GramoFer/Backend/src/main/java/com/example/gramofer/model/Korisnickiracun.java
+/home/azureuser/GramoFer/Backend/src/main/java/com/example/gramofer/model/Ploca.java
+/home/azureuser/GramoFer/Backend/src/main/java/com/example/gramofer/model/zanr.java
+/home/azureuser/GramoFer/Backend/src/main/java/com/example/gramofer/repo/KorisniciRepo.java
+/home/azureuser/GramoFer/Backend/src/main/java/com/example/gramofer/repo/Ploce_Repo.java
+/home/azureuser/GramoFer/Backend/src/main/java/com/example/gramofer/service/Ploce_Service.java
