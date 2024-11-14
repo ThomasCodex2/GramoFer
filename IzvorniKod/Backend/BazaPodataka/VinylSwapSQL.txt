@@ -8,9 +8,11 @@ CREATE TABLE KorisnickiRacun
   prezime VARCHAR(31) NOT NULL,
   jeAdmin INT NOT NULL,
   datumRegistracije DATE NOT NULL,
+  googleid VARCHAR(255),
   PRIMARY KEY (idKorisnika),
   UNIQUE (username),
   UNIQUE (email)
+  UNIQUE (googleid)
 );
 
 CREATE TABLE zanr
