@@ -11,6 +11,8 @@ jobs:
     steps:
       - name: Setup Maven Action
         uses: s4u/setup-maven-action@v1.16.0
+        with:
+          java-version: 21
       - name: Build Backend
         working-directory: ./IzvorniKod/Backend
         run: mvn clean install -Dmaven.test.skip=true
