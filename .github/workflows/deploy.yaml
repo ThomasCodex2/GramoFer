@@ -80,6 +80,8 @@ jobs:
             rm current.jar || true
             cp IzvorniKod/Backend/target/gramofer*.jar current.jar
             nohup java -jar current.jar > /dev/null 2>&1 & echo $! > ./backend.pid
+            cd ..
+            sudo rm -rf /var/www/html/* ; sudo cp -r ./GramoFer_Deploy_Frontend/IzvorniKod/Frontend/GramoFER/* /var/www/html/
       - name: Update deployment Status (success)
         if: success()
         uses: chrnorm/deployment-status@v2
