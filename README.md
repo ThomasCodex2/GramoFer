@@ -55,8 +55,7 @@ Ovaj projekt je rezultat timskog rada u sklopu projeknog zadatka kolegija [Progr
 # Članovi tima 
 > Amar Omeragić, Kristijan Kozomara, Josip Rončević, Lovro Kasunić, Sami Perković, Jurica Galić, Tomislav Peraković
 
-# Kontribucije
->Pravila ovise o organizaciji tima i su često izdvojena u CONTRIBUTING.md
+# Link: gramofer.work.gd/
 
 
 
