@@ -17,12 +17,28 @@ const VinylBox: React.FC<Vinyl_color> = ({ by_genre, color }) => {
     "U njegovom srcu",
     "All you need is love",
     "The wild boys",
+    "84",
+    "Running up that hill",
+    "Sun Street",
+    "Haustor",
+    "Diamond life",
+    "Elektra",
+    "Beutiful vision",
+    "Etta Jones G.H.",
   ];
   const Url_slika = [
     "/images/Wave.jpg",
     "/images/Njeg.jpg",
     "/images/All.jpg",
     "/images/Duran.jpg",
+    "/images/84.jpg",
+    "/images/Kate.jpg",
+    "/images/Sun.jpg",
+    "/images/Haustor.jpg",
+    "/images/DIA.jpg",
+    "/images/Elektra.jpg",
+    "/images/Beut.jpg",
+    "/images/GT.jpg",
   ];
 
   if (by_genre) {
@@ -64,7 +80,7 @@ const VinylBox: React.FC<Vinyl_color> = ({ by_genre, color }) => {
       });
     }
   };
-
+  let i = Naslovi.length - 1;
   return (
     <div className={styles.container}>
       <button
@@ -73,18 +89,28 @@ const VinylBox: React.FC<Vinyl_color> = ({ by_genre, color }) => {
       >
         <img src="/images/left.png" alt="" />
       </button>
-
       <div className={styles.filter_row} ref={scrollContainerRef}>
         {Array.from({ length: V_count }).map((_, index) => {
           let naslov = "";
           let url = "";
 
-          if (index < Naslovi.length) {
-            naslov = Naslovi[index];
-            url = Url_slika[index];
+          if (by_genre) {
+            if (i >= 0) {
+              naslov = Naslovi[i];
+              url = Url_slika[i];
+              i--;
+            } else {
+              naslov = "Placeholder Title";
+              url = "/images/vinyl_blue.png";
+            }
           } else {
-            naslov = "Placeholder Title";
-            url = "/images/vinyl_blue.png";
+            if (index < Naslovi.length) {
+              naslov = Naslovi[index];
+              url = Url_slika[index];
+            } else {
+              naslov = "Placeholder Title";
+              url = "/images/vinyl_blue.png";
+            }
           }
 
           if (by_genre) {
