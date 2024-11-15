@@ -40,7 +40,7 @@ Ovaj projekt je rezultat timskog rada u sklopu projeknog zadatka kolegija [Progr
 > 
 > Back-end: Spring Boot (Java)
 > 
-> Baza podataka: H2
+> Baza podataka: PostgreSQL
 > 
 > Geolokacijski serveri: OpenStreetMap
 >
@@ -50,7 +50,7 @@ Ovaj projekt je rezultat timskog rada u sklopu projeknog zadatka kolegija [Progr
 >
 > Dokumentacija: Github Wiki
 >
-> Deployment: Azure
+> Deployment: Azure VM
 
 # Članovi tima 
 > Amar Omeragić, Kristijan Kozomara, Josip Rončević, Lovro Kasunić, Sami Perković, Jurica Galić, Tomislav Peraković
