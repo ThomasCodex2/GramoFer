@@ -1,0 +1,24 @@
+.container{
+  padding-top: 10px;
+  color: black;
+  background-color: white;
+  padding-bottom: 5px;
+  padding-top: 20px;
+  margin-left: 4.9vw;
+  margin-right: 4.9vw;
+  padding-right: 3.5vw;
+  height: 100vh;
+  width: 1fr;
+  border: 1px solid black;
+  padding-left: 3.5vw;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+button{
+  margin-left: 0;
+  color: white;
+  background-color: black;
+}
+button:hover{
+  color: black;
+  background-color: white;
+}
