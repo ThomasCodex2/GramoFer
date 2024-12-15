@@ -1,6 +1,6 @@
 import styles from "./VinylBox.module.css";
 import Vinyl from "../Vinyl/Vinyl";
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 
 interface Vinyl_color {
   by_genre: boolean;
@@ -9,6 +9,12 @@ interface Vinyl_color {
 
 const VinylBox: React.FC<Vinyl_color> = ({ by_genre, color }) => {
   const scrollContainerRef = useRef<HTMLDivElement>(null);
+
+  const [selectedVinyl, setSelectedVinyl] = useState<{
+    title: string;
+    url: string;
+  } | null>(null);
+
   let number = 0;
   let V_count = 0;
 
@@ -63,11 +69,10 @@ const VinylBox: React.FC<Vinyl_color> = ({ by_genre, color }) => {
     number = 6;
     V_count = 4;
   }
-  let vinylclass = `vinylBox_${number}`;
   const scrollLeft = () => {
     if (scrollContainerRef.current) {
       scrollContainerRef.current.scrollBy({
-        left: -800,
+        left: -window.innerWidth * 0.5,
         behavior: "smooth",
       });
     }
@@ -75,12 +80,20 @@ const VinylBox: React.FC<Vinyl_color> = ({ by_genre, color }) => {
   const scrollRight = () => {
     if (scrollContainerRef.current) {
       scrollContainerRef.current.scrollBy({
-        left: 800,
+        left: window.innerWidth * 0.5,
         behavior: "smooth",
       });
     }
   };
-  let i = Naslovi.length - 1;
+
+  const handleVinylClick = (title: string, url: string) => {
+    setSelectedVinyl({ title, url });
+  };
+
+  const closePopup = () => {
+    setSelectedVinyl(null);
+  };
+
   return (
     <div className={styles.container}>
       <button
@@ -91,40 +104,19 @@ const VinylBox: React.FC<Vinyl_color> = ({ by_genre, color }) => {
       </button>
       <div className={styles.filter_row} ref={scrollContainerRef}>
         {Array.from({ length: V_count }).map((_, index) => {
-          let naslov = "";
-          let url = "";
-
-          if (by_genre) {
-            if (i >= 0) {
-              naslov = Naslovi[i];
-              url = Url_slika[i];
-              i--;
-            } else {
-              naslov = "Placeholder Title";
-              url = "/images/vinyl_blue.png";
-            }
-          } else {
-            if (index < Naslovi.length) {
-              naslov = Naslovi[index];
-              url = Url_slika[index];
-            } else {
-              naslov = "Placeholder Title";
-              url = "/images/vinyl_blue.png";
-            }
-          }
-
-          if (by_genre) {
-            vinylclass = `vinylBox_${number}`;
-          } else {
-            const randomColor = Math.floor(Math.random() * 3) + 1;
-            vinylclass = `vinylBox_${randomColor}`;
-          }
+          const naslov =
+            index < Naslovi.length ? Naslovi[index] : "Placeholder Title";
+          const url =
+            index < Url_slika.length
+              ? Url_slika[index]
+              : "/images/vinyl_blue.png";
           return (
             <Vinyl
               key={index}
-              vinyl_genre={vinylclass}
+              vinyl_genre={`vinylBox_${number}`}
               title={naslov}
               url={url}
+              onClick={() => handleVinylClick(naslov, url)}
             />
           );
         })}
@@ -135,6 +127,62 @@ const VinylBox: React.FC<Vinyl_color> = ({ by_genre, color }) => {
       >
         <img src="/images/right.png" alt="" />
       </button>
+      {selectedVinyl && (
+        <div className={styles.popupBackground} onClick={closePopup}>
+          <div
+            className={styles.popupContent}
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className={styles.column}>
+              <div className={styles.rowGrid}>
+                <div className={styles.row}>
+                  <img src={selectedVinyl.url} />
+                  <div className={styles.smallImg}>
+                    <img src={selectedVinyl.url} />
+                    <img src={selectedVinyl.url} />
+                    <img src={selectedVinyl.url} />
+                    <img src={selectedVinyl.url} />
+                  </div>
+                </div>
+                <h3>
+                  Album name:
+                  <br /> {selectedVinyl.title}
+                </h3>
+                <h3>
+                  Genre:
+                  <br />
+                  somegenre
+                </h3>
+              </div>
+              <div className={styles.vinDetails}>
+                <h4>
+                  Album name:
+                  <br /> {selectedVinyl.title}
+                </h4>
+                <h4>
+                  Genre:
+                  <br />
+                  somegenre
+                </h4>
+                <p>Performer: Lorem</p>
+                <p>Year of release: Lorem</p>
+                <p>Goldmine standard (Vinyl): Lorem</p>
+                <p>Goldmine standard (Casing): Lorem</p>
+                <p>Edition mark: Lorem</p>
+                <p>Current location: Lorem</p>
+              </div>
+              <p>
+                Description: Lorem ipsum dolor sit amet consectetur adipisicing
+                elit. Fugit nemo eaque voluptatibus ducimus
+              </p>
+              <button className={styles.buttonExtra}>Ponudi zamjenu</button>
+            </div>
+            <button className={styles.closeButton} onClick={closePopup}>
+              &times;
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

@@ -6,6 +6,7 @@ const VinylSelect = () => {
   const handleGenreChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setSelectedGenre(event.target.value);
   };
+
   return (
     <div className={styles.container}>
       <div className={styles.welcome_banner}>
@@ -28,7 +29,7 @@ const VinylSelect = () => {
           <VinylBox by_genre={false} color={"random"}></VinylBox>
         </div>
         <hr></hr>
-        <div className={styles.filter}>
+        <div className={[styles.filter].join(" ")}>
           <div className={styles.row}>
             <h2>
               Got the <i>groove</i> but not the note? Try by genre:
