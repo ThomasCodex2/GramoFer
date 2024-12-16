@@ -17,7 +17,6 @@
   top: 50%;
   transform: translateY(-70%);
   background-color: rgba(255, 255, 255, 0.5);
-
   width: 50px;
   height: 50px;
   border-radius: 100%;
@@ -42,4 +41,134 @@
 
 .rightArrow {
   right: 0;
+}
+
+.popupBackground {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.popupContent {
+  top: 10vh;
+  background: #2F2D2E;
+  color: white;
+  padding: 20px;
+  border-radius: 8px;
+  text-align: center;
+  width: 50vw;
+  height: 70vh;
+  position: relative;
+}
+
+.closeButton {
+  color: gray;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+}
+.rowGrid{
+  display: grid;
+  width: 100%;
+  min-height: 150px;
+  height: 15vw;
+  grid-template-columns: 60% 40%;
+  grid-template-rows: 50% 50%;
+}
+.rowGrid > div{
+  height: 15vw;
+  min-height: 150px;
+}
+.rowGrid > .row{
+  grid-row: span 2;
+}
+.rowGrid > div > img{
+  height: 1fr;
+}
+.smallImg{
+  border: 5px solid gray;
+  display: grid;
+  grid-template-rows: 22%  22%  22%  22%;
+  align-content: space-between;
+  height: 1fr;
+  background-color: gray;
+}
+.smallImg > img{
+  height: 100%;
+}
+.smallImg > img:hover{
+  cursor: pointer;
+}
+.column{
+  display: flex;
+  flex-direction: column;
+}
+.column > p{
+  word-wrap: break-word;
+}
+.row{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+.vinDetails{
+  margin-top: 10px;
+  display: grid;
+  grid-template-columns: 50% 50%;
+  grid-template-rows: 33% 33% 33%;
+  column-gap: 5px;
+  height: 1fr;
+  text-align: left;
+}
+.vinDetails > h4{
+  font-weight:normal;
+  display: none;
+}
+.buttonExtra{
+  margin-bottom: auto;
+  width: 200px;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+@media (max-width: 700px) {
+  .rowGrid > h3{
+    display: none;
+  }
+  .popupContent{
+    min-width: fit-content;
+    overflow-y:scroll;
+    overflow-x: hidden;
+  }
+  .arrowButton {
+    width: 30px;
+    height: 30px;
+    border-radius: 100%;
+    font-size: 1rem;
+    cursor: pointer;
+    z-index: 10;
+    user-select: none;
+  }
+  .rowGrid{
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .rowGrid > .row{
+    grid-column: span 2;
+  }
+  .vinDetails{
+
+    grid-template-rows: 25% 25% 25% 25%;
+  }
+  .vinDetails > h4{
+    display: block;
+  }
+
 }

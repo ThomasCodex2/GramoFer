@@ -4,15 +4,21 @@ interface VinylProps {
   vinyl_genre: string;
   title: string;
   url: string;
+  onClick?: () => void;
 }
-const Vinyl: React.FC<VinylProps> = ({ vinyl_genre, title, url }) => {
+const Vinyl: React.FC<VinylProps> = ({ vinyl_genre, title, url, onClick }) => {
   return (
-    <div className={[styles.vinylBox, styles[vinyl_genre]].join(" ")}>
-      <img src={url} alt="image" />
-      <div>
-        <h3>{title}</h3>
+    <>
+      <div
+        className={[styles.vinylBox, styles[vinyl_genre]].join(" ")}
+        onClick={onClick}
+      >
+        <img src={url} alt="image" />
+        <div>
+          <h3>{title}</h3>
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 export default Vinyl;

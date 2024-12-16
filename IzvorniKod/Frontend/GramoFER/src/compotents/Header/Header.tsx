@@ -5,7 +5,6 @@ import { Link } from "react-router-dom";
 function Header() {
   const handleLoginSuccess = (response: any) => {
     console.log("Login Success: ", response);
-    // Handle the response, such as storing the token in local storage or state
   };
 
   const handleLoginFailure = () => {

@@ -61,6 +61,7 @@
 .google-login-button-wrapper {
   display: flex;
   align-items: center;
+
 }
 
 .google-login-button {
@@ -96,7 +97,7 @@ button:hover {
   cursor: pointer;
 }
 
-@media (max-width: 600px) {
+@media (max-width: 700px) {
   .header {
     padding-top: 4vh;
     height: 65vh;
@@ -111,7 +112,7 @@ button:hover {
   .site_links > div{
     padding-top: 10px;
   }
-  .site_links > div > h3 {
+  .site_links > .link > h3 {
     margin-top: 0;
     color: white;
     text-align: center;
@@ -125,5 +126,9 @@ button:hover {
   }
   .temp{
     display: none;
+  }
+  .google_btn{
+    margin-left: 0;
+    justify-self: center;
   }
 }
