@@ -7,16 +7,19 @@
   margin-left: 4.9vw;
   margin-right: 4.9vw;
   padding-right: 3.5vw;
-  height: 100vh;
+  min-height: 100vh;
+  height: fit-content;
   width: 1fr;
   border: 1px solid black;
   padding-left: 3.5vw;
   font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
+.container > h1{
+ text-align: center;
+}
 .pending{
   color: white;
   background-color: #2F2D2E;
- 
   min-height: 100px;
   height: fit-content;
 }
@@ -38,4 +41,13 @@
   padding-block-start: 1em;
   padding-block-end: 1em;
   background-color: #2F2D2E;
+}
+.out{
+  color: #5b969fa8;
+}
+.in{
+  color: #ad8956ae;
+}
+.prev{
+  color: #629460af;
 }
