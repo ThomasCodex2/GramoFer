@@ -65,6 +65,7 @@
   width: 50vw;
   height: 70vh;
   position: relative;
+  min-height: fit-content;
 }
 
 .closeButton {
@@ -112,6 +113,7 @@
 .column{
   display: flex;
   flex-direction: column;
+
 }
 .column > p{
   word-wrap: break-word;
@@ -138,6 +140,21 @@
   margin-bottom: auto;
   width: 200px;
   font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+.buttonDiv{
+  display: flex;
+  justify-content: space-between;
+}
+.buttonTrash{
+  justify-self: end;
+  margin-bottom: auto;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  background-color: red;
+  width: 50px;
+}
+.buttonTrash > img{
+  width: 25px;
+  height: 25px;
 }
 @media (max-width: 700px) {
   .rowGrid > h3{
