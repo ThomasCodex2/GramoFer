@@ -1,0 +1,36 @@
+.history{
+  color: white;
+  display: grid;
+  grid-template-columns:25% 25% 25% 25%;
+  text-align: center;
+  width: 100%;
+  background-color: black;
+  height: fit-content;
+  margin-bottom: 20px;
+}
+.info{
+  padding-block-start: 1em;
+  padding-block-end: 1em;
+  background-color: #2F2D2E;
+}
+h2{
+  text-align: center;
+  grid-column: 1 / 5;
+ 
+}
+.vinyl_container{
+  padding-top: 5px;
+  padding-bottom: 5px;
+  display: flex;
+  justify-content: center;
+  gap: 5px;
+}
+.vinyl_container > img{
+  height: 100px;
+}
+.HistoryFooter{
+  padding-top: 10px;
+  height: 60px;
+  background-color: #2F2D2E;
+  grid-column: 1 / 5;
+}

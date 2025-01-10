@@ -21,7 +21,7 @@ const VinylSelect = () => {
       </div>
       <div className={styles.content_bg}>
         <div className={styles.filter}>
-          <div className={styles.row}>
+          <div className={styles.block_header}>
             <h2>
               The <u>newest</u> additions:
             </h2>
@@ -30,24 +30,38 @@ const VinylSelect = () => {
         </div>
         <hr></hr>
         <div className={[styles.filter].join(" ")}>
-          <div className={styles.row}>
+          <div className={styles.block_header}>
             <h2>
-              Got the <i>groove</i> but not the note? Try by genre:
+              Got the <i>groove</i> but not the note? Try by genre or year:
             </h2>
-            <div className={styles.genre_select}>
-              <label htmlFor="options">select genre: </label>
-              <select
-                id="options"
-                name="options"
-                className={styles.select}
-                value={selectedGenre}
-                onChange={handleGenreChange}
-              >
-                <option value="Rock">Rock</option>
-                <option value="Blues">Blues</option>
-                <option value="Pop">Pop</option>
-              </select>
-            </div>
+            <form className={styles.genre_select}>
+              <div className={styles.input_fields}>
+                {" "}
+                <input
+                  type="text"
+                  name="year"
+                  id="year"
+                  className={styles.select}
+                  placeholder="Input year"
+                />
+                <label htmlFor="options"> genre: </label>
+                <select
+                  id="options"
+                  name="options"
+                  className={styles.select}
+                  value={selectedGenre}
+                  onChange={handleGenreChange}
+                >
+                  <option value="Rock">Rock</option>
+                  <option value="Blues">Blues</option>
+                  <option value="Pop">Pop</option>
+                </select>
+              </div>
+
+              <button className={styles.icon_contain}>
+                <img src="/images/magnify_icon.webp" alt=""></img>
+              </button>
+            </form>
           </div>
           <VinylBox by_genre={true} color={selectedGenre}></VinylBox>
         </div>
