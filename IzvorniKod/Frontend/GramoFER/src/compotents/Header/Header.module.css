@@ -72,16 +72,27 @@
   background-color: white;
   margin-top: 5px; 
 }
-
 .google-login-button:hover {
   background-color: #357ae8;
   color: white;
 }
 .google_btn{
+  display: flex;
   margin-left: auto;
 }
 .logo{
   width: 15vw;
+}
+.reg_btn{
+  background-color: #81d6e3a8;
+  height: 42px;
+  margin-right: 10px;
+  margin-left: 10px;
+}
+.reg_btn:hover{
+  background-color: #81d6e360;
+  color: white;
+
 }
 button {
   font-weight: 500;

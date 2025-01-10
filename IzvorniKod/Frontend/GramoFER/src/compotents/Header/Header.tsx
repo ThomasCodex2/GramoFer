@@ -32,6 +32,9 @@ function Header() {
           <h3>My Exchanges</h3>
         </Link>
         <div className={styles.google_btn}>
+          <Link to="/register" className={styles.link}>
+            <button className={styles.reg_btn}>Register</button>
+          </Link>
           <GoogleLogin
             onSuccess={handleLoginSuccess}
             onError={handleLoginFailure}

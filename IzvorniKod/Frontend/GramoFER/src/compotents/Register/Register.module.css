@@ -1,0 +1,27 @@
+.container{
+  padding-top: 10px;
+  color: black;
+  background-color: white;
+  padding-bottom: 5px;
+  padding-top: 20px;
+  margin-left: 4.9vw;
+  margin-right: 4.9vw;
+  padding-right: 3.5vw;
+  min-height: 100vh;
+  height: fit-content;
+  width: 1fr;
+  border: 1px solid black;
+  padding-left: 3.5vw;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+.form_contain{
+  margin-top: 10px;
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 200px;
+}
+input{
+  font-style: italic;
+}
