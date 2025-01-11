@@ -18,35 +18,48 @@ public class Vinyl {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "vinylid")
-    private int vinylID;
+    private int vinylid;
 
     @Column(name = "vinylcondition", nullable = false)
-    private String vinylCondition;
+    private String vinylcondition;
 
     @Column(name = "covercondition", nullable = false)
-    private String coverCondition;
+    private String covercondition;
 
     @Column(name = "description")
     private String description;
 
     @Column(name = "vinylimagepath1")
-    private String vinylImagePath1;
+    private String vinylimagepath1;
 
     @Column(name = "vinylimagepath2")
-    private String vinylImagePath2;
+    private String vinylimagepath2;
 
     @Column(name = "coverimagepath1", nullable = false)
-    private String coverImagePath1;
+    private String coverimagepath1;
 
     @Column(name = "coverimagepath2", nullable = false)
-    private String coverImagePath2;
+    private String coverimagepath2;
 
-    @ManyToOne
-    @JoinColumn(name = "userid", referencedColumnName = "userid", nullable = false)
-    private UserAccount userAccount;
+    @Column(name = "userid", nullable = false)
+    private int userid;
 
-    @ManyToOne
-    @JoinColumn(name = "editionlabel", referencedColumnName = "editionlabel", nullable = false)
-    private Edition edition;
+    @Column(name = "editionlabel", nullable = false)
+    private String editionlabel;
 
+    @Override
+    public String toString() {
+        return "Vinyl{" +
+                "vinylid=" + vinylid +
+                ", vinylcondition='" + vinylcondition + '\'' +
+                ", covercondition='" + covercondition + '\'' +
+                ", description='" + description + '\'' +
+                ", vinylimagepath1='" + vinylimagepath1 + '\'' +
+                ", vinylimagepath2='" + vinylimagepath2 + '\'' +
+                ", coverimagepath1='" + coverimagepath1 + '\'' +
+                ", coverimagepath2='" + coverimagepath2 + '\'' +
+                ", userid=" + userid +
+                ", edition='" + editionlabel + '\'' +
+                '}';
+    }
 }

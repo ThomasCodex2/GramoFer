@@ -1,10 +1,9 @@
 package com.example.gramofer.service;
 
-import com.example.gramofer.model.UserAccount;
 import com.example.gramofer.model.Vinyl;
 import com.example.gramofer.repo.UserRepo;
 import com.example.gramofer.repo.VinylRepo;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -12,11 +11,20 @@ import java.util.List;
 @Service
 public class VinylService {
 
-    @Autowired
-    VinylRepo repoVinyl;
+    private final VinylRepo repoVinyl;
+    private final UserRepo userRepo;
 
-    @Autowired
-    UserRepo repoUsers;
+
+    public VinylService(VinylRepo repoVinyl, UserRepo userRepo) {
+        this.repoVinyl = repoVinyl;
+        this.userRepo = userRepo;
+
+    }
+
+    public List<Vinyl> getAllVinylByUsername(String username) {
+        int id = userRepo.findUserIdByUsername(username);
+        return repoVinyl.findByuserid(id);
+    }
 
     public List<Vinyl> fetchVinyls() {
         return repoVinyl.findAll();
@@ -34,7 +42,5 @@ public class VinylService {
         repoVinyl.deleteById(id);
     }
 
-    public List<UserAccount> fetchUsers() {
-        return repoUsers.findAll();
-    }
+
 }

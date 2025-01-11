@@ -16,7 +16,7 @@ import java.util.Map;
 public class KorisnikService implements OAuth2UserService<OAuth2UserRequest, OAuth2User> {
     //Repozitorij koji nam je potreban za vezu za bazom podataka
     @Autowired
-    private KorisnickiracunService korisnikService;
+    private UserService korisnikService;
     @Override
     public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
         //Prvo nam treba objekt klase koji ce nam dati odgovor koji sadrzi podatke koje nam Google vraca kada smo se prijavili
