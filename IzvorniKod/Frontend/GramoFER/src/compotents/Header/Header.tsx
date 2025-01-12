@@ -11,6 +11,8 @@ function Header() {
     console.log("Login Failed");
   };
 
+  const notify_test = false;
+
   return (
     <div className={styles.header}>
       <div className={[styles.row].join(" ")}>
@@ -22,15 +24,23 @@ function Header() {
       </div>
       <div className={styles.temp}></div>
       <div className={[styles.row, styles.site_links].join(" ")}>
-        <Link to="/" className={styles.link}>
-          <h3>Offers</h3>
-        </Link>
-        <Link to="/my-vinyls" className={styles.link}>
-          <h3>My Vinyls</h3>
-        </Link>
-        <Link to="/my-exchanges" className={styles.link}>
-          <h3>My Exchanges</h3>
-        </Link>
+        <div className={styles.link_contain}>
+          <Link to="/" className={styles.link}>
+            <h3>Offers</h3>
+          </Link>
+        </div>
+        <div className={styles.link_contain}>
+          <Link to="/my-vinyls" className={styles.link}>
+            <h3>My Vinyls</h3>
+            {notify_test && <div className={styles.notify}></div>}
+          </Link>
+        </div>
+        <div className={styles.link_contain}>
+          <Link to="/my-exchanges" className={styles.link}>
+            <h3>My Exchanges</h3>
+            {notify_test && <div className={styles.notify}></div>}
+          </Link>
+        </div>
         <div className={styles.google_btn}>
           <Link to="/register" className={styles.link}>
             <button className={styles.reg_btn}>Register</button>
