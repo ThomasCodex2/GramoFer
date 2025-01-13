@@ -97,15 +97,6 @@
 				<artifactId>spring-boot-maven-plugin</artifactId>
 				<version>3.3.5</version>
 			</plugin>
-
-			<plugin>
-            	<groupId>org.apache.maven.plugins</groupId>
-            	<artifactId>maven-surefire-plugin</artifactId>
-            	<version>3.3.5</version>
-            	<configuration>
-            	    <useSystemClassLoader>false</useSystemClassLoader>
-            	</configuration>
-        	</plugin>
 		</plugins>
 	</build>
 
