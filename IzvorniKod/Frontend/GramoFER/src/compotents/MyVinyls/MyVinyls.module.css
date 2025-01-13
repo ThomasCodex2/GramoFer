@@ -2,12 +2,13 @@
   padding-top: 10px;
   color: black;
   background-color: white;
-  padding-bottom: 5px;
+  padding-bottom: 15px;
   padding-top: 20px;
+  padding-right: 3.5vw;
   margin-left: 4.9vw;
   margin-right: 4.9vw;
-  padding-right: 3.5vw;
-  height: 100vh;
+  min-height: 100vh;
+  height: fit-content;
   width: 1fr;
   border: 1px solid black;
   padding-left: 3.5vw;
@@ -22,7 +23,49 @@
   grid-auto-rows: 50px;
   width: 100%;
   background-color: black;
-
+}
+.listing_form{
+  background-color: #2F2D2E;
+  color: white;
+  padding: 5px;
+  padding-bottom: 10px;
+  border: 1px solid black;
+  display: grid;
+  grid-template-columns: 50% 50%;
+  grid-template-rows:auto;
+}
+.listing_form > h1{
+  text-align: center;
+  grid-column: span 2;
+}
+h1 > span{
+  color: #6bb1bc;
+}
+.listing_form > div{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 10px;
+}
+.listing_form > div > input{
+  word-wrap: break-word;
+  font-style: normal;
+  color: white;
+  margin-top: 5px;
+  width: 50%;
+  border-radius: 10px;
+  background-color: #b0423e;
+  height: 25px;
+  padding-left: 5px;
+  border-color: #81d6e3;
+}
+.listing{
+  background-color: #2F2D2E;
+}
+.picture_drop{
+  grid-column: span 2;
+  display: flex;
+  flex-direction: column;
 }
 .vinyl_list > div {
   display: flex;
@@ -30,6 +73,61 @@
   justify-content: center;
   height: 100%;
   color: white;
-  background-color: #2F2D2E;
   text-align: center;
+}
+.dropZone{
+  word-break: break-all;
+  margin-top: 10px;
+  display: flex;
+  height: 100px;
+  border-radius: 15px;
+  border: 2px solid black;
+  background-color: #f2bf78ae;
+  width: 25%;
+  align-self: center;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+.dropZone:-moz-drag-over{
+  background-color: #b0423e;
+}
+.dropZone:hover{
+  cursor: pointer;
+  opacity: 0.5;
+}
+.preview{
+  margin-top: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.preview img {
+  max-width: 100px;
+  max-height: 100px;
+  object-fit: cover;
+  background-color: white;
+}
+.clear_button{
+  margin-top: 10px;
+  background-color: #f2bf78ae;
+}
+.clear_button:hover{
+  background-color: antiquewhite;
+}
+.add_button{
+  justify-self: center;
+  grid-column: span 2;
+  margin-top: 10px;
+  width: 150px;
+  height: 40px;
+  font-size: large;
+  background-color: #6bb1bc;
+}
+.add_button:hover{
+  color: white;
+  background-color: #81d6e3;
+}
+.desc{
+  grid-column: span 2;
 }
