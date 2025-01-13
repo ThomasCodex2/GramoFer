@@ -12,7 +12,7 @@ import jakarta.persistence.SequenceGenerator;
 
 
 @Entity
-public class Wish {
+public class Reports {
 
     @Id
     @Column(nullable = false, updatable = false)
@@ -26,44 +26,40 @@ public class Wish {
             strategy = GenerationType.SEQUENCE,
             generator = "primary_sequence"
     )
-    private Integer wishId;
+    private Integer reportId;
 
-    @Column(nullable = false)
-    private String albumName;
+    @Column(nullable = false, length = 31)
+    private String reason;
 
-    @Column(nullable = false)
-    private String artistName;
+    @Column(nullable = false, length = 511)
+    private String details;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
     private UserAccount user;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "edition_label_id")
-    private Edition editionLabel;
-
-    public Integer getWishId() {
-        return wishId;
+    public Integer getReportId() {
+        return reportId;
     }
 
-    public void setWishId(final Integer wishId) {
-        this.wishId = wishId;
+    public void setReportId(final Integer reportId) {
+        this.reportId = reportId;
     }
 
-    public String getAlbumName() {
-        return albumName;
+    public String getReason() {
+        return reason;
     }
 
-    public void setAlbumName(final String albumName) {
-        this.albumName = albumName;
+    public void setReason(final String reason) {
+        this.reason = reason;
     }
 
-    public String getArtistName() {
-        return artistName;
+    public String getDetails() {
+        return details;
     }
 
-    public void setArtistName(final String artistName) {
-        this.artistName = artistName;
+    public void setDetails(final String details) {
+        this.details = details;
     }
 
     public UserAccount getUser() {
@@ -72,14 +68,6 @@ public class Wish {
 
     public void setUser(final UserAccount user) {
         this.user = user;
-    }
-
-    public Edition getEditionLabel() {
-        return editionLabel;
-    }
-
-    public void setEditionLabel(final Edition editionLabel) {
-        this.editionLabel = editionLabel;
     }
 
 }

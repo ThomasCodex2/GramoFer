@@ -1,52 +1,202 @@
 package com.example.gramofer.model;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.SequenceGenerator;
+import java.time.LocalDate;
+import java.util.Collection;
+import java.util.List;
+import java.util.Set;
 
-import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
-import java.util.Date;
-@AllArgsConstructor
-@NoArgsConstructor
-@Getter
-@Setter
+
 @Entity
-@Table(name = "useraccount")
-public class UserAccount {
+public class UserAccount implements UserDetails {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "userid")
-    private Integer userid;
+    @Column(nullable = false, updatable = false)
+    @SequenceGenerator(
+            name = "primary_sequence",
+            sequenceName = "primary_sequence",
+            allocationSize = 1,
+            initialValue = 10000
+    )
+    @GeneratedValue(
+            strategy = GenerationType.SEQUENCE,
+            generator = "primary_sequence"
+    )
+    private Integer userId;
 
-    @Column(name = "username", nullable = false, unique = true)
+    @Column(nullable = false, unique = true, length = 31)
     private String username;
 
-    @Column(name = "email", nullable = false, unique = true)
+    @Column(nullable = false, unique = true, length = 320)
     private String email;
 
-    @Column(name = "password", nullable = false)
+    @Column(nullable = false, length = 64)
     private String password;
 
-    @Column(name = "firstname", nullable = false)
-    private String firstname;
+    @Column(nullable = false, length = 31)
+    private String firstName;
 
-    @Column(name = "lastname", nullable = false)
-    private String lastname;
+    @Column(nullable = false, length = 31)
+    private String lastName;
 
-    @Column(name = "isadmin", nullable = false)
-    private int isadmin;
+    @Column(nullable = false)
+    private Integer isAdmin;
 
-    @Column(name = "registrationdate", nullable = false)
-    private Date registrationdate;
+    @Column(nullable = false)
+    private LocalDate registrationDate;
 
-    @Column(name = "googleid", nullable = false, unique = true)
-    private String googleid;
+    @Column(nullable = true, unique = true, length = 511)
+    private String googleId;
 
-    @Column(name = "strikecount", nullable = false)
-    private int strikecount;
+    @Column(nullable = false)
+    private Integer strikeCount;
 
-    // Getters and setters
+    @OneToMany(mappedBy = "user")
+    private Set<Reports> userReportses;
+
+    @OneToMany(mappedBy = "user")
+    private Set<Vinyl> userVinyls;
+
+    @OneToMany(mappedBy = "user")
+    private Set<Exchange> userExchanges;
+
+    @OneToMany(mappedBy = "isOfferingUser")
+    private Set<Exchange> isOfferingUserExchanges;
+
+    @OneToMany(mappedBy = "user")
+    private Set<Wish> userWishes;
+
+    public Integer getUserId() {
+        return userId;
+    }
+
+    public void setUserId(final Integer userId) {
+        this.userId = userId;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(final String username) {
+        this.username = username;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(final String email) {
+        this.email = email;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(final String password) {
+        this.password = password;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(final String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(final String lastName) {
+        this.lastName = lastName;
+    }
+
+    public Integer getIsAdmin() {
+        return isAdmin;
+    }
+
+    public void setIsAdmin(final Integer isAdmin) {
+        this.isAdmin = isAdmin;
+    }
+
+    public LocalDate getRegistrationDate() {
+        return registrationDate;
+    }
+
+    public void setRegistrationDate(final LocalDate registrationDate) {
+        this.registrationDate = registrationDate;
+    }
+
+    public String getGoogleId() {
+        return googleId;
+    }
+
+    public void setGoogleId(final String googleId) {
+        this.googleId = googleId;
+    }
+
+    public Integer getStrikeCount() {
+        return strikeCount;
+    }
+
+    public void setStrikeCount(final Integer strikeCount) {
+        this.strikeCount = strikeCount;
+    }
+
+    public Set<Reports> getUserReportses() {
+        return userReportses;
+    }
+
+    public void setUserReportses(final Set<Reports> userReportses) {
+        this.userReportses = userReportses;
+    }
+
+    public Set<Vinyl> getUserVinyls() {
+        return userVinyls;
+    }
+
+    public void setUserVinyls(final Set<Vinyl> userVinyls) {
+        this.userVinyls = userVinyls;
+    }
+
+    public Set<Exchange> getUserExchanges() {
+        return userExchanges;
+    }
+
+    public void setUserExchanges(final Set<Exchange> userExchanges) {
+        this.userExchanges = userExchanges;
+    }
+
+    public Set<Exchange> getIsOfferingUserExchanges() {
+        return isOfferingUserExchanges;
+    }
+
+    public void setIsOfferingUserExchanges(final Set<Exchange> isOfferingUserExchanges) {
+        this.isOfferingUserExchanges = isOfferingUserExchanges;
+    }
+
+    public Set<Wish> getUserWishes() {
+        return userWishes;
+    }
+
+    public void setUserWishes(final Set<Wish> userWishes) {
+        this.userWishes = userWishes;
+    }
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return List.of();
+    }
 }
