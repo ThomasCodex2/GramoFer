@@ -4,10 +4,11 @@ C:\Users\Toma\Documents\gramofer\GramoFer\IzvorniKod\Backend\src\main\java\com\e
 C:\Users\Toma\Documents\gramofer\GramoFer\IzvorniKod\Backend\src\main\java\com\example\gramofer\contoller\AuthenticationController.java
 C:\Users\Toma\Documents\gramofer\GramoFer\IzvorniKod\Backend\src\main\java\com\example\gramofer\contoller\DebugController.java
 C:\Users\Toma\Documents\gramofer\GramoFer\IzvorniKod\Backend\src\main\java\com\example\gramofer\contoller\HomeController.java
-C:\Users\Toma\Documents\gramofer\GramoFer\IzvorniKod\Backend\src\main\java\com\example\gramofer\contoller\MyController.java
+C:\Users\Toma\Documents\gramofer\GramoFer\IzvorniKod\Backend\src\main\java\com\example\gramofer\contoller\OauthController.java
 C:\Users\Toma\Documents\gramofer\GramoFer\IzvorniKod\Backend\src\main\java\com\example\gramofer\contoller\UserController.java
 C:\Users\Toma\Documents\gramofer\GramoFer\IzvorniKod\Backend\src\main\java\com\example\gramofer\contoller\VinylController.java
 C:\Users\Toma\Documents\gramofer\GramoFer\IzvorniKod\Backend\src\main\java\com\example\gramofer\dtos\LoginUserDto.java
+C:\Users\Toma\Documents\gramofer\GramoFer\IzvorniKod\Backend\src\main\java\com\example\gramofer\dtos\OAuthDto.java
 C:\Users\Toma\Documents\gramofer\GramoFer\IzvorniKod\Backend\src\main\java\com\example\gramofer\dtos\RegisterUserDto.java
 C:\Users\Toma\Documents\gramofer\GramoFer\IzvorniKod\Backend\src\main\java\com\example\gramofer\GramoferApplication.java
 C:\Users\Toma\Documents\gramofer\GramoFer\IzvorniKod\Backend\src\main\java\com\example\gramofer\model\Edition.java
