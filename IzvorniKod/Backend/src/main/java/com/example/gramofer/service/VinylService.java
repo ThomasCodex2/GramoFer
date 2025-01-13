@@ -1,12 +1,13 @@
 package com.example.gramofer.service;
 
+import com.example.gramofer.model.UserAccount;
 import com.example.gramofer.model.Vinyl;
 import com.example.gramofer.repo.UserRepo;
 import com.example.gramofer.repo.VinylRepo;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class VinylService {
@@ -22,8 +23,8 @@ public class VinylService {
     }
 
     public List<Vinyl> getAllVinylByUsername(String username) {
-        int id = userRepo.findUserIdByUsername(username);
-        return repoVinyl.findByuserid(id);
+        Optional<UserAccount> user = userRepo.findByUsername(username);
+        return repoVinyl.findByUser(user.get());
     }
 
     public List<Vinyl> fetchVinyls() {
