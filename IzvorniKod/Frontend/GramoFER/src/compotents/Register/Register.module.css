@@ -15,13 +15,113 @@
   font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 .form_contain{
-  margin-top: 10px;
-  margin-bottom: 20px;
   display: flex;
   flex-direction: column;
-  gap: 10px;
-  width: 200px;
+  justify-self: center;
+  width: 400px;
+  min-height: 100px;
+  height: fit-content;
+  border: 1px solid black;
+  background-color: #2F2D2E;
+  padding: 10px;
 }
-input{
-  font-style: italic;
+.form_contain > h2{
+  color: white;
+  text-align: center;
+}
+.form_contain > div{
+  color: white;
+}
+.form_contain > button{
+  grid-column: span 2;
+  align-self: center;
+}
+.form_style{
+  margin-top: 20px;
+  color: white;
+  display: grid;
+  grid-template-columns: 50% 50%;
+  row-gap: 10px;
+}
+.form_style > div > input{
+  color: white;
+  padding: 5px;
+  border-radius: 5px;
+}
+.form_style > div{
+  text-align: center;
+}
+.double{
+  display: flex;
+  flex-direction: column;
+  grid-column: span 2;
+}
+.double > input{
+  width: 50%;
+  align-self: center;
+}
+.buttons{
+  margin-top: 10px;
+  gap: 40px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+.reg_button{
+  background-color: #2F2D2E;
+  color:  #81d6e3c7;
+  font-weight: bold;
+  font-size: large;
+  border: 1px solid #2F2D2E;
+  width: 100px;
+  box-shadow: none;
+  margin: 0;
+  transition: box-shadow 0.3s, border 0.3s, background-color 0.3s;
+}
+.login_button{
+  margin: 0;
+  background-color: #2F2D2E;
+  color: #77b575;
+  font-weight: bold;
+  font-size: large;
+  border: 1px solid #2F2D2E;
+  width: 100px;
+  box-shadow: none;
+  transition: box-shadow 0.3s, border 0.3s, background-color 0.3s;
+}
+.active_button {
+  background-color: black;
+  border: 1px solid #f2bf78ae;
+  box-shadow: 0 0 0 5px #f2bf78ae;
+}
+.submit_button{
+  margin: 0;
+  margin-top: 10px;
+  color: white;
+  font-weight: bold;
+  width: 25%;
+  grid-column: span 2;
+  justify-self: center;
+  background-color: #81d6e3a8;
+}
+.register{
+background-color: #81d6e3a8;
+}
+.login{
+  background-color: #629460;
+}
+.register_form > div > input{
+ background-color: #81d6e3a8;
+}
+.login_form > div{
+  display: flex;
+  flex-direction: column;
+  justify-self: center;
+  justify-content: center;
+  align-items: center;
+  grid-column: span 2;
+}
+.login_form > div > input{
+  width: 100%;
+  background-color: #629460;
 }

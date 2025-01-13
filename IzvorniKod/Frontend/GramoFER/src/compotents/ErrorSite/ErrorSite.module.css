@@ -13,12 +13,12 @@
   padding-left: 3.5vw;
   font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
-button{
+.err_button{
   margin-left: 0;
   color: white;
   background-color: black;
 }
-button:hover{
+.err_button:hover{
   color: black;
   background-color: white;
 }
