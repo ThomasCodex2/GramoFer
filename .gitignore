@@ -401,3 +401,7 @@ FodyWeavers.xsd
 GramoFER/node_modules
 
 GramoFER/target
+
+IzvorniKod/Backend/target
+IzvorniKod/Frontend/GramoFER/target
+IzvorniKod/Frontend/GramoFER/node_modules
