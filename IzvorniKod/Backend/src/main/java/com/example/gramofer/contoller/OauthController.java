@@ -131,13 +131,18 @@ public class OauthController {
             }
             user.setEmail(nodeResponse.get("email").asText());
             user.setGoogleId(nodeResponse.get("id").asText());
-            String[] names = nodeResponse.get("family_name").asText().split(" ");
-            String firstName = names[0];
-            String lastName = "";
-            if (names.length > 1)
-                lastName = names[-1];
-            if (lastName.equals(""))
+            String firstName;
+            try {
+                firstName = nodeResponse.get("given_name").asText();
+            } catch (Exception e) {
+                firstName = "N/A";
+            }
+            String lastName;
+            try {
+                lastName = nodeResponse.get("family_name").asText();
+            } catch (Exception e) {
                 lastName = "N/A";
+            }
             user.setFirstname(firstName);
             user.setLastname(lastName);
         } finally {
