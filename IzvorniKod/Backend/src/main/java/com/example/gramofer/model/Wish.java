@@ -1,6 +1,7 @@
 package com.example.gramofer.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -43,6 +44,7 @@ public class Wish {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "edition_label_id")
+    @JsonManagedReference
     private Edition editionLabel;
 
     public Integer getWishId() {
