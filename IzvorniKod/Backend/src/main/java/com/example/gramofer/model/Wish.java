@@ -44,7 +44,7 @@ public class Wish {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "edition_label_id")
-    @JsonManagedReference
+    @JsonBackReference
     private Edition editionLabel;
 
     public Integer getWishId() {

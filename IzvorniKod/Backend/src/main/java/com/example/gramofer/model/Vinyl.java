@@ -65,7 +65,7 @@ public class Vinyl {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "edition_label_id", nullable = false)
-    @JsonManagedReference
+    @JsonBackReference
     private Edition editionLabel;
 
     @OneToMany(mappedBy = "vinyl")
