@@ -45,11 +45,12 @@ function Header() {
           <Link to="/register" className={styles.link}>
             <button className={styles.reg_btn}>Register</button>
           </Link>
-          <GoogleLogin
-            onSuccess={handleLoginSuccess}
-            onError={handleLoginFailure}
-            useOneTap
-          />
+          <a
+            href="https://gramofer.work.gd/api/auth/google"
+            className={styles.google_login_button}
+          >
+            Sign in with Google
+          </a>
         </div>
       </div>
     </div>
