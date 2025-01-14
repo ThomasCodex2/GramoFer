@@ -33,7 +33,7 @@ public class UserAccount implements UserDetails {
     )
     private Integer userId;
 
-    @Column(nullable = false, unique = true, length = 31)
+    @Column(nullable = false, unique = true, length = 320)
     private String username;
 
     @Column(nullable = false, unique = true, length = 320)
