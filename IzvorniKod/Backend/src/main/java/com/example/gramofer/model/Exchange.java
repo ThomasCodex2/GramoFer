@@ -52,6 +52,7 @@ public class Exchange {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "vinyl_id", nullable = false)
+    @JsonBackReference
     private Vinyl vinyl;
 
     @ManyToMany
@@ -60,6 +61,7 @@ public class Exchange {
             joinColumns = @JoinColumn(name = "exchangeId"),
             inverseJoinColumns = @JoinColumn(name = "vinylId")
     )
+    @JsonBackReference
     private Set<Vinyl> includesOfferedVinyls;
 
     public Integer getExchangeId() {

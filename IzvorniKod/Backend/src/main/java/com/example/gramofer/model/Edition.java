@@ -11,6 +11,8 @@ import lombok.Data;
 
 import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 
 @Entity
 @Data
@@ -41,9 +43,11 @@ public class Edition {
     private Set<Genre> belongsToGenreGenres;
 
     @OneToMany(mappedBy = "editionLabel")
+    @JsonBackReference
     private Set<Vinyl> editionLabelVinyls;
 
     @OneToMany(mappedBy = "editionLabel")
+    @JsonBackReference
     private Set<Wish> editionLabelWishes;
 
     public String getEditionLabel() {

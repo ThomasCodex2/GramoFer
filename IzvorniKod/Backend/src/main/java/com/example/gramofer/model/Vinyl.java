@@ -16,6 +16,7 @@ import lombok.Data;
 import java.util.Set;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 
 @Entity
@@ -64,12 +65,15 @@ public class Vinyl {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "edition_label_id", nullable = false)
+    @JsonManagedReference
     private Edition editionLabel;
 
     @OneToMany(mappedBy = "vinyl")
+    @JsonManagedReference
     private Set<Exchange> vinylExchanges;
 
     @ManyToMany(mappedBy = "includesOfferedVinyls")
+    @JsonManagedReference
     private Set<Exchange> includesOfferedExchanges;
 
     public Integer getVinylId() {
