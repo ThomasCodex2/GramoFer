@@ -6,7 +6,7 @@ const ErrorSite = () => {
       <h1>Think that record is scratched...</h1>
       <h2>Error 404: Page not Found</h2>
       <Link to="/" className={styles.return_btn}>
-        <button>Return to offers</button>
+        <button className={styles.err_button}>Return to offers</button>
       </Link>
     </div>
   );

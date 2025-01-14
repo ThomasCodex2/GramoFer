@@ -26,7 +26,7 @@
   color: black;
 }
 
-.site_links > div:hover {
+.site_links > div > div:hover {
   color: black;
   text-shadow: 
   0px 8px 4px #b0423eb6,
@@ -50,7 +50,7 @@
     -8px 0px 4px #f2bf78ae;
   cursor: pointer;
 }
-.site_links > .link > h3 {
+.site_links >div > .link > h3 {
   width: 100%;
   color: white;
   text-align: center;
@@ -63,7 +63,6 @@
   align-items: center;
 
 }
-
 .google-login-button {
   font-size: 1em;
   padding: 5px 10px;
@@ -92,7 +91,23 @@
 .reg_btn:hover{
   background-color: #81d6e360;
   color: white;
-
+}
+.link_contain{
+  position: relative;
+}
+.notify{
+  text-shadow: none;
+  text-align: center;
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  background-color: #DB162F;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+}
+.notify:hover{
+  text-shadow: none;
 }
 button {
   font-weight: 500;
@@ -103,7 +118,6 @@ button {
   background-color: white;
   border-radius: 5px;
 }
-
 button:hover {
   cursor: pointer;
 }
@@ -120,10 +134,10 @@ button:hover {
     grid-template-columns: 1fr;
     grid-template-rows: repeat(4, 1fr);
   }
-  .site_links > div{
+  .site_links > div > div{
     padding-top: 10px;
   }
-  .site_links > .link > h3 {
+  .site_links > div >.link > h3 {
     margin-top: 0;
     color: white;
     text-align: center;
