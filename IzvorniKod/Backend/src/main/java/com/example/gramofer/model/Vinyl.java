@@ -15,6 +15,8 @@ import lombok.Data;
 
 import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 
 @Entity
 @Data
@@ -57,6 +59,7 @@ public class Vinyl {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
+    @JsonBackReference
     private UserAccount user;
 
     @ManyToOne(fetch = FetchType.LAZY)

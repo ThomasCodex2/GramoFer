@@ -14,6 +14,8 @@ import jakarta.persistence.SequenceGenerator;
 import java.time.LocalDate;
 import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 
 @Entity
 public class Exchange {
@@ -40,10 +42,12 @@ public class Exchange {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
+    @JsonBackReference
     private UserAccount user;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "is_offering_user_id", nullable = false)
+    @JsonBackReference
     private UserAccount isOfferingUser;
 
     @ManyToOne(fetch = FetchType.LAZY)

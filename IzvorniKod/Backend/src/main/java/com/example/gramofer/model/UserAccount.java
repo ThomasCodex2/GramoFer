@@ -15,6 +15,8 @@ import java.util.Set;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 
 @Entity
 public class UserAccount implements UserDetails {
@@ -61,18 +63,23 @@ public class UserAccount implements UserDetails {
     private Integer strikeCount;
 
     @OneToMany(mappedBy = "user")
+    @JsonManagedReference
     private Set<Reports> userReportses;
 
     @OneToMany(mappedBy = "user")
+    @JsonManagedReference
     private Set<Vinyl> userVinyls;
 
     @OneToMany(mappedBy = "user")
+    @JsonManagedReference
     private Set<Exchange> userExchanges;
 
     @OneToMany(mappedBy = "isOfferingUser")
+    @JsonManagedReference
     private Set<Exchange> isOfferingUserExchanges;
 
     @OneToMany(mappedBy = "user")
+    @JsonManagedReference
     private Set<Wish> userWishes;
 
     public Integer getUserId() {
