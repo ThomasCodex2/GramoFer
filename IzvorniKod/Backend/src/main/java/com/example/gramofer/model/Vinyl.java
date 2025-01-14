@@ -11,10 +11,13 @@ import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.SequenceGenerator;
+import lombok.Data;
+
 import java.util.Set;
 
 
 @Entity
+@Data
 public class Vinyl {
 
     @Id

@@ -7,9 +7,6 @@ import com.example.gramofer.model.UserAccount;
 import com.example.gramofer.repo.UserRepo;
 
 import java.time.LocalDate;
-import java.util.Random;
-
-import org.springframework.boot.autoconfigure.security.SecurityProperties.User;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -46,7 +43,7 @@ public class AuthenticationService {
         user.setRegistrationDate(LocalDate.now());
         return userRepository.save(user);
     }
-
+    
     public UserAccount getOauthUserAccount(OAuthDto user){
         return userRepository.findByEmail(user.getEmail())
                 .orElseGet(() -> newOauthUser(user));
@@ -58,7 +55,7 @@ public class AuthenticationService {
         user.setLastName(input.getLastname()); 
         user.setEmail(input.getEmail());
         user.setPassword(passwordEncoder.encode(input.getPassword()));
-        user.setUsername(input.getUsername());
+        user.setUsername(input.getEmail());
         user.setIsAdmin(0);
         user.setStrikeCount(0);
         user.setRegistrationDate(LocalDate.now());

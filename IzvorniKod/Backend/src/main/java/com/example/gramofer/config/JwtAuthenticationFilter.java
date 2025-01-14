@@ -20,8 +20,8 @@ import java.io.IOException;
 
 @Component
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
+    
     private final HandlerExceptionResolver handlerExceptionResolver;
-
     private final JWTService jwtService;
     private final UserDetailsService userDetailsService;
 
@@ -71,6 +71,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
             filterChain.doFilter(request, response);
         } catch (Exception exception) {
+            System.out.println(exception.getMessage());
             handlerExceptionResolver.resolveException(request, response, null, exception);
         }
     }
