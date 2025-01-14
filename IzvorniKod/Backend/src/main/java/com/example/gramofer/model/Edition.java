@@ -12,6 +12,7 @@ import lombok.Data;
 import java.util.Set;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 
 @Entity
@@ -40,6 +41,7 @@ public class Edition {
             joinColumns = @JoinColumn(name = "editionLabel"),
             inverseJoinColumns = @JoinColumn(name = "genreId")
     )
+    @JsonManagedReference
     private Set<Genre> belongsToGenreGenres;
 
     @OneToMany(mappedBy = "editionLabel")

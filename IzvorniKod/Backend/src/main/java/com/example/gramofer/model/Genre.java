@@ -9,6 +9,8 @@ import jakarta.persistence.ManyToMany;
 import jakarta.persistence.SequenceGenerator;
 import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 
 @Entity
 public class Genre {
@@ -31,6 +33,7 @@ public class Genre {
     private String genreName;
 
     @ManyToMany(mappedBy = "belongsToGenreGenres")
+    @JsonBackReference
     private Set<Edition> belongsToGenreEditions;
 
     public Integer getGenreId() {
