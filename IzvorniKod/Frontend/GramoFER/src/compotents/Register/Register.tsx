@@ -66,6 +66,7 @@ const Register = () => {
         console.log("Form submitted successfully", data);
         localStorage.setItem("expiresIn", expiresIn.toString());
         navigate("/");
+        window.location.reload();
       } else {
         console.error("Failed to submit form");
       }
