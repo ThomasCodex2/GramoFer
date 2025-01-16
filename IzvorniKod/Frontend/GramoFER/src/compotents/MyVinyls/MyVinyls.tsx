@@ -15,6 +15,8 @@ interface FormData {
     year: string;
     performer: string;
     albumName: string;
+    countryOfOrigin: string;
+    genres: []
   };
   onLocation: string;
   [key: string]: any; // Index signature for dynamic keys
@@ -37,6 +39,8 @@ const MyVinyls = () => {
       year: "",
       performer: "",
       albumName: "",
+      countryOfOrigin: "",
+      genres: []
     },
     onLocation: "",
   });
@@ -106,8 +110,8 @@ const MyVinyls = () => {
       setFormData((prev) => ({
         ...prev,
         [parent]: {
-          ...(prev[parent] as Record<string, any>), // Type assertion to ensure safety
-          [child]: value,
+          ...prev[parent],
+          [child]: child === "genres" ? value.split(",") : value,
         },
       }));
     } else {
@@ -144,6 +148,8 @@ const MyVinyls = () => {
             year: "",
             performer: "",
             albumName: "",
+            countryOfOrigin: "",
+            genres:[]
           },
           onLocation: "",
         });
@@ -167,7 +173,7 @@ const MyVinyls = () => {
           Edition mark:
           <input 
           type="text"
-          name= "editionMark"
+          name= "edition.editionMark"
           value={formData.edition.editionMark}
           onChange={handleInputChange} 
           required maxLength={20}></input>
@@ -176,7 +182,7 @@ const MyVinyls = () => {
           Year of release:{" "}
           <input 
           type="number" 
-          name= "year"
+          name= "edition.year"
           value={formData.edition.year}
           onChange={handleInputChange} 
           required min={1948} max={2025}>
@@ -186,7 +192,7 @@ const MyVinyls = () => {
           Performer: 
           <input 
           type="text" 
-          name= "performer"
+          name= "edition.performer"
           value={formData.edition.performer}
           onChange={handleInputChange} 
           required></input>
@@ -195,7 +201,7 @@ const MyVinyls = () => {
           Album name:
           <input 
           type="text" 
-          name= "albumName"
+          name= "edition.albumName"
           value={formData.edition.albumName}
           onChange={handleInputChange} 
           required></input>
@@ -221,8 +227,8 @@ const MyVinyls = () => {
         <div>
           Genre: 
           <input type="text"
-          name= "editionMark"
-          value={formData.edition.editionMark}
+          name= "edition.genres"
+          value={formData.edition.genres.join(",")}
           onChange={handleInputChange}  
           required></input>
         </div>
@@ -230,8 +236,8 @@ const MyVinyls = () => {
           Location: 
           <input 
           type="text"
-          name= "editionMark"
-          value={formData.edition.editionMark}
+          name= "edition.countryOfOrigin"
+          value={formData.edition.countryOfOrigin}
           onChange={handleInputChange} 
           required></input>
         </div>
