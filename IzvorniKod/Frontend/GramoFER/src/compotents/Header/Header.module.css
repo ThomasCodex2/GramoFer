@@ -117,7 +117,12 @@ button:hover {
   cursor: pointer;
   transition: background-color 0.3s ease;
 }
+.disabled {
+  pointer-events: none;
+  color: gray;
+  text-decoration: line-through;
 
+}
 @media (max-width: 700px) {
   .header {
     padding-top: 4vh;
