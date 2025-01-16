@@ -28,7 +28,7 @@ public class VinylController {
         return service.fetchVinyls();
     }
 
-    @GetMapping("/vinyl/{username}")
+    @GetMapping("/vinylfa/sad")
     public List<Vinyl> getVinylsByUsername(@PathVariable String username) {
         return service.getAllVinylByUsername(username);
     }
