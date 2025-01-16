@@ -20,10 +20,10 @@ const TokenHandler = () => {
     const uriToken = urlParams.get("token");
     if (uriToken) {
       localStorage.setItem("aToken", uriToken);
-      console.log(
-        "Token stored in localStorage:",
-        localStorage.getItem("aToken")
-      );
+      const expiresIn = urlParams.get("expiresIn");
+      if (expiresIn) {
+        localStorage.setItem("expiresIn", expiresIn);
+      }
     }
     if (localStorage.getItem("aToken")) {
       console.log(
