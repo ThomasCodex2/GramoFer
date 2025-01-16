@@ -16,7 +16,7 @@ interface FormData {
     releaseDate: string;
     albumName: string;
     countryOfOrigin: string;
-    genres: []
+    genres: [];
   };
   onLocation: string;
   [key: string]: any; // Index signature for dynamic keys
@@ -24,9 +24,7 @@ interface FormData {
 
 const API_BASE_URL = "https://gramofer.work.gd";
 
-
 const MyVinyls = () => {
-
   //const getToken = async () => {
   //  const token = localStorage.getItem("aToken");
   //
@@ -72,7 +70,7 @@ const MyVinyls = () => {
       releaseDate: "",
       albumName: "",
       countryOfOrigin: "",
-      genres: []
+      genres: [],
     },
   });
   const maxImages = 4;
@@ -132,9 +130,7 @@ const MyVinyls = () => {
     }));
   };
 
-  const handleInputChange = (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
+  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
     if (name.includes("edition.")) {
       const [parent, child] = name.split(".");
@@ -160,25 +156,23 @@ const MyVinyls = () => {
 
     if (token !== null) {
       // If the value exists, print the value of atoken
-      console.log('Token found:', token);
+      console.log("Token found:", token);
     } else {
       // If it does not exist, print a message
-      console.log('No token found');
-  }
+      console.log("No token found");
+    }
 
-    console.log (JSON.stringify(formData));
+    console.log(JSON.stringify(formData));
     try {
       const response = await fetch(`${API_BASE_URL}/api/vinyls/add`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          "Authorization": `Bearer ${token}`,
+          Authorization: `Bearer ${token}`,
         },
-        
+
         body: JSON.stringify(formData),
       });
-
-     
 
       if (response.ok) {
         alert("Vinyl added successfully!");
@@ -197,9 +191,8 @@ const MyVinyls = () => {
             releaseDate: "",
             albumName: "",
             countryOfOrigin: "",
-            genres: []
+            genres: [],
           },
-          
         });
         clearImages();
       } else {
@@ -219,75 +212,86 @@ const MyVinyls = () => {
         </h1>
         <div>
           Edition mark:
-          <input 
-          type="text"
-          name= "edition.editionLabel"
-          value={formData.edition.editionLabel}
-          onChange={handleInputChange} 
-          required maxLength={20}></input>
+          <input
+            type="text"
+            name="edition.editionLabel"
+            value={formData.edition.editionLabel}
+            onChange={handleInputChange}
+            required
+            maxLength={20}
+          ></input>
         </div>
         <div>
           Year of release:{" "}
-          <input 
-          type="number" 
-          name= "edition.releaseDate"
-          value={formData.edition.releaseDate}
-          onChange={handleInputChange} 
-          required min={1948} max={2025}>
-          </input>
+          <input
+            type="number"
+            name="edition.releaseDate"
+            value={formData.edition.releaseDate}
+            onChange={handleInputChange}
+            required
+            min={1948}
+            max={2025}
+          ></input>
         </div>
         <div>
-          Performer: 
-          <input 
-          type="text" 
-          name= "edition.artistName"
-          value={formData.edition.artistName}
-          onChange={handleInputChange} 
-          required></input>
+          Performer:
+          <input
+            type="text"
+            name="edition.artistName"
+            value={formData.edition.artistName}
+            onChange={handleInputChange}
+            required
+          ></input>
         </div>
         <div>
           Album name:
-          <input 
-          type="text" 
-          name= "edition.albumName"
-          value={formData.edition.albumName}
-          onChange={handleInputChange} 
-          required></input>
+          <input
+            type="text"
+            name="edition.albumName"
+            value={formData.edition.albumName}
+            onChange={handleInputChange}
+            required
+          ></input>
         </div>
         <div>
-          Goldmine standard {"(vinyl)"}: 
-          <input 
-          type="text" 
-          name= "vinylCondition"
-          value={formData.vinylCondition}
-          onChange={handleInputChange} 
-          required></input>
+          Goldmine standard {"(vinyl)"}:
+          <input
+            type="text"
+            name="vinylCondition"
+            value={formData.vinylCondition}
+            onChange={handleInputChange}
+            required
+          ></input>
         </div>
         <div>
-          Goldmine standard {"(wrap)"}: 
-          <input 
-          type="text"
-          name= "coverCondition"
-          value={formData.coverCondition}
-          onChange={handleInputChange}  
-          required></input>
+          Goldmine standard {"(wrap)"}:
+          <input
+            type="text"
+            name="coverCondition"
+            value={formData.coverCondition}
+            onChange={handleInputChange}
+            required
+          ></input>
         </div>
         <div>
-          Genre: 
-          <input type="text"
-          name= "edition.genres"
-          value={formData.edition.genres.join(",")}
-          onChange={handleInputChange}  
-          required></input>
+          Genre:
+          <input
+            type="text"
+            name="edition.genres"
+            value={formData.edition.genres.join(",")}
+            onChange={handleInputChange}
+            required
+          ></input>
         </div>
         <div>
-          Location: 
-          <input 
-          type="text"
-          name= "edition.countryOfOrigin"
-          value={formData.edition.countryOfOrigin}
-          onChange={handleInputChange} 
-          required></input>
+          Location:
+          <input
+            type="text"
+            name="edition.countryOfOrigin"
+            value={formData.edition.countryOfOrigin}
+            onChange={handleInputChange}
+            required
+          ></input>
         </div>
         <div
           className={styles.picture_drop}
@@ -320,12 +324,13 @@ const MyVinyls = () => {
         </div>
         <div className={styles.desc}>
           Description {"(optional)"}:{" "}
-          <input 
-          type="text"
-          name= "description"
-          value={formData.description}
-          onChange={handleInputChange} 
-          maxLength={200}></input>
+          <input
+            type="text"
+            name="description"
+            value={formData.description}
+            onChange={handleInputChange}
+            maxLength={200}
+          ></input>
         </div>
         <button className={styles.add_button}>Add Vinyl</button>
       </form>
