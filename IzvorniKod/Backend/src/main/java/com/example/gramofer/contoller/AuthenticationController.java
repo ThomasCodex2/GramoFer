@@ -46,13 +46,13 @@ public class AuthenticationController {
         return ResponseEntity.ok(loginResponse);
     }
 
-    @GetMapping("/token")
-    public String getToken(@AuthenticationPrincipal UserAccount user) {
-        // If the user is authenticated, generate a new JWT token and return it.
-        if (user != null) {
-            return jwtService.generateToken(user); // The same method you use for login
-        } else {
-            return "User is not authenticated"; // You can throw an exception or handle it differently
-        }
-    }
+    //@GetMapping("/token")
+    //public String getToken(@AuthenticationPrincipal UserAccount user) {
+    //    // If the user is authenticated, generate a new JWT token and return it.
+    //    if (user != null) {
+    //        return jwtService.generateToken(user); // The same method you use for login
+    //    } else {
+    //        return "User is not authenticated"; // You can throw an exception or handle it differently
+    //    }
+    //}
 }
