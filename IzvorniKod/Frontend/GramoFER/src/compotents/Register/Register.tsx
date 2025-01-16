@@ -57,7 +57,7 @@ const Register = () => {
       if (response.ok) {
         const data = await response.json();
         //const {token} = data;
-        const {token, expiresIn } = data;
+        const {token} = data;
 
         console.log("Received token:", token);
         localStorage.setItem("aToken", token);
