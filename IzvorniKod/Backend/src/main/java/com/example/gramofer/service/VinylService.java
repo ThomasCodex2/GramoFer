@@ -48,6 +48,9 @@ public class VinylService {
         return repoVinyl.findAll();
     }
 
+    public List<Vinyl> getVinylByUser(UserAccount user) {
+        return repoVinyl.findByUser(user);
+    }
 
     private Genre newGenre (String input) {
         Genre genre = new Genre();
