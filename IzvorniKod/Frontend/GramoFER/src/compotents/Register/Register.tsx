@@ -57,11 +57,13 @@ const Register = () => {
       if (response.ok) {
         const data = await response.json();
         //const {token} = data;
-        const {token} = data;
+        const { token, expiresIn } = data;
 
         console.log("Received token:", token);
+        console.log("Expires in:", expiresIn);
         localStorage.setItem("aToken", token);
         console.log("Form submitted successfully", data);
+        localStorage.setItem("expiresIn", expiresIn.toString());
         navigate("/");
       } else {
         console.error("Failed to submit form");
