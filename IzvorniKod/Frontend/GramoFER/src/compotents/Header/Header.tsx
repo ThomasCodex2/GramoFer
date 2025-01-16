@@ -1,18 +1,27 @@
 import styles from "./Header.module.css";
-import { GoogleLogin } from "@react-oauth/google";
 import { Link } from "react-router-dom";
-
+import { useEffect } from "react";
 function Header() {
-  const handleLoginSuccess = (response: any) => {
-    console.log("Login Success: ", response);
-  };
+  // const handleLoginSuccess = (response: any) => {
+  //   console.log("Login Success: ", response);
+  // };
 
-  const handleLoginFailure = () => {
-    console.log("Login Failed");
+  // const handleLoginFailure = () => {
+  //   console.log("Login Failed");
+  // };
+  const checkLocal = () => {
+    console.log(localStorage);
   };
-
   const notify_test = false;
-
+  useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const uriToken = urlParams.get("token");
+    if (uriToken) {
+      localStorage.setItem("aToken", uriToken);
+      console.log(localStorage);
+      return;
+    }
+  });
   return (
     <div className={styles.header}>
       <div className={[styles.row].join(" ")}>
@@ -22,6 +31,7 @@ function Header() {
           className={styles.logo}
         />
       </div>
+
       <div className={styles.temp}></div>
       <div className={[styles.row, styles.site_links].join(" ")}>
         <div className={styles.link_contain}>

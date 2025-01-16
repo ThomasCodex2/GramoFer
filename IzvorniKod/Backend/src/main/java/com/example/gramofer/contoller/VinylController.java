@@ -22,7 +22,7 @@ public class VinylController {
         this.service = service;
     }
 
-    //OVO TREBA PROMJENITI DA BUDE PRIKAZ SVIH PLOCA OD KORISNIKA
+    // OVO TREBA PROMJENITI DA BUDE PRIKAZ SVIH PLOCA OD KORISNIKA
     @GetMapping("/vinyl")
     public List<Vinyl> getVinyls() {
         return service.fetchVinyls();
@@ -32,7 +32,6 @@ public class VinylController {
     public List<Vinyl> getVinylsByUsername(@PathVariable String username) {
         return service.getAllVinylByUsername(username);
     }
-
 
     @PostMapping("/add")
     public ResponseEntity<String> addVinyl(@AuthenticationPrincipal UserAccount user, @RequestBody VinylDto vinyl) {
