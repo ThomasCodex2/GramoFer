@@ -54,22 +54,20 @@ const Register = () => {
         body: JSON.stringify(formValues),
       });
 
-      let data = await response.json();
+      const data = await response.json();
       if (response.ok) {
-        let { token, expiresIn } = data;
-
-        console.log("Received token:", token);
-        console.log("Expires in:", expiresIn);
-        localStorage.setItem("aToken", token);
+        console.log("Received token:", data.token);
+        console.log("Expires in:", data.expiresIn);
+        localStorage.setItem("aToken", data.token);
         console.log("Form submitted successfully", data);
-        localStorage.setItem("expiresIn", expiresIn.toString());
-        navigate("/");
+        localStorage.setItem("expiresIn", data.expiresIn.toString());
       } else {
         console.error("Failed to submit form");
       }
     } catch (error) {
       console.error("Error occurred during form submission", error);
     }
+    navigate("/");
   };
 
   const handleRegSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
