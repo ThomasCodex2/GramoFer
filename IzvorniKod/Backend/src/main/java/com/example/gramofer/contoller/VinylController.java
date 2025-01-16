@@ -3,6 +3,7 @@ package com.example.gramofer.contoller;
 import com.example.gramofer.dtos.VinylDto;
 import com.example.gramofer.model.UserAccount;
 import com.example.gramofer.model.Vinyl;
+import com.example.gramofer.responses.VinylResponseDTO;
 import com.example.gramofer.service.VinylService;
 
 import org.apache.http.HttpStatus;
@@ -24,8 +25,8 @@ public class VinylController {
 
     // OVO TREBA PROMJENITI DA BUDE PRIKAZ SVIH PLOCA OD KORISNIKA
     @GetMapping("/vinyl")
-    public List<Vinyl> getVinyls() {
-        return service.fetchVinyls();
+    public List<VinylResponseDTO> getVinyls() {
+        return service.getAllVinyls();
     }
 
     @GetMapping("/vinylfa/sad")

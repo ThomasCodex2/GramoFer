@@ -10,6 +10,7 @@ import com.example.gramofer.repo.EditionRepo;
 import com.example.gramofer.repo.GenreRepo;
 import com.example.gramofer.repo.UserRepo;
 import com.example.gramofer.repo.VinylRepo;
+import com.example.gramofer.responses.VinylResponseDTO;
 
 import jakarta.transaction.Transactional;
 
@@ -19,6 +20,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 public class VinylService {
@@ -89,6 +91,27 @@ public class VinylService {
         vinyl.setOnLocation(input.getOnLocation());
         repoVinyl.save(vinyl);
     }
+
+    public List<VinylResponseDTO> getAllVinyls() {
+    List<Vinyl> vinyls = repoVinyl.findAll();
+    return vinyls.stream()
+        .map(vinyl -> {
+            VinylResponseDTO dto = new VinylResponseDTO();
+            dto.setVinylId(vinyl.getVinylId());
+            dto.setVinylCondition(vinyl.getVinylCondition());
+            dto.setCoverCondition(vinyl.getCoverCondition());
+            dto.setDescription(vinyl.getDescription());
+            dto.setVinylImagePath1(vinyl.getVinylImagePath1());
+            dto.setVinylImagePath2(vinyl.getVinylImagePath2());
+            dto.setCoverImagePath1(vinyl.getCoverImagePath1());
+            dto.setCoverImagePath2(vinyl.getCoverImagePath2());
+            dto.setAvailable(vinyl.getAvailable());
+            dto.setOnLocation(vinyl.getOnLocation());
+            dto.setEditionLabel(vinyl.getEditionLabel());
+            return dto;
+        })
+        .collect(Collectors.toList());
+}
 
     public void updateVinyl(Vinyl vinyl) {
         repoVinyl.save(vinyl);
