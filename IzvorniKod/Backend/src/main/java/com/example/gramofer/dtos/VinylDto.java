@@ -22,5 +22,7 @@ public class VinylDto {
     private String coverImagePath2;
 
     private EditionDto edition;
+    
+    private String onLocation;
 
 }
