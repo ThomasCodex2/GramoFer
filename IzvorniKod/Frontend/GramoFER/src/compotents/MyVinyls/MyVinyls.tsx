@@ -164,6 +164,7 @@ const MyVinyls = () => {
       console.log('No token found');
   }
 
+    console.log (JSON.stringify(formData));
     try {
       const response = await fetch("/vinyls/add", {
         method: "POST",
@@ -171,8 +172,11 @@ const MyVinyls = () => {
           "Content-Type": "application/json",
           "Authorization": `Bearer ${token}`,
         },
+        
         body: JSON.stringify(formData),
       });
+
+     
 
       if (response.ok) {
         alert("Vinyl added successfully!");
