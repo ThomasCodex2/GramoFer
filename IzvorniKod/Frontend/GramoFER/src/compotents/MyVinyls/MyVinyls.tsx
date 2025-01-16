@@ -4,6 +4,18 @@ import { useState, useRef } from "react";
 
 const MyVinyls = () => {
   const [images, setImages] = useState<string[]>([]);
+
+  const [formData, setFormData] = useState({
+    editionMark: "",
+    year: "",
+    performer: "",
+    albumName: "",
+    vinylCondition: "",
+    wrapCondition: "",
+    genre: "",
+    location: "",
+    description: "",
+  });
   const maxImages = 4;
   const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -54,9 +66,56 @@ const MyVinyls = () => {
     setImages([]);
   };
 
+  const handleInputChange = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    const { name, value } = event.target;
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
+  const handleSubmit = async (event: React.FormEvent) => {
+    event.preventDefault();
+    try {
+      const response = await fetch("/vinyls/add", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          ...formData,
+          images,
+        }),
+      });
+
+      if (response.ok) {
+        alert("Vinyl added successfully!");
+        setFormData({
+          editionMark: "",
+          year: "",
+          performer: "",
+          albumName: "",
+          vinylCondition: "",
+          wrapCondition: "",
+          genre: "",
+          location: "",
+          description: "",
+        });
+        clearImages();
+      } else {
+        alert("Failed to add vinyl. Please try again.");
+      }
+    } catch (error) {
+      console.error("Error adding vinyl:", error);
+      alert("An error occurred. Please try again.");
+    }
+  };
+
   return (
     <div className={styles.container}>
-      <form className={styles.listing_form} action="">
+      <form className={styles.listing_form} onSubmit={handleSubmit}>
         <h1>
           Add <span>YOUR</span> records here!
         </h1>
