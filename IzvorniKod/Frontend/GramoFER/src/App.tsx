@@ -2,16 +2,16 @@ import Header from "./compotents/Header/Header";
 import MyExchanges from "./compotents/MyExchanges/MyExchanges";
 import MyVinyls from "./compotents/MyVinyls/MyVinyls";
 import VinylSelect from "./compotents/VinylSelect/VinylSelect";
+import AdminSite from "./compotents/AdminSite/AdminSite";
+import ErrorSite from "./compotents/ErrorSite/ErrorSite";
+import Register from "./compotents/Register/Register";
+import { useEffect } from "react";
 import {
   BrowserRouter as Router,
   Route,
   Routes,
   useLocation,
 } from "react-router-dom";
-import ErrorSite from "./compotents/ErrorSite/ErrorSite";
-import Register from "./compotents/Register/Register";
-import { useEffect } from "react";
-
 const TokenHandler = () => {
   const location = useLocation();
 
@@ -59,6 +59,7 @@ function App() {
             <Route path="/my-exchanges" element={<MyExchanges />} />
             <Route path="*" element={<ErrorSite />} />
             <Route path="/register" element={<Register />} />
+            <Route path="/admin-site" element={<AdminSite />} />
           </Routes>
         </div>
       </div>
