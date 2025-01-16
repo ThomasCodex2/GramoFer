@@ -1,0 +1,21 @@
+.exchange_buttons{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  column-gap: 10px;
+  align-items: center;
+  padding-block-end: 0!important;
+  padding-block-start: 0!important;
+  height: 100%;
+}
+.exchange_buttons > div{
+  width: 40px;
+  height: 40px;
+}
+.exchange_buttons > div:hover{
+  opacity: 0.5;
+  cursor: pointer;
+}
+.exchange_buttons > div > img{
+  width: 100%;
+}

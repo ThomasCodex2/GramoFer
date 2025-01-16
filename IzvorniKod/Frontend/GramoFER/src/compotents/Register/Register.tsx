@@ -32,6 +32,7 @@ const Register = () => {
   //   }
   // });
   const handleLogResult = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault(); //dodano?!?!?!
     const formData = new FormData(e.target as HTMLFormElement);
     const formValues: LogFormValues = {
       email: "",

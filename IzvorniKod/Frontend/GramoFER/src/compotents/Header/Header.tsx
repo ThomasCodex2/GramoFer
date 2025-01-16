@@ -14,18 +14,16 @@ function Header() {
       setIsLoggedIn(!!token);
     };
 
-    // Add event listener for localStorage changes
     window.addEventListener("storage", handleStorageChange);
 
-    // Update state on location change
     const token = localStorage.getItem("aToken");
     setIsLoggedIn(!!token);
 
     return () => {
-      // Clean up the event listener
       window.removeEventListener("storage", handleStorageChange);
     };
-  }, [location]);
+  }, [location.search]);
+
   const handleLogout = () => {
     localStorage.removeItem("aToken");
     setIsLoggedIn(false);
