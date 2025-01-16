@@ -22,7 +22,7 @@ const TokenHandler = () => {
       localStorage.setItem("aToken", uriToken);
       const expiresIn = urlParams.get("expiresIn");
       if (expiresIn) {
-        localStorage.setItem("expiresIn", expiresIn);
+        localStorage.setItem("expiresIn", expiresIn.toString());
       }
     }
     if (localStorage.getItem("aToken")) {
