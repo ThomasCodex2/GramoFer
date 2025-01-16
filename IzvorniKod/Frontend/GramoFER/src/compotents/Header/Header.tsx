@@ -1,13 +1,14 @@
 import styles from "./Header.module.css";
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
+import { useLocation } from "react-router-dom";
 function Header() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-
+  const location = useLocation();
   useEffect(() => {
     const token = localStorage.getItem("aToken");
     setIsLoggedIn(!!token);
-  }, []);
+  }, [location.search]);
 
   const handleLogout = () => {
     localStorage.removeItem("aToken");

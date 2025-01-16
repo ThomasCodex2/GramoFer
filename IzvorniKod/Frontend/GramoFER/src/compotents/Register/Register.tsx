@@ -54,7 +54,9 @@ const Register = () => {
         body: JSON.stringify(formValues),
       });
 
+      console.log("Login response status:", response.status);
       const data = await response.json();
+      console.log("Login response data:", data);
       if (response.ok) {
         const { token, expiresIn } = data;
 

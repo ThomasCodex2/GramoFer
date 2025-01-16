@@ -46,7 +46,7 @@ public class OauthController {
     private String googleRedirectUri;
 
     private final JWTService jwtService;
-    
+
     private final AuthenticationService authenticationService;
 
     public OauthController(JWTService jwtService, AuthenticationService authenticationService) {
@@ -56,36 +56,72 @@ public class OauthController {
 
     @GetMapping("/auth/google")
     public ModelAndView google() {
-        String googleURL = "http://accounts.google.com/o/oauth2/v2/auth?client_id=" + googleClientId + "&redirect_uri=" + googleRedirectUri + "&scope=email+profile+openid+https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.profile+https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.email&response_type=code";
+        String googleURL = "http://accounts.google.com/o/oauth2/v2/auth?client_id=" + googleClientId + "&redirect_uri="
+                + googleRedirectUri
+                + "&scope=email+profile+openid+https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.profile+https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.email&response_type=code";
         return new ModelAndView("redirect:" + googleURL);
     }
 
     @GetMapping("/auth/google/code")
-    public ModelAndView google_code(@RequestParam String code, @RequestParam(required = false) String error){
-         if (error != null) {
+    public ModelAndView google_code(@RequestParam String code, @RequestParam(required = false) String error) {
+        if (error != null) {
             return new ModelAndView("redirect:/login?error=".concat(error));
         }
         try {
-        CloseableHttpClient httpclient = HttpClients.createDefault();
-        HttpPost httppost = new HttpPost("https://oauth2.googleapis.com/token");
+            CloseableHttpClient httpclient = HttpClients.createDefault();
+            HttpPost httppost = new HttpPost("https://oauth2.googleapis.com/token");
 
-        List<NameValuePair> params = new ArrayList<NameValuePair>(5);
-        params.add(new BasicNameValuePair("code", code));
-        params.add(new BasicNameValuePair("client_id", googleClientId));
-        params.add(new BasicNameValuePair("client_secret", googleClientSecret));
-        params.add(new BasicNameValuePair("redirect_uri", googleRedirectUri));
-        params.add(new BasicNameValuePair("grant_type", "authorization_code"));
+            List<NameValuePair> params = new ArrayList<NameValuePair>(5);
+            params.add(new BasicNameValuePair("code", code));
+            params.add(new BasicNameValuePair("client_id", googleClientId));
+            params.add(new BasicNameValuePair("client_secret", googleClientSecret));
+            params.add(new BasicNameValuePair("redirect_uri", googleRedirectUri));
+            params.add(new BasicNameValuePair("grant_type", "authorization_code"));
 
-        httppost.setEntity(new UrlEncodedFormEntity(params, "UTF-8"));
+            httppost.setEntity(new UrlEncodedFormEntity(params, "UTF-8"));
 
-        CloseableHttpResponse response;
-        response = httpclient.execute(httppost);
-        
-        HttpEntity entity = response.getEntity();
+            CloseableHttpResponse response;
+            response = httpclient.execute(httppost);
 
-        String token = null;
-        if (entity != null) {
-            try (InputStream instream = entity.getContent()) {
+            HttpEntity entity = response.getEntity();
+
+            String token = null;
+            if (entity != null) {
+                try (InputStream instream = entity.getContent()) {
+                    String jsonResponse = new String(instream.readAllBytes(), StandardCharsets.UTF_8);
+                    ObjectMapper mapper = new ObjectMapper();
+                    JsonNode nodeResponse;
+                    try {
+                        nodeResponse = mapper.readTree(jsonResponse);
+                    } catch (JsonProcessingException e) {
+                        e.printStackTrace();
+                        return new ModelAndView("redirect:/login?error=".concat(e.getMessage()));
+                    }
+                    token = nodeResponse.get("access_token").asText();
+                } catch (IOException e1) {
+                    e1.printStackTrace();
+                    return new ModelAndView("redirect:/login?error=".concat(e1.getMessage()));
+                } finally {
+                    try {
+                        response.close();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+
+            CloseableHttpResponse getResponse;
+            URIBuilder builder = new URIBuilder();
+            builder.setScheme("https").setHost("www.googleapis.com").setPath("/userinfo/v2/me")
+                    .setParameter("access_token", token);
+            URI uri = builder.build();
+            HttpGet getConnecton = new HttpGet(uri);
+            getResponse = httpclient.execute(getConnecton);
+
+            HttpEntity getrEntity = getResponse.getEntity();
+
+            OAuthDto user = new OAuthDto();
+            try (InputStream instream = getrEntity.getContent()) {
                 String jsonResponse = new String(instream.readAllBytes(), StandardCharsets.UTF_8);
                 ObjectMapper mapper = new ObjectMapper();
                 JsonNode nodeResponse;
@@ -95,68 +131,34 @@ public class OauthController {
                     e.printStackTrace();
                     return new ModelAndView("redirect:/login?error=".concat(e.getMessage()));
                 }
-                token = nodeResponse.get("access_token").asText();
-            } catch (IOException e1) {
-                e1.printStackTrace();
-                return new ModelAndView("redirect:/login?error=".concat(e1.getMessage()));
-            } finally {
+                user.setEmail(nodeResponse.get("email").asText());
+                user.setGoogleId(nodeResponse.get("id").asText());
+                String firstName;
                 try {
-                    response.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
+                    firstName = nodeResponse.get("given_name").asText();
+                } catch (Exception e) {
+                    firstName = "N/A";
                 }
+                String lastName;
+                try {
+                    lastName = nodeResponse.get("family_name").asText();
+                } catch (Exception e) {
+                    lastName = "N/A";
+                }
+                user.setFirstname(firstName);
+                user.setLastname(lastName);
+            } finally {
+                getResponse.close();
             }
-        }
 
-        CloseableHttpResponse getResponse;
-        URIBuilder builder = new URIBuilder();
-        builder.setScheme("https").setHost("www.googleapis.com").setPath("/userinfo/v2/me")
-            .setParameter("access_token", token);
-        URI uri = builder.build();
-        HttpGet getConnecton = new HttpGet(uri);
-        getResponse = httpclient.execute(getConnecton);
+            UserAccount authenticatedUser = authenticationService.getOauthUserAccount(user);
 
-        HttpEntity getrEntity = getResponse.getEntity();
+            String jwtToken = jwtService.generateToken(authenticatedUser);
 
-        OAuthDto user = new OAuthDto();
-        try (InputStream instream = getrEntity.getContent()) {
-            String jsonResponse = new String(instream.readAllBytes(), StandardCharsets.UTF_8);
-            ObjectMapper mapper = new ObjectMapper();
-            JsonNode nodeResponse;
-            try {
-                nodeResponse = mapper.readTree(jsonResponse);
-            } catch (JsonProcessingException e) {
-                e.printStackTrace();
-                return new ModelAndView("redirect:/login?error=".concat(e.getMessage()));
-            }
-            user.setEmail(nodeResponse.get("email").asText());
-            user.setGoogleId(nodeResponse.get("id").asText());
-            String firstName;
-            try {
-                firstName = nodeResponse.get("given_name").asText();
-            } catch (Exception e) {
-                firstName = "N/A";
-            }
-            String lastName;
-            try {
-                lastName = nodeResponse.get("family_name").asText();
-            } catch (Exception e) {
-                lastName = "N/A";
-            }
-            user.setFirstname(firstName);
-            user.setLastname(lastName);
-        } finally {
-            getResponse.close();
-        }
+            httpclient.close();
 
-        UserAccount authenticatedUser = authenticationService.getOauthUserAccount(user);
-
-        String jwtToken = jwtService.generateToken(authenticatedUser);
-
-        httpclient.close();
-
-        return new ModelAndView("redirect:/?token=" + jwtToken);
-        } catch (Exception e){
+            return new ModelAndView("redirect:/?token=" + jwtToken);
+        } catch (Exception e) {
             return new ModelAndView("redirect:/?error=" + e.getMessage().replace(" ", "+"));
         }
     }
