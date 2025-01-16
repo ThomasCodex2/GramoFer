@@ -7,6 +7,8 @@ import com.example.gramofer.responses.LoginResponse;
 import com.example.gramofer.service.AuthenticationService;
 import com.example.gramofer.service.JWTService;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,7 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class AuthenticationController {
     private final JWTService jwtService;
-
+    
     private final AuthenticationService authenticationService;
 
     public AuthenticationController(JWTService jwtService, AuthenticationService authenticationService) {
@@ -42,5 +44,15 @@ public class AuthenticationController {
         loginResponse.setExpiresIn(jwtService.getExpirationTime());
 
         return ResponseEntity.ok(loginResponse);
+    }
+
+    @GetMapping("/token")
+    public String getToken(@AuthenticationPrincipal UserAccount user) {
+        // If the user is authenticated, generate a new JWT token and return it.
+        if (user != null) {
+            return jwtService.generateToken(user); // The same method you use for login
+        } else {
+            return "User is not authenticated"; // You can throw an exception or handle it differently
+        }
     }
 }
