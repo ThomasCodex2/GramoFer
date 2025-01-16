@@ -174,7 +174,7 @@ const MyVinyls = () => {
           Edition mark:
           <input 
           type="text"
-          name= "edition.editionMark"
+          name= "edition.editionLabel"
           value={formData.edition.editionLabel}
           onChange={handleInputChange} 
           required maxLength={20}></input>
@@ -183,7 +183,7 @@ const MyVinyls = () => {
           Year of release:{" "}
           <input 
           type="number" 
-          name= "edition.year"
+          name= "edition.releaseDate"
           value={formData.edition.releaseDate}
           onChange={handleInputChange} 
           required min={1948} max={2025}>
@@ -193,7 +193,7 @@ const MyVinyls = () => {
           Performer: 
           <input 
           type="text" 
-          name= "edition.performer"
+          name= "edition.artistName"
           value={formData.edition.artistName}
           onChange={handleInputChange} 
           required></input>
