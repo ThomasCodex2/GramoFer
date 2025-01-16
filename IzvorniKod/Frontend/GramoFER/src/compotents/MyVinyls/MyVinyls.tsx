@@ -11,9 +11,9 @@ interface FormData {
   coverImagePath1: string;
   coverImagePath2: string;
   edition: {
-    editionMark: string;
-    year: string;
-    performer: string;
+    editionLabel: string;
+    artistName: string;
+    releaseDate: string;
     albumName: string;
     countryOfOrigin: string;
     genres: []
@@ -34,15 +34,15 @@ const MyVinyls = () => {
     vinylImagePath2: "",
     coverImagePath1: "",
     coverImagePath2: "",
+    onLocation: "",
     edition: {
-      editionMark: "",
-      year: "",
-      performer: "",
+      editionLabel: "",
+      artistName: "",
+      releaseDate: "",
       albumName: "",
       countryOfOrigin: "",
       genres: []
     },
-    onLocation: "",
   });
   const maxImages = 4;
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -143,15 +143,16 @@ const MyVinyls = () => {
           vinylImagePath2: "",
           coverImagePath1: "",
           coverImagePath2: "",
+          onLocation: "",
           edition: {
-            editionMark: "",
-            year: "",
-            performer: "",
+            editionLabel: "",
+            artistName: "",
+            releaseDate: "",
             albumName: "",
             countryOfOrigin: "",
-            genres:[]
+            genres: []
           },
-          onLocation: "",
+          
         });
         clearImages();
       } else {
@@ -174,7 +175,7 @@ const MyVinyls = () => {
           <input 
           type="text"
           name= "edition.editionMark"
-          value={formData.edition.editionMark}
+          value={formData.edition.editionLabel}
           onChange={handleInputChange} 
           required maxLength={20}></input>
         </div>
@@ -183,7 +184,7 @@ const MyVinyls = () => {
           <input 
           type="number" 
           name= "edition.year"
-          value={formData.edition.year}
+          value={formData.edition.releaseDate}
           onChange={handleInputChange} 
           required min={1948} max={2025}>
           </input>
@@ -193,7 +194,7 @@ const MyVinyls = () => {
           <input 
           type="text" 
           name= "edition.performer"
-          value={formData.edition.performer}
+          value={formData.edition.artistName}
           onChange={handleInputChange} 
           required></input>
         </div>
