@@ -61,7 +61,7 @@ public class Vinyl {
     @Column(nullable = false)
     private Integer available;
 
-    @Column(nullable = false)
+    @Column
     private String onLocation;
 
     @ManyToOne(fetch = FetchType.LAZY)
