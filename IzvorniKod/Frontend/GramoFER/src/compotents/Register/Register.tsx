@@ -65,7 +65,7 @@ const Register = () => {
         localStorage.setItem("aToken", token);
         console.log("Form submitted successfully", data);
         localStorage.setItem("expiresIn", expiresIn.toString());
-        // navigate("/");
+        navigate("/");
       } else {
         console.error("Failed to submit form");
       }
