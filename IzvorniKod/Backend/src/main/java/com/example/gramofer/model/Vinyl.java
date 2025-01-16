@@ -58,6 +58,12 @@ public class Vinyl {
     @Column(nullable = false)
     private String coverImagePath2;
 
+    @Column(nullable = false)
+    private Integer available;
+
+    @Column(nullable = false)
+    private String onLocation;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
     @JsonBackReference
