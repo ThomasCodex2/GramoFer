@@ -54,10 +54,9 @@ const Register = () => {
         body: JSON.stringify(formValues),
       });
 
+      let data = await response.json();
       if (response.ok) {
-        const data = await response.json();
-        //const {token} = data;
-        const { token, expiresIn } = data;
+        let { token, expiresIn } = data;
 
         console.log("Received token:", token);
         console.log("Expires in:", expiresIn);
