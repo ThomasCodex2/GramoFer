@@ -12,9 +12,9 @@ import ErrorSite from "./compotents/ErrorSite/ErrorSite";
 import Register from "./compotents/Register/Register";
 import { useEffect } from "react";
 
-function App() {
-  //added this
+const TokenHandler = () => {
   const location = useLocation();
+
   useEffect(() => {
     const urlParams = new URLSearchParams(location.search);
     const uriToken = urlParams.get("token");
@@ -26,11 +26,16 @@ function App() {
       );
     }
   }, [location.search]);
-  //
+
+  return null;
+};
+
+function App() {
   return (
     <Router>
       <div>
         <Header />
+        <TokenHandler></TokenHandler>
         <div>
           <Routes>
             <Route path="/" element={<VinylSelect />} />
