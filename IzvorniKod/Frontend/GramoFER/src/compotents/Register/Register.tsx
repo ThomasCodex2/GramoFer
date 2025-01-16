@@ -1,7 +1,7 @@
 import styles from "./Register.module.css";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useEffect } from "react";
+// import { useEffect } from "react";
 interface RegFormValues {
   email: string;
   password: string;
@@ -22,15 +22,15 @@ const Register = () => {
     setActiveButton(event.currentTarget.id);
   };
   const navigate = useNavigate();
-  useEffect(() => {
-    const urlParams = new URLSearchParams(window.location.search);
-    const urltoken = urlParams.get("token");
-    if (urltoken) {
-      localStorage.setItem("aToken", urltoken);
-      navigate("/");
-      return;
-    }
-  });
+  // useEffect(() => {
+  //   const urlParams = new URLSearchParams(window.location.search);
+  //   const uriToken = urlParams.get("token");
+  //   if (uriToken) {
+  //     localStorage.setItem("aToken", uriToken);
+  //     console.log(localStorage.getItem("aToken"));
+  //     return;
+  //   }
+  // });
   const handleLogResult = async (e: React.FormEvent<HTMLFormElement>) => {
     const formData = new FormData(e.target as HTMLFormElement);
     const formValues: LogFormValues = {
@@ -54,9 +54,9 @@ const Register = () => {
         body: JSON.stringify(formValues),
       });
 
-      let data = await response.json();
+      const data = await response.json();
       if (response.ok) {
-        let { token, expiresIn } = data;
+        const { token, expiresIn } = data;
 
         console.log("Received token:", token);
         console.log("Expires in:", expiresIn);
@@ -140,6 +140,14 @@ const Register = () => {
             Login
           </button>
         </div>
+        <button
+          onClick={() => {
+            window.location.href = "https://gramofer.work.gd/api/auth/google";
+          }}
+          className={styles.google_login_button}
+        >
+          Sign in with Google
+        </button>
         {activeButton === "register" && (
           <form
             action=""

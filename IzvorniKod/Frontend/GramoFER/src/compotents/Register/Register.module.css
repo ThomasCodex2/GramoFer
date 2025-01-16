@@ -21,6 +21,24 @@
   opacity: 0.4;
   font-style: italic;
 }
+.google_login_button {
+  margin-top: 10px;
+  padding: 5px;
+  display: inline-block;
+  height: 40px;
+  width: fit-content;
+  font-size: 16px;
+  font-weight: bold;
+  color: #fff;
+  background-color: #6bb3be;
+  text-align: center;
+  text-decoration: none;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+  align-self: center;
+  transition: background-color 0.3s ease;
+}
 .form_contain{
   margin-top: 50px;
   border-radius: 20px;

@@ -1,23 +1,23 @@
 import styles from "./VinylSelect.module.css";
 import VinylBox from "../VinylBox/VinylBox";
 import React, { useState } from "react";
-import { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+// import { useEffect } from "react";
+// import { useNavigate } from "react-router-dom";
 const VinylSelect = () => {
   const [selectedGenre, setSelectedGenre] = useState("Rock");
   const handleGenreChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setSelectedGenre(event.target.value);
   };
-  const navigate = useNavigate();
-  useEffect(() => {
-    const urlParams = new URLSearchParams(window.location.search);
-    const urltoken = urlParams.get("token");
-    if (urltoken) {
-      localStorage.setItem("aToken", urltoken);
-      navigate("/");
-      return;
-    }
-  });
+  // const navigate = useNavigate();
+  // useEffect(() => {
+  //   const urlParams = new URLSearchParams(window.location.search);
+  //   const urltoken = urlParams.get("token");
+  //   if (urltoken) {
+  //     localStorage.setItem("aToken", urltoken);
+  //     navigate("/");
+  //     return;
+  //   }
+  // });
 
   return (
     <div className={styles.container}>

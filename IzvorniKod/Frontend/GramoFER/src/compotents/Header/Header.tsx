@@ -1,6 +1,6 @@
 import styles from "./Header.module.css";
 import { Link } from "react-router-dom";
-import { useEffect } from "react";
+// import { useEffect } from "react";
 function Header() {
   // const handleLoginSuccess = (response: any) => {
   //   console.log("Login Success: ", response);
@@ -9,19 +9,16 @@ function Header() {
   // const handleLoginFailure = () => {
   //   console.log("Login Failed");
   // };
-  const checkLocal = () => {
-    console.log(localStorage);
-  };
   const notify_test = false;
-  useEffect(() => {
-    const urlParams = new URLSearchParams(window.location.search);
-    const uriToken = urlParams.get("token");
-    if (uriToken) {
-      localStorage.setItem("aToken", uriToken);
-      console.log(localStorage);
-      return;
-    }
-  });
+  // useEffect(() => {
+  //   const urlParams = new URLSearchParams(window.location.search);
+  //   const uriToken = urlParams.get("token");
+  //   if (uriToken) {
+  //     localStorage.setItem("aToken", uriToken);
+  //     console.log(localStorage);
+  //     return;
+  //   }
+  // });
   return (
     <div className={styles.header}>
       <div className={[styles.row].join(" ")}>
