@@ -1,19 +1,42 @@
 import styles from "./VinylBox.module.css";
 import Vinyl from "../Vinyl/Vinyl";
-import React, { useRef, useState } from "react";
+import React, { useRef, useState /*useEffect*/ } from "react";
 
 interface Vinyl_color {
   by_genre: boolean;
   color: string;
 }
 
+// interface VinylRecord { // WIP
+//   title: string;
+//   url: string;
+//   genre: string;
+// }
+
 const VinylBox: React.FC<Vinyl_color> = ({ by_genre, color }) => {
   const scrollContainerRef = useRef<HTMLDivElement>(null);
-
   const [selectedVinyl, setSelectedVinyl] = useState<{
     title: string;
     url: string;
   } | null>(null);
+  // const [vinylRecords, setVinylRecords] = useState<VinylRecord[]>([]); //Wip
+
+  // useEffect(() => { // WIP
+  //   const fetchVinylRecords = async () => {
+  //     try {
+  //       const response = await fetch("https://gramofer.work.gd/vinyls/vinyl");
+  //       if (!response.ok) {
+  //         throw new Error("Failed to fetch vinyl records");
+  //       }
+  //       const data: VinylRecord[] = await response.json();
+  //       setVinylRecords(data);
+  //     } catch (error) {
+  //       console.error("Error fetching vinyl records:", error);
+  //     }
+  //   };
+
+  //   fetchVinylRecords();
+  // }, []);
 
   let number = 0;
   let V_count = 0;

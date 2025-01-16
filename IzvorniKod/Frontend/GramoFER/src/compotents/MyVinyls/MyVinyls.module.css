@@ -57,7 +57,12 @@ h1 > span{
   background-color: #b0423e;
   height: 25px;
   padding-left: 5px;
-  border-color: #81d6e3;
+  border-color: #f2bf78ae;
+}
+.listing_form > div > input:focus{
+  outline: 0;
+  border-color: #ffd69d;
+  border-style:double;
 }
 .listing{
   background-color: #2F2D2E;
@@ -116,18 +121,16 @@ h1 > span{
   background-color: antiquewhite;
 }
 .add_button{
+  color: white;
   justify-self: center;
   grid-column: span 2;
   margin-top: 10px;
   width: 150px;
   height: 40px;
   font-size: large;
-  background-color: #6bb1bc;
+  background-color: #b0423e;
 }
-.add_button:hover{
-  color: white;
-  background-color: #81d6e3;
-}
+
 .desc{
   grid-column: span 2;
 }

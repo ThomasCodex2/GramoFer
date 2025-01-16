@@ -14,7 +14,16 @@
   padding-left: 3.5vw;
   font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
+.undertext{
+  margin-top: 0;
+  color: white;
+  text-align: center;
+  opacity: 0.4;
+  font-style: italic;
+}
 .form_contain{
+  margin-top: 50px;
+  border-radius: 20px;
   display: flex;
   flex-direction: column;
   justify-self: center;

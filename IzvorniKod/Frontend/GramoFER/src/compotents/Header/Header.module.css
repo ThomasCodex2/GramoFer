@@ -66,14 +66,13 @@
   width: 15vw;
 }
 .reg_btn{
-  background-color: #81d6e3a8;
+  font-size: 16px;
+  color: white;
+  font-weight: bold;
+  background-color: #6bb3be;
   height: 42px;
   margin-right: 10px;
   margin-left: 10px;
-}
-.reg_btn:hover{
-  background-color: #81d6e360;
-  color: white;
 }
 .link_contain{
   position: relative;
@@ -107,11 +106,10 @@ button:hover {
 
 .google_login_button {
   display: inline-block;
-  padding: 10px 20px;
   font-size: 16px;
   font-weight: bold;
   color: #fff;
-  background-color: #007bff;
+  background-color: #6bb3be;
   text-align: center;
   text-decoration: none;
   border-radius: 5px;
