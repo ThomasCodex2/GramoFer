@@ -57,6 +57,10 @@ const Register = () => {
       if (response.ok) {
         const data = await response.json();
         //const {token} = data;
+        const {token, expiresIn } = data;
+
+        console.log("Received token:", token);
+        localStorage.setItem("aToken", token);
         console.log("Form submitted successfully", data);
         navigate("/");
       } else {
