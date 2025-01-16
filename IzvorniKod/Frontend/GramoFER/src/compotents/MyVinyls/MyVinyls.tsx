@@ -156,6 +156,14 @@ const MyVinyls = () => {
 
     const token = localStorage.getItem("aToken");
 
+    if (token !== null) {
+      // If the value exists, print the value of atoken
+      console.log('Token found:', token);
+    } else {
+      // If it does not exist, print a message
+      console.log('No token found');
+  }
+
     try {
       const response = await fetch("/vinyls/add", {
         method: "POST",
