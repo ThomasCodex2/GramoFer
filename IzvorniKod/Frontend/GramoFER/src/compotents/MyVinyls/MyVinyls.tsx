@@ -22,6 +22,8 @@ interface FormData {
   [key: string]: any; // Index signature for dynamic keys
 }
 
+const API_BASE_URL = "https://gramofer.work.gd";
+
 
 const MyVinyls = () => {
 
@@ -166,7 +168,7 @@ const MyVinyls = () => {
 
     console.log (JSON.stringify(formData));
     try {
-      const response = await fetch("/vinyls/add", {
+      const response = await fetch(`${API_BASE_URL}/api/vinyls/add`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
