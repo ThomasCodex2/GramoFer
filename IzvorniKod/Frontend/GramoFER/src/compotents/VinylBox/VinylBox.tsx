@@ -1,6 +1,6 @@
 import styles from "./VinylBox.module.css";
 import Vinyl from "../Vinyl/Vinyl";
-import React, { useRef, useState /*useEffect*/ } from "react";
+import React, { useRef, useState, useEffect } from "react";
 
 interface Vinyl_color {
   by_genre: boolean;
@@ -116,6 +116,28 @@ const VinylBox: React.FC<Vinyl_color> = ({ by_genre, color }) => {
   const closePopup = () => {
     setSelectedVinyl(null);
   };
+
+  useEffect(() => {
+    const fetchVinyls = async () => {
+      try {
+        const response = await fetch(
+          "https://gramofer.work.gd/api/vinyls/vinyl"
+        );
+
+        if (!response.ok) {
+          throw new Error("Failed to fetch vinyls");
+        }
+
+        const vinylsData = await response.json();
+
+        console.log("Vinyls data:", vinylsData);
+      } catch (error) {
+        console.error("Error fetching vinyls:", error);
+      }
+    };
+
+    fetchVinyls();
+  }, []);
 
   return (
     <div className={styles.container}>
