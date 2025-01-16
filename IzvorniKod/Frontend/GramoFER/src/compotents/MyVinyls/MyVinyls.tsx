@@ -6,15 +6,20 @@ const MyVinyls = () => {
   const [images, setImages] = useState<string[]>([]);
 
   const [formData, setFormData] = useState({
-    editionMark: "",
-    year: "",
-    performer: "",
-    albumName: "",
     vinylCondition: "",
-    wrapCondition: "",
-    genre: "",
-    location: "",
+    coverCondition: "",
     description: "",
+    vinylImagePath1: "",
+    vinylImagePath2: "",
+    coverImagePath1: "",
+    coverImagePath2: "",
+    edition: {
+      editionMark: "",
+      year: "",
+      performer: "",
+      albumName: "",
+    },
+    onLocation: "",
   });
   const maxImages = 4;
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -76,6 +81,19 @@ const MyVinyls = () => {
     }));
   };
 
+  const handleEditionChange = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    const { name, value } = event.target;
+    setFormData((prev) => ({
+      ...prev,
+      edition: {
+        ...prev.edition,
+        [name]: value,
+      },
+    }));
+  };
+
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
     try {
@@ -84,24 +102,26 @@ const MyVinyls = () => {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({
-          ...formData,
-          images,
-        }),
+        body: JSON.stringify(formData),
       });
 
       if (response.ok) {
         alert("Vinyl added successfully!");
         setFormData({
-          editionMark: "",
-          year: "",
-          performer: "",
-          albumName: "",
           vinylCondition: "",
-          wrapCondition: "",
-          genre: "",
-          location: "",
+          coverCondition: "",
           description: "",
+          vinylImagePath1: "",
+          vinylImagePath2: "",
+          coverImagePath1: "",
+          coverImagePath2: "",
+          edition: {
+            editionMark: "",
+            year: "",
+            performer: "",
+            albumName: "",
+          },
+          onLocation: "",
         });
         clearImages();
       } else {
@@ -120,30 +140,76 @@ const MyVinyls = () => {
           Add <span>YOUR</span> records here!
         </h1>
         <div>
-          Edition mark: <input type="text" required maxLength={20}></input>
+          Edition mark:
+          <input 
+          type="text"
+          name= "editionMark"
+          value={formData.edition.editionMark}
+          onChange={handleEditionChange} 
+          required maxLength={20}></input>
         </div>
         <div>
           Year of release:{" "}
-          <input type="number" required min={1948} max={2025}></input>
+          <input 
+          type="number" 
+          name= "year"
+          value={formData.edition.year}
+          onChange={handleEditionChange} 
+          required min={1948} max={2025}>
+          </input>
         </div>
         <div>
-          Performer: <input type="text" required></input>
+          Performer: 
+          <input 
+          type="text" 
+          name= "performer"
+          value={formData.edition.performer}
+          onChange={handleEditionChange} 
+          required></input>
         </div>
         <div>
           Album name:
-          <input type="text" required></input>
+          <input 
+          type="text" 
+          name= "albumName"
+          value={formData.edition.albumName}
+          onChange={handleEditionChange} 
+          required></input>
         </div>
         <div>
-          Goldmine standard {"(vinyl)"}: <input type="text" required></input>
+          Goldmine standard {"(vinyl)"}: 
+          <input 
+          type="text" 
+          name= "vinylCondition"
+          value={formData.vinylCondition}
+          onChange={handleInputChange} 
+          required></input>
         </div>
         <div>
-          Goldmine standard {"(wrap)"}: <input type="text" required></input>
+          Goldmine standard {"(wrap)"}: 
+          <input 
+          type="text"
+          name= "coverCondition"
+          value={formData.coverCondition}
+          onChange={handleInputChange}  
+          required></input>
         </div>
         <div>
-          Genre: <input type="text" required></input>
+          Genre: 
+          <input type="text"
+          name= "editionMark"
+          value={formData.edition.editionMark}
+          onChange={handleEditionChange}  
+          required></input>
         </div>
         <div>
-          Location: <input type="text" required></input>
+          Location: 
+          <input 
+          type="text"
+          name= "editionMark"
+          value={formData.edition.editionMark}
+          onChange={handleEditionChange} 
+          required></input>
         </div>
         <div
           className={styles.picture_drop}
@@ -176,7 +242,12 @@ const MyVinyls = () => {
         </div>
         <div className={styles.desc}>
           Description {"(optional)"}:{" "}
-          <input type="text" maxLength={200}></input>
+          <input 
+          type="text"
+          name= "description"
+          value={formData.description}
+          onChange={handleEditionChange} 
+          maxLength={200}></input>
         </div>
         <button className={styles.add_button}>Add Vinyl</button>
       </form>
