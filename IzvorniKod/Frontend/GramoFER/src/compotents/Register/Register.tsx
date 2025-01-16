@@ -56,6 +56,7 @@ const Register = () => {
 
       if (response.ok) {
         const data = await response.json();
+        const {token} = data;
         console.log("Form submitted successfully", data);
         navigate("/");
       } else {
