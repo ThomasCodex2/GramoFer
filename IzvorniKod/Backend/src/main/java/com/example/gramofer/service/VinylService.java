@@ -86,7 +86,7 @@ public class VinylService {
         vinyl.setCoverImagePath2(input.getCoverImagePath2());
         vinyl.setUser(user);
         vinyl.setAvailable(0);
-        vinyl.setOnLocation("Hrvatska");
+        vinyl.setOnLocation(input.getOnLocation());
         repoVinyl.save(vinyl);
     }
 
