@@ -25,34 +25,34 @@ interface FormData {
 
 const MyVinyls = () => {
 
-  const getToken = async () => {
-    const token = localStorage.getItem("aToken");
-  
-    if (!token) {
-      try {
-        const response = await fetch("/auth/token", {
-          method: "GET",
-          headers: {
-            "Authorization": `Bearer ${token}`,
-          },
-        });
-  
-        if (response.ok) {
-          const newToken = await response.text();
-          localStorage.setItem("aToken", newToken); // Store the new token
-          return newToken;
-        } else {
-          alert("Failed to refresh token. Please log in again.");
-          // Redirect to login page or clear session, etc.
-        }
-      } catch (error) {
-        console.error("Error fetching the token:", error);
-        alert("Error fetching the token.");
-      }
-    } else {
-      return token; // Return the existing token
-    }
-  };
+  //const getToken = async () => {
+  //  const token = localStorage.getItem("aToken");
+  //
+  //  if (!token) {
+  //    try {
+  //      const response = await fetch("/auth/token", {
+  //        method: "GET",
+  //        headers: {
+  //          "Authorization": `Bearer ${token}`,
+  //        },
+  //      });
+  //
+  //      if (response.ok) {
+  //        const newToken = await response.text();
+  //        localStorage.setItem("aToken", newToken); // Store the new token
+  //        return newToken;
+  //      } else {
+  //        alert("Failed to refresh token. Please log in again.");
+  //        // Redirect to login page or clear session, etc.
+  //      }
+  //    } catch (error) {
+  //      console.error("Error fetching the token:", error);
+  //      alert("Error fetching the token.");
+  //    }
+  //  } else {
+  //    return token; // Return the existing token
+  //  }
+  //};
   const [images, setImages] = useState<string[]>([]);
 
   const [formData, setFormData] = useState<FormData>({
@@ -154,7 +154,7 @@ const MyVinyls = () => {
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
 
-    const token = await getToken();
+    const token = localStorage.getItem("aToken");
 
     try {
       const response = await fetch("/vinyls/add", {
