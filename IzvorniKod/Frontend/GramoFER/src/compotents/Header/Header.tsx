@@ -1,7 +1,6 @@
 import styles from "./Header.module.css";
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
-// import { useEffect } from "react";
 function Header() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
@@ -9,6 +8,12 @@ function Header() {
     const token = localStorage.getItem("aToken");
     setIsLoggedIn(!!token);
   }, []);
+
+  const handleLogout = () => {
+    localStorage.removeItem("aToken");
+    setIsLoggedIn(false);
+    alert("You have been logged out.");
+  };
 
   // const handleLoginSuccess = (response: any) => {
   //   console.log("Login Success: ", response);
@@ -51,7 +56,7 @@ function Header() {
             className={`${styles.link} ${!isLoggedIn ? styles.disabled : ""}`}
             onClick={(e) => {
               if (!isLoggedIn) {
-                e.preventDefault(); // Prevent navigation if not logged in
+                e.preventDefault();
                 alert("You need to log in to access My Vinyls.");
               }
             }}
@@ -76,15 +81,15 @@ function Header() {
           </Link>
         </div>
         <div className={styles.google_btn}>
-          <Link to="/register" className={styles.link}>
-            <button className={styles.reg_btn}>Register</button>
-          </Link>
-          <a
-            href="https://gramofer.work.gd/api/auth/google"
-            className={styles.google_login_button}
-          >
-            Sign in with Google
-          </a>
+          {isLoggedIn ? (
+            <button className={styles.reg_btn} onClick={handleLogout}>
+              Logout
+            </button>
+          ) : (
+            <Link to="/register" className={styles.link}>
+              <button className={styles.reg_btn}>Register / Login</button>
+            </Link>
+          )}
         </div>
       </div>
     </div>
