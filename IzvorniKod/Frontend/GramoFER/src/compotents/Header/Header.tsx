@@ -3,13 +3,29 @@ import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 function Header() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(
+    !!localStorage.getItem("aToken")
+  );
   const location = useLocation();
+
   useEffect(() => {
+    const handleStorageChange = () => {
+      const token = localStorage.getItem("aToken");
+      setIsLoggedIn(!!token);
+    };
+
+    // Add event listener for localStorage changes
+    window.addEventListener("storage", handleStorageChange);
+
+    // Update state on location change
     const token = localStorage.getItem("aToken");
     setIsLoggedIn(!!token);
-  }, [location.search]);
 
+    return () => {
+      // Clean up the event listener
+      window.removeEventListener("storage", handleStorageChange);
+    };
+  }, [location]);
   const handleLogout = () => {
     localStorage.removeItem("aToken");
     setIsLoggedIn(false);

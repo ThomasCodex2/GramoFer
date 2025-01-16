@@ -1,6 +1,6 @@
 import styles from "./Register.module.css";
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 // import { useEffect } from "react";
 interface RegFormValues {
   email: string;
@@ -21,7 +21,7 @@ const Register = () => {
   const handleButtonPress = (event: React.MouseEvent<HTMLButtonElement>) => {
     setActiveButton(event.currentTarget.id);
   };
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   // useEffect(() => {
   //   const urlParams = new URLSearchParams(window.location.search);
   //   const uriToken = urlParams.get("token");
@@ -59,13 +59,12 @@ const Register = () => {
       console.log("Login response data:", data);
       if (response.ok) {
         const { token, expiresIn } = data;
-
         console.log("Received token:", token);
         console.log("Expires in:", expiresIn);
         localStorage.setItem("aToken", token);
         console.log("Form submitted successfully", data);
         localStorage.setItem("expiresIn", expiresIn.toString());
-        navigate("/");
+        // navigate("/");
       } else {
         console.error("Failed to submit form");
       }
