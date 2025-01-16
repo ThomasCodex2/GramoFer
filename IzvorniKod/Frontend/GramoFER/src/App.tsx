@@ -25,6 +25,22 @@ const TokenHandler = () => {
         localStorage.getItem("aToken")
       );
     }
+    if (localStorage.getItem("aToken")) {
+      console.log(
+        "Token stored in localStorage:",
+        localStorage.getItem("aToken")
+      );
+    } else {
+      console.log("No aToken in storage");
+    }
+    if (localStorage.getItem("expiresIn")) {
+      console.log(
+        "ExpiresIn stored in localStorage:",
+        localStorage.getItem("expiresIn")
+      );
+    } else {
+      console.log("No expiresIn in storage");
+    }
   }, [location.search]);
 
   return null;
