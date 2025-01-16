@@ -2,10 +2,29 @@ import styles from "./MyVinyls.module.css";
 import MyVinylsRecord from "../MyVinylsRecord/MyVinylsRecord";
 import { useState, useRef } from "react";
 
+interface FormData {
+  vinylCondition: string;
+  coverCondition: string;
+  description: string;
+  vinylImagePath1: string;
+  vinylImagePath2: string;
+  coverImagePath1: string;
+  coverImagePath2: string;
+  edition: {
+    editionMark: string;
+    year: string;
+    performer: string;
+    albumName: string;
+  };
+  onLocation: string;
+  [key: string]: any; // Index signature for dynamic keys
+}
+
+
 const MyVinyls = () => {
   const [images, setImages] = useState<string[]>([]);
 
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<FormData>({
     vinylCondition: "",
     coverCondition: "",
     description: "",
@@ -69,29 +88,34 @@ const MyVinyls = () => {
 
   const clearImages = () => {
     setImages([]);
+    setFormData((prev) => ({
+      ...prev,
+      vinylImagePath1: "",
+      vinylImagePath2: "",
+      coverImagePath1: "",
+      coverImagePath2: "",
+    }));
   };
 
   const handleInputChange = (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
     const { name, value } = event.target;
-    setFormData((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
-  };
-
-  const handleEditionChange = (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    const { name, value } = event.target;
-    setFormData((prev) => ({
-      ...prev,
-      edition: {
-        ...prev.edition,
+    if (name.includes("edition.")) {
+      const [parent, child] = name.split(".");
+      setFormData((prev) => ({
+        ...prev,
+        [parent]: {
+          ...(prev[parent] as Record<string, any>), // Type assertion to ensure safety
+          [child]: value,
+        },
+      }));
+    } else {
+      setFormData((prev) => ({
+        ...prev,
         [name]: value,
-      },
-    }));
+      }));
+    }
   };
 
   const handleSubmit = async (event: React.FormEvent) => {
@@ -145,7 +169,7 @@ const MyVinyls = () => {
           type="text"
           name= "editionMark"
           value={formData.edition.editionMark}
-          onChange={handleEditionChange} 
+          onChange={handleInputChange} 
           required maxLength={20}></input>
         </div>
         <div>
@@ -154,7 +178,7 @@ const MyVinyls = () => {
           type="number" 
           name= "year"
           value={formData.edition.year}
-          onChange={handleEditionChange} 
+          onChange={handleInputChange} 
           required min={1948} max={2025}>
           </input>
         </div>
@@ -164,7 +188,7 @@ const MyVinyls = () => {
           type="text" 
           name= "performer"
           value={formData.edition.performer}
-          onChange={handleEditionChange} 
+          onChange={handleInputChange} 
           required></input>
         </div>
         <div>
@@ -173,7 +197,7 @@ const MyVinyls = () => {
           type="text" 
           name= "albumName"
           value={formData.edition.albumName}
-          onChange={handleEditionChange} 
+          onChange={handleInputChange} 
           required></input>
         </div>
         <div>
@@ -199,7 +223,7 @@ const MyVinyls = () => {
           <input type="text"
           name= "editionMark"
           value={formData.edition.editionMark}
-          onChange={handleEditionChange}  
+          onChange={handleInputChange}  
           required></input>
         </div>
         <div>
@@ -208,7 +232,7 @@ const MyVinyls = () => {
           type="text"
           name= "editionMark"
           value={formData.edition.editionMark}
-          onChange={handleEditionChange} 
+          onChange={handleInputChange} 
           required></input>
         </div>
         <div
@@ -246,7 +270,7 @@ const MyVinyls = () => {
           type="text"
           name= "description"
           value={formData.description}
-          onChange={handleEditionChange} 
+          onChange={handleInputChange} 
           maxLength={200}></input>
         </div>
         <button className={styles.add_button}>Add Vinyl</button>

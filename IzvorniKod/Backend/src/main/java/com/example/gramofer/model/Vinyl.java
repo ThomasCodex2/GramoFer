@@ -52,10 +52,10 @@ public class Vinyl {
     @Column
     private String vinylImagePath2;
 
-    @Column(nullable = false)
+    @Column
     private String coverImagePath1;
 
-    @Column(nullable = false)
+    @Column
     private String coverImagePath2;
 
     @Column(nullable = false)
