@@ -1,6 +1,6 @@
 import styles from "./MyVinyls.module.css";
 import MyVinylsRecord from "../MyVinylsRecord/MyVinylsRecord";
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 
 interface FormData {
   vinylCondition: string;
@@ -203,6 +203,28 @@ const MyVinyls = () => {
       alert("An error occurred. Please try again.");
     }
   };
+
+  useEffect(() => {
+    const fetchVinyls = async () => {
+      try {
+        const response = await fetch(
+          "https://gramofer.work.gd/api/vinyls/myVinyl"
+        );
+
+        if (!response.ok) {
+          throw new Error("Failed to fetch vinyls");
+        }
+
+        const vinylsData = await response.json();
+
+        console.log("myVinyl data:", vinylsData);
+      } catch (error) {
+        console.error("Error fetching vinyls:", error);
+      }
+    };
+
+    fetchVinyls();
+  }, []);
 
   return (
     <div className={styles.container}>
