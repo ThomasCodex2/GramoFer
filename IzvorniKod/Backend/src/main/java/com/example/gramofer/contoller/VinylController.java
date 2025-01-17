@@ -30,7 +30,7 @@ public class VinylController {
     }
 
     @GetMapping("/myVinyl")
-    public List<Vinyl> getVinylsByUsername(@AuthenticationPrincipal UserAccount user) {
+    public List<VinylResponseDTO> getVinylsByUsername(@AuthenticationPrincipal UserAccount user) {
         return service.getVinylByUser(user);
     }
 
