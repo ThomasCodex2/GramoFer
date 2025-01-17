@@ -11,10 +11,12 @@ import {
   Route,
   Routes,
   useLocation,
+  useNavigate,
 } from "react-router-dom";
+
 const TokenHandler = () => {
   const location = useLocation();
-
+  const navigate = useNavigate();
   useEffect(() => {
     const urlParams = new URLSearchParams(location.search);
     const uriToken = urlParams.get("token");
@@ -41,6 +43,7 @@ const TokenHandler = () => {
     } else {
       console.log("No expiresIn in storage");
     }
+    navigate("/");
   }, [location.search]);
 
   return null;
