@@ -42,4 +42,9 @@ public class VinylController {
         return ResponseEntity.status(HttpStatus.SC_CREATED).body("Vinyl added successfully.");
     }
 
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deleteVinyl(@PathVariable Integer id, @AuthenticationPrincipal UserAccount user) {
+        return service.deleteVinylById(id);
+    }
+
 }

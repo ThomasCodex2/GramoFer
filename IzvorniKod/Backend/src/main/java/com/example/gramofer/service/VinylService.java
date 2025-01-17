@@ -14,6 +14,7 @@ import com.example.gramofer.responses.VinylResponseDTO;
 
 import jakarta.transaction.Transactional;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
@@ -122,6 +123,15 @@ public class VinylService {
 
     public void deleteVinyl(int id) {
         repoVinyl.deleteById(id);
+    }
+
+    public ResponseEntity<?> deleteVinylById(Integer id) {
+        if (!repoVinyl.existsById(id)) {
+            return ResponseEntity.status(404).body("Vinyl not found");
+        }
+
+        repoVinyl.deleteById(id);
+        return ResponseEntity.ok("Vinyl deleted successfully");
     }
 
 
