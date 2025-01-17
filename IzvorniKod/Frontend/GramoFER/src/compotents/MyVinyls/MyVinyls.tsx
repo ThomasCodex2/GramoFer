@@ -204,27 +204,43 @@ const MyVinyls = () => {
     }
   };
 
-  useEffect(() => {
-    const fetchVinyls = async () => {
-      try {
-        const response = await fetch(
-          "https://gramofer.work.gd/api/vinyls/myVinyl"
-        );
+    useEffect(() => {
+      const fetchVinyls = async () => {
+        const token = localStorage.getItem("aToken");
 
-        if (!response.ok) {
-          throw new Error("Failed to fetch vinyls");
+        if (token !== null) {
+          // If the value exists, print the value of atoken
+          console.log("Token found:", token);
+        } else {
+          // If it does not exist, print a message
+          console.log("No token found");
         }
-
-        const vinylsData = await response.json();
-
-        console.log("myVinyl data:", vinylsData);
-      } catch (error) {
-        console.error("Error fetching vinyls:", error);
-      }
-    };
-
-    fetchVinyls();
-  }, []);
+        try {
+          const response = await fetch(`${API_BASE_URL}/api/vinyls/myVinyl`, {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
+            },
+    
+            body: JSON.stringify(formData),
+          });
+  
+          if (!response.ok) {
+            throw new Error("Failed to fetch vinyls");
+          }
+  
+          const myVinylsData = await response.json();
+  
+          console.log("myVinyls data:", myVinylsData);
+        } catch (error) {
+          console.error("Error fetching vinyls:", error);
+        }
+      };
+  
+      fetchVinyls();
+    }, []);
+  
 
   return (
     <div className={styles.container}>
