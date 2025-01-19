@@ -95,6 +95,8 @@
 }
 .rowGrid > div > img{
   height: 1fr;
+  max-width: 15vw;
+  min-width: 150px;
 }
 .smallImg{
   border: 5px solid gray;
@@ -106,6 +108,7 @@
 }
 .smallImg > img{
   height: 100%;
+  max-width: 50px;
 }
 .smallImg > img:hover{
   cursor: pointer;

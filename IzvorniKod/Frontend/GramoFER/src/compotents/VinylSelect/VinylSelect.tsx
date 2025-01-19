@@ -35,7 +35,7 @@ const VinylSelect = () => {
         <div className={styles.filter}>
           <div className={styles.block_header}>
             <h2>
-              The <u>newest</u> additions:
+              List of <u>ALL</u> our vinyls!
             </h2>
           </div>
           <VinylBox by_genre={false} color={"random"}></VinylBox>
