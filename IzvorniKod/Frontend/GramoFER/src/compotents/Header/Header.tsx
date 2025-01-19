@@ -26,6 +26,9 @@ function Header() {
 
   const handleLogout = () => {
     localStorage.removeItem("aToken");
+    if (localStorage.getItem("expiresIn")) {
+      localStorage.removeItem("expiresIn");
+    }
     setIsLoggedIn(false);
     alert("You have been logged out.");
   };

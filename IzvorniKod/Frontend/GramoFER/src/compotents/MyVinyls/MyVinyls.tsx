@@ -21,6 +21,10 @@ interface FormData {
   onLocation: string;
   [key: string]: any; // Index signature for dynamic keys
 }
+interface MyVinylsData extends FormData {
+  available: string;
+  vinylId: string;
+}
 
 const API_BASE_URL = "https://gramofer.work.gd";
 
@@ -72,6 +76,26 @@ const MyVinyls = () => {
       countryOfOrigin: "",
       genres: [],
     },
+  });
+  const [MyVinylsData, setMyVinylsData] = useState<MyVinylsData>({
+    vinylCondition: "",
+    coverCondition: "",
+    description: "",
+    vinylImagePath1: "",
+    vinylImagePath2: "",
+    coverImagePath1: "",
+    coverImagePath2: "",
+    onLocation: "",
+    edition: {
+      editionLabel: "",
+      artistName: "",
+      releaseDate: "",
+      albumName: "",
+      countryOfOrigin: "",
+      genres: [],
+    },
+    available: "",
+    vinylId: "",
   });
   const maxImages = 4;
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -204,41 +228,38 @@ const MyVinyls = () => {
     }
   };
 
-    useEffect(() => {
-      const fetchVinyls = async () => {
-        const token = localStorage.getItem("aToken");
+  useEffect(() => {
+    const fetchVinyls = async () => {
+      const token = localStorage.getItem("aToken");
 
-        if (token !== null) {
-          // If the value exists, print the value of atoken
-          console.log("Token found:", token);
-        } else {
-          // If it does not exist, print a message
-          console.log("No token found");
+      if (token !== null) {
+        console.log("Token found:", token);
+      } else {
+        console.log("No token found");
+      }
+      try {
+        const response = await fetch(`${API_BASE_URL}/api/vinyls/myVinyl`, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        });
+
+        if (!response.ok) {
+          throw new Error("Failed to fetch vinyls");
         }
-        try {
-          const response = await fetch(`${API_BASE_URL}/api/vinyls/myVinyl`, {
-            method: "GET",
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${token}`,
-            },
-          });
-  
-          if (!response.ok) {
-            throw new Error("Failed to fetch vinyls");
-          }
-  
-          const myVinylsData = await response.json();
-  
-          console.log("myVinyls data:", myVinylsData);
-        } catch (error) {
-          console.error("Error fetching vinyls:", error);
-        }
-      };
-  
-      fetchVinyls();
-    }, []);
-  
+
+        const myVinylsData = await response.json();
+        setMyVinylsData(myVinylsData);
+        console.log("myVinyls data:", myVinylsData);
+      } catch (error) {
+        console.error("Error fetching vinyls:", error);
+      }
+    };
+
+    fetchVinyls();
+  }, []);
 
   return (
     <div className={styles.container}>
