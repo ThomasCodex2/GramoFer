@@ -8,11 +8,6 @@ interface Vinyl_color {
 }
 
 interface VinylRecord {
-  title: string;
-  url: string;
-  genre: string;
-}
-interface VinylRecord {
   available: number;
   coverCondition: string;
   coverImagePath1: string; //url

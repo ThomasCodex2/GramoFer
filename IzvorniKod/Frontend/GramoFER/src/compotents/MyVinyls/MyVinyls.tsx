@@ -29,34 +29,6 @@ interface MyVinylsData extends FormData {
 const API_BASE_URL = "https://gramofer.work.gd";
 
 const MyVinyls = () => {
-  //const getToken = async () => {
-  //  const token = localStorage.getItem("aToken");
-  //
-  //  if (!token) {
-  //    try {
-  //      const response = await fetch("/auth/token", {
-  //        method: "GET",
-  //        headers: {
-  //          "Authorization": `Bearer ${token}`,
-  //        },
-  //      });
-  //
-  //      if (response.ok) {
-  //        const newToken = await response.text();
-  //        localStorage.setItem("aToken", newToken); // Store the new token
-  //        return newToken;
-  //      } else {
-  //        alert("Failed to refresh token. Please log in again.");
-  //        // Redirect to login page or clear session, etc.
-  //      }
-  //    } catch (error) {
-  //      console.error("Error fetching the token:", error);
-  //      alert("Error fetching the token.");
-  //    }
-  //  } else {
-  //    return token; // Return the existing token
-  //  }
-  //};
   const [images, setImages] = useState<string[]>([]);
 
   const [formData, setFormData] = useState<FormData>({
@@ -406,10 +378,10 @@ const MyVinyls = () => {
           MyVinylsData.map((vinyl, index) => (
             <MyVinylsRecord
               key={index}
-              edition_mark={vinyl.edition.editionLabel || "N/A"}
-              album={vinyl.edition.albumName || "ALBUM_NAME"}
-              performer={vinyl.edition.artistName || "PERFORMER"}
-              genre={vinyl.edition.genres || "GENRES"}
+              edition_mark={vinyl.editionLabel.editionLabel || "N/A"}
+              album={vinyl.editionLabel.albumName || "ALBUM_NAME"}
+              performer={vinyl.editionLabel.artistName || "PERFORMER"}
+              genre={vinyl.editionLabel.genres || "GENRES"}
               picture_urls={vinyl.coverImagePath1 || "pic_url"}
             />
           ))
