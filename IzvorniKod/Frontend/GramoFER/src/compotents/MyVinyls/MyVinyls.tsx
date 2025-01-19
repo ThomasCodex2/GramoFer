@@ -77,26 +77,29 @@ const MyVinyls = () => {
       genres: [],
     },
   });
-  const [MyVinylsData, setMyVinylsData] = useState<MyVinylsData>({
-    vinylCondition: "",
-    coverCondition: "",
-    description: "",
-    vinylImagePath1: "",
-    vinylImagePath2: "",
-    coverImagePath1: "",
-    coverImagePath2: "",
-    onLocation: "",
-    edition: {
-      editionLabel: "",
-      artistName: "",
-      releaseDate: "",
-      albumName: "",
-      countryOfOrigin: "",
-      genres: [],
-    },
-    available: "",
-    vinylId: "",
-  });
+  const [MyVinylsData, setMyVinylsData] = useState<MyVinylsData[]>(
+    []
+    //{
+    //   vinylCondition: "",
+    //   coverCondition: "",
+    //   description: "",
+    //   vinylImagePath1: "",
+    //   vinylImagePath2: "",
+    //   coverImagePath1: "",
+    //   coverImagePath2: "",
+    //   onLocation: "",
+    //   edition: {
+    //     editionLabel: "",
+    //     artistName: "",
+    //     releaseDate: "",
+    //     albumName: "",
+    //     countryOfOrigin: "",
+    //     genres: [],
+    //   },
+    //   available: "",
+    //   vinylId: "",
+    // }
+  );
   const maxImages = 4;
   const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -399,18 +402,31 @@ const MyVinyls = () => {
         <div className={styles.listing}>Genre</div>
         <div className={styles.listing}>Display picture</div>
         <div className={styles.listing}>Edit/Delete record</div>
+        {MyVinylsData.length > 0 ? (
+          MyVinylsData.map((vinyl) => (
+            <MyVinylsRecord
+              edition_mark={vinyl.edition.editionLabel}
+              album={vinyl.edition.albumName}
+              performer={vinyl.edition.artistName}
+              genre={vinyl.edition.genres}
+              picture_urls={vinyl.coverImagePath1 || "pic_url"}
+            />
+          ))
+        ) : (
+          <h2 className={styles.noVinylsAdded}>You have no Vinyl records</h2>
+        )}
         <MyVinylsRecord
           edition_mark="1203"
           album="Wavelength"
           performer="lorem"
-          genre="pop"
+          genre={["pop"]}
           picture_urls="pic_url"
         />
         <MyVinylsRecord
           edition_mark="1014"
           album="The Wild Boys"
           performer="ipsums"
-          genre="pop"
+          genre={["pop"]}
           picture_urls="pic_url"
         />
       </div>
