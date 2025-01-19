@@ -7,36 +7,45 @@ interface Vinyl_color {
   color: string;
 }
 
-// interface VinylRecord { // WIP
-//   title: string;
-//   url: string;
-//   genre: string;
-// }
-
+interface VinylRecord {
+  title: string;
+  url: string;
+  genre: string;
+}
+interface VinylRecord {
+  available: number;
+  coverCondition: string;
+  coverImagePath1: string; //url
+  coverImagePath2: string;
+  description: string;
+  editionLabel: {
+    albumName: string; //title
+    artistName: string;
+    editionLabel: string;
+    belongsToGenreGenres: { genreId: number; genreName: string }[]; //genre
+    countryOfOrigin: string;
+    releaseDate: number;
+  };
+  onLocation: string;
+  vinylCondition: string;
+  vinylId: number;
+  vinylImagePath1: string;
+  vinylImagePath2: string;
+}
 const VinylBox: React.FC<Vinyl_color> = ({ by_genre, color }) => {
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const [selectedVinyl, setSelectedVinyl] = useState<{
     title: string;
     url: string;
+    performer: string;
+    YearOfRelease: number;
+    vinylCondition: string;
+    coverCondition: string;
+    editionMark: string;
+    location: string;
+    description: string;
   } | null>(null);
-  // const [vinylRecords, setVinylRecords] = useState<VinylRecord[]>([]); //Wip
-
-  // useEffect(() => { // WIP
-  //   const fetchVinylRecords = async () => {
-  //     try {
-  //       const response = await fetch("https://gramofer.work.gd/vinyls/vinyl");
-  //       if (!response.ok) {
-  //         throw new Error("Failed to fetch vinyl records");
-  //       }
-  //       const data: VinylRecord[] = await response.json();
-  //       setVinylRecords(data);
-  //     } catch (error) {
-  //       console.error("Error fetching vinyl records:", error);
-  //     }
-  //   };
-
-  //   fetchVinylRecords();
-  // }, []);
+  const [vinylRecords, setVinylRecords] = useState<VinylRecord[]>([]);
 
   let number = 0;
   let V_count = 0;
@@ -56,10 +65,10 @@ const VinylBox: React.FC<Vinyl_color> = ({ by_genre, color }) => {
     "Etta Jones G.H.",
   ];
   const Url_slika = [
-    "/images/Wave.jpg",
     "/images/Njeg.jpg",
     "/images/All.jpg",
     "/images/Duran.jpg",
+    "/images/Wave.jpg",
     "/images/84.jpg",
     "/images/Kate.jpg",
     "/images/Sun.jpg",
@@ -92,6 +101,7 @@ const VinylBox: React.FC<Vinyl_color> = ({ by_genre, color }) => {
     number = 6;
     V_count = 4;
   }
+
   const scrollLeft = () => {
     if (scrollContainerRef.current) {
       scrollContainerRef.current.scrollBy({
@@ -109,8 +119,28 @@ const VinylBox: React.FC<Vinyl_color> = ({ by_genre, color }) => {
     }
   };
 
-  const handleVinylClick = (title: string, url: string) => {
-    setSelectedVinyl({ title, url });
+  const handleVinylClick = (
+    title: string,
+    url: string,
+    performer: string,
+    YearOfRelease: number,
+    vinylCondition: string,
+    coverCondition: string,
+    editionMark: string,
+    location: string,
+    description: string
+  ) => {
+    setSelectedVinyl({
+      title,
+      url,
+      performer,
+      YearOfRelease,
+      vinylCondition,
+      coverCondition,
+      editionMark,
+      location,
+      description,
+    });
   };
 
   const closePopup = () => {
@@ -128,9 +158,11 @@ const VinylBox: React.FC<Vinyl_color> = ({ by_genre, color }) => {
           throw new Error("Failed to fetch vinyls");
         }
 
-        const vinylsData = await response.json();
+        const vinylsData: VinylRecord[] = await response.json();
 
         console.log("Vinyls data:", vinylsData);
+
+        setVinylRecords(vinylsData);
       } catch (error) {
         console.error("Error fetching vinyls:", error);
       }
@@ -148,6 +180,28 @@ const VinylBox: React.FC<Vinyl_color> = ({ by_genre, color }) => {
         <img src="/images/left.png" alt="" />
       </button>
       <div className={styles.filter_row} ref={scrollContainerRef}>
+        {!by_genre &&
+          vinylRecords.map((vinyl, index) => (
+            <Vinyl
+              key={vinyl.vinylId}
+              //vinyl_genre={`vinylBox_${index}`}
+              title={vinyl.editionLabel.albumName}
+              url={vinyl.coverImagePath1 || "/images/placeholder_vinyl.jpg"}
+              onClick={() =>
+                handleVinylClick(
+                  vinyl.editionLabel.albumName,
+                  vinyl.coverImagePath1,
+                  vinyl.editionLabel.artistName,
+                  vinyl.editionLabel.releaseDate,
+                  vinyl.vinylCondition,
+                  vinyl.coverCondition,
+                  vinyl.editionLabel.editionLabel,
+                  vinyl.onLocation,
+                  vinyl.description
+                )
+              }
+            />
+          ))}
         {Array.from({ length: V_count }).map((_, index) => {
           const naslov =
             index < Naslovi.length ? Naslovi[index] : "Placeholder Title";
@@ -158,10 +212,12 @@ const VinylBox: React.FC<Vinyl_color> = ({ by_genre, color }) => {
           return (
             <Vinyl
               key={index}
-              vinyl_genre={`vinylBox_${number}`}
+              //vinyl_genre={`vinylBox_${number}`}
               title={naslov}
               url={url}
-              onClick={() => handleVinylClick(naslov, url)}
+              onClick={() =>
+                handleVinylClick(naslov, url, "", 0, "", "", "", "", "")
+              }
             />
           );
         })}
@@ -181,12 +237,14 @@ const VinylBox: React.FC<Vinyl_color> = ({ by_genre, color }) => {
             <div className={styles.column}>
               <div className={styles.rowGrid}>
                 <div className={styles.row}>
-                  <img src={selectedVinyl.url} />
+                  <img
+                    src={selectedVinyl.url || "/images/placeholder_vinyl.jpg"}
+                  />
                   <div className={styles.smallImg}>
-                    <img src={selectedVinyl.url} />
-                    <img src={selectedVinyl.url} />
-                    <img src={selectedVinyl.url} />
-                    <img src={selectedVinyl.url} />
+                    <img src={selectedVinyl.url || "/images/vinyl_blue.png"} />
+                    <img src={selectedVinyl.url || "/images/vinyl_red.png"} />
+                    <img src={selectedVinyl.url || "/images/vinyl_blue.png"} />
+                    <img src={selectedVinyl.url || "/images/vinyl_red.png"} />
                   </div>
                 </div>
                 <h3>
@@ -196,7 +254,7 @@ const VinylBox: React.FC<Vinyl_color> = ({ by_genre, color }) => {
                 <h3>
                   Genre:
                   <br />
-                  somegenre
+                  GENRE IN WIP
                 </h3>
               </div>
               <div className={styles.vinDetails}>
@@ -207,18 +265,25 @@ const VinylBox: React.FC<Vinyl_color> = ({ by_genre, color }) => {
                 <h4>
                   Genre:
                   <br />
-                  somegenre
+                  GENRE IN WIP
                 </h4>
-                <p>Performer: Lorem</p>
-                <p>Year of release: Lorem</p>
-                <p>Goldmine standard (Vinyl): Lorem</p>
-                <p>Goldmine standard (Casing): Lorem</p>
-                <p>Edition mark: Lorem</p>
-                <p>Current location: Lorem</p>
+                <p>Performer: {selectedVinyl.performer || "PERFORMER"}</p>
+                <p>Year of release: {selectedVinyl.YearOfRelease || "YEAR"}</p>
+                <p>
+                  Goldmine standard (Vinyl):{" "}
+                  {selectedVinyl.vinylCondition || "CONDITION"}
+                </p>
+                <p>
+                  Goldmine standard (Cover):{" "}
+                  {selectedVinyl.coverCondition || "CONDITION"}
+                </p>
+                <p>Edition mark: {selectedVinyl.editionMark || "EDITION"}</p>
+                <p>Current location: {selectedVinyl.location || "LOCATION"}</p>
               </div>
               <p>
-                Description: Lorem ipsum dolor sit amet consectetur adipisicing
-                elit. Fugit nemo eaque voluptatibus ducimus
+                Description:{" "}
+                {selectedVinyl.description ||
+                  "Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugit nemo eaque voluptatibus ducimus"}
               </p>
               <div className={styles.buttonDiv}>
                 <div></div>
