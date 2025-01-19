@@ -253,7 +253,7 @@ const MyVinyls = () => {
           throw new Error("Failed to fetch vinyls");
         }
 
-        const myVinylsData = await response.json();
+        const myVinylsData: MyVinylsData[] = await response.json();
         setMyVinylsData(myVinylsData);
         console.log("myVinyls data:", myVinylsData);
       } catch (error) {
@@ -403,12 +403,13 @@ const MyVinyls = () => {
         <div className={styles.listing}>Display picture</div>
         <div className={styles.listing}>Edit/Delete record</div>
         {MyVinylsData.length > 0 ? (
-          MyVinylsData.map((vinyl) => (
+          MyVinylsData.map((vinyl, index) => (
             <MyVinylsRecord
-              edition_mark={vinyl.edition.editionLabel}
-              album={vinyl.edition.albumName}
-              performer={vinyl.edition.artistName}
-              genre={vinyl.edition.genres}
+              key={index}
+              edition_mark={vinyl.edition.editionLabel || "N/A"}
+              album={vinyl.edition.albumName || "ALBUM_NAME"}
+              performer={vinyl.edition.artistName || "PERFORMER"}
+              genre={vinyl.edition.genres || "GENRES"}
               picture_urls={vinyl.coverImagePath1 || "pic_url"}
             />
           ))
