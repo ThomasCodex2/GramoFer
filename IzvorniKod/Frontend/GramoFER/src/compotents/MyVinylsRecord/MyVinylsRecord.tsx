@@ -4,7 +4,7 @@ interface MyVinylsRecordProps {
   edition_mark: string;
   album: string;
   performer: string;
-  genre: string;
+  genre: string[];
   picture_urls: string;
 }
 
@@ -20,7 +20,7 @@ const MyVinylsRecord: React.FC<MyVinylsRecordProps> = ({
       <div className={styles.list_element}>{edition_mark}</div>
       <div>{album}</div>
       <div>{performer}</div>
-      <div>{genre}</div>
+      <div>{genre.join(", ")}</div>
       <div>{picture_urls}</div>
       <div className={styles.exchange_buttons}>
         <div>

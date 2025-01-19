@@ -130,7 +130,13 @@ h1 > span{
   font-size: large;
   background-color: #b0423e;
 }
-
+.noVinylsAdded{
+  opacity: 0.7;
+  color: white;
+  font-style: italic;
+  text-align: center;
+  grid-column: span 6;
+}
 .desc{
   grid-column: span 2;
 }

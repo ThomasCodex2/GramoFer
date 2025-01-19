@@ -189,7 +189,7 @@ const VinylBox: React.FC<Vinyl_color> = ({ by_genre, color }) => {
       </button>
       <div className={styles.filter_row} ref={scrollContainerRef}>
         {!by_genre &&
-          vinylRecords.map((vinyl, index) => (
+          vinylRecords.map((vinyl) => (
             <Vinyl
               key={vinyl.vinylId}
               //vinyl_genre={`vinylBox_${index}`}
