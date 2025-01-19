@@ -12,8 +12,6 @@ import com.example.gramofer.repo.UserRepo;
 import com.example.gramofer.repo.VinylRepo;
 import com.example.gramofer.responses.VinylResponseDTO;
 
-import jakarta.transaction.Transactional;
-
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 

@@ -2,7 +2,6 @@ package com.example.gramofer.contoller;
 
 import com.example.gramofer.dtos.VinylDto;
 import com.example.gramofer.model.UserAccount;
-import com.example.gramofer.model.Vinyl;
 import com.example.gramofer.responses.VinylResponseDTO;
 import com.example.gramofer.service.VinylService;
 

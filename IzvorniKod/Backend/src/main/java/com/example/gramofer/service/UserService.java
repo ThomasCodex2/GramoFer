@@ -1,10 +1,7 @@
 package com.example.gramofer.service;
 
 import com.example.gramofer.model.UserAccount;
-import com.example.gramofer.repo.EditionRepo;
-import com.example.gramofer.repo.GenreRepo;
 import com.example.gramofer.repo.UserRepo;
-import com.example.gramofer.repo.VinylRepo;
 import com.example.gramofer.responses.UserResponse;
 
 import org.springframework.http.ResponseEntity;
