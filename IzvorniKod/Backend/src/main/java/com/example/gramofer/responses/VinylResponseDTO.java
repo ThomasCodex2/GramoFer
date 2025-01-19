@@ -1,7 +1,6 @@
 package com.example.gramofer.responses;
 
 import com.example.gramofer.model.Edition;
-import com.example.gramofer.model.UserAccount;
 
 import lombok.Data;
 
@@ -19,5 +18,4 @@ public class VinylResponseDTO {
     private String onLocation;
     private Edition editionLabel;
 
-    // Add getters and setters or use Lombok's @Data annotation
 }

@@ -2,7 +2,6 @@ package com.example.gramofer.contoller;
 
 import com.example.gramofer.dtos.VinylDto;
 import com.example.gramofer.model.UserAccount;
-import com.example.gramofer.model.Vinyl;
 import com.example.gramofer.responses.VinylResponseDTO;
 import com.example.gramofer.service.VinylService;
 
@@ -23,7 +22,6 @@ public class VinylController {
         this.service = service;
     }
 
-    // OVO TREBA PROMJENITI DA BUDE PRIKAZ SVIH PLOCA OD KORISNIKA
     @GetMapping("/vinyl")
     public List<VinylResponseDTO> getVinyls() {
         return service.getAllVinyls();
@@ -38,8 +36,13 @@ public class VinylController {
     public ResponseEntity<String> addVinyl(@AuthenticationPrincipal UserAccount user, @RequestBody VinylDto vinyl) {
         System.out.println("Dodavanje vinila");
         System.out.println(user.getEmail());
-        service.newVinyl(vinyl, user);
+        String zastavica = service.newVinyl(vinyl, user);
+        if (zastavica == "uspjeh") {
         return ResponseEntity.status(HttpStatus.SC_CREATED).body("Vinyl added successfully.");
+        }
+        else {
+            return ResponseEntity.status(HttpStatus.SC_NOT_ACCEPTABLE).body("Edition already exists");
+        }
     }
 
     @DeleteMapping("/{id}")
@@ -47,4 +50,20 @@ public class VinylController {
         return service.deleteVinylById(id);
     }
 
+    @PostMapping("/update/{id}")
+    public ResponseEntity<String> updateVinyl (@AuthenticationPrincipal UserAccount user, @PathVariable Integer id, @RequestBody VinylDto vinyl){
+        System.out.println("Mijenjanje vinila");
+        System.out.println(user.getEmail());
+        String poruka = service.updateV(id, user, vinyl);
+        if (poruka == "Greska1"){
+            return ResponseEntity.status(HttpStatus.SC_NOT_ACCEPTABLE).body("Ploca ne postoji");
+        }
+        else if (poruka == "Greska2"){
+            return ResponseEntity.status(HttpStatus.SC_NOT_ACCEPTABLE).body("Edition already exists");
+        }
+        else {
+        return ResponseEntity.status(HttpStatus.SC_CREATED).body("Vinyl added changed.");
+        }
+    }
+    
 }
