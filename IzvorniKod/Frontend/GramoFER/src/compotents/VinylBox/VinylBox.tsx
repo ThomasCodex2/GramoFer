@@ -37,6 +37,7 @@ const VinylBox: React.FC<Vinyl_color> = ({ by_genre, color }) => {
   const [selectedVinyl, setSelectedVinyl] = useState<{
     title: string;
     url: string;
+    belongsToGenreGenres: string[];
     performer: string;
     YearOfRelease: number;
     vinylCondition: string;
@@ -122,6 +123,7 @@ const VinylBox: React.FC<Vinyl_color> = ({ by_genre, color }) => {
   const handleVinylClick = (
     title: string,
     url: string,
+    belongsToGenreGenres: string[],
     performer: string,
     YearOfRelease: number,
     vinylCondition: string,
@@ -133,6 +135,7 @@ const VinylBox: React.FC<Vinyl_color> = ({ by_genre, color }) => {
     setSelectedVinyl({
       title,
       url,
+      belongsToGenreGenres,
       performer,
       YearOfRelease,
       vinylCondition,
@@ -170,7 +173,12 @@ const VinylBox: React.FC<Vinyl_color> = ({ by_genre, color }) => {
 
     fetchVinyls();
   }, []);
-
+  const changePicture = (event: React.MouseEvent<HTMLImageElement>) => {
+    const bigImage = document.getElementById("bigPicture") as HTMLImageElement;
+    if (bigImage && event.target instanceof HTMLImageElement) {
+      bigImage.src = event.target.src;
+    }
+  };
   return (
     <div className={styles.container}>
       <button
@@ -191,6 +199,9 @@ const VinylBox: React.FC<Vinyl_color> = ({ by_genre, color }) => {
                 handleVinylClick(
                   vinyl.editionLabel.albumName,
                   vinyl.coverImagePath1,
+                  vinyl.editionLabel.belongsToGenreGenres.map(
+                    (genre) => genre.genreName
+                  ),
                   vinyl.editionLabel.artistName,
                   vinyl.editionLabel.releaseDate,
                   vinyl.vinylCondition,
@@ -205,10 +216,7 @@ const VinylBox: React.FC<Vinyl_color> = ({ by_genre, color }) => {
         {Array.from({ length: V_count }).map((_, index) => {
           const naslov =
             index < Naslovi.length ? Naslovi[index] : "Placeholder Title";
-          const url =
-            index < Url_slika.length
-              ? Url_slika[index]
-              : "/images/vinyl_blue.png";
+          const url = index < Url_slika.length ? Url_slika[index] : "";
           return (
             <Vinyl
               key={index}
@@ -216,7 +224,7 @@ const VinylBox: React.FC<Vinyl_color> = ({ by_genre, color }) => {
               title={naslov}
               url={url}
               onClick={() =>
-                handleVinylClick(naslov, url, "", 0, "", "", "", "", "")
+                handleVinylClick(naslov, url, [""], "", 0, "", "", "", "", "")
               }
             />
           );
@@ -238,13 +246,26 @@ const VinylBox: React.FC<Vinyl_color> = ({ by_genre, color }) => {
               <div className={styles.rowGrid}>
                 <div className={styles.row}>
                   <img
+                    id="bigPicture"
                     src={selectedVinyl.url || "/images/placeholder_vinyl.jpg"}
                   />
                   <div className={styles.smallImg}>
-                    <img src={selectedVinyl.url || "/images/vinyl_blue.png"} />
-                    <img src={selectedVinyl.url || "/images/vinyl_red.png"} />
-                    <img src={selectedVinyl.url || "/images/vinyl_blue.png"} />
-                    <img src={selectedVinyl.url || "/images/vinyl_red.png"} />
+                    <img
+                      src={selectedVinyl.url || "/images/vinyl_blue.png"}
+                      onClick={changePicture}
+                    />
+                    <img
+                      src={selectedVinyl.url || "/images/vinyl_back.jpg"}
+                      onClick={changePicture}
+                    />
+                    <img
+                      src={selectedVinyl.url || "/images/vinyl_blue.png"}
+                      onClick={changePicture}
+                    />
+                    <img
+                      src={selectedVinyl.url || "/images/vinyl_back.jpg"}
+                      onClick={changePicture}
+                    />
                   </div>
                 </div>
                 <h3>
@@ -254,7 +275,8 @@ const VinylBox: React.FC<Vinyl_color> = ({ by_genre, color }) => {
                 <h3>
                   Genre:
                   <br />
-                  GENRE IN WIP
+                  {selectedVinyl.belongsToGenreGenres.join(", ") ||
+                    "GENRE IN WIP"}
                 </h3>
               </div>
               <div className={styles.vinDetails}>
@@ -265,7 +287,8 @@ const VinylBox: React.FC<Vinyl_color> = ({ by_genre, color }) => {
                 <h4>
                   Genre:
                   <br />
-                  GENRE IN WIP
+                  {selectedVinyl.belongsToGenreGenres.join(", ") ||
+                    "GENRE IN WIP"}
                 </h4>
                 <p>Performer: {selectedVinyl.performer || "PERFORMER"}</p>
                 <p>Year of release: {selectedVinyl.YearOfRelease || "YEAR"}</p>
