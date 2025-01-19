@@ -21,9 +21,25 @@ interface FormData {
   onLocation: string;
   [key: string]: any; // Index signature for dynamic keys
 }
-interface MyVinylsData extends FormData {
+interface MyVinylsData {
   available: string;
   vinylId: string;
+  vinylCondition: string;
+  coverCondition: string;
+  description: string;
+  vinylImagePath1: string;
+  vinylImagePath2: string;
+  coverImagePath1: string;
+  coverImagePath2: string;
+  editionLabel: {
+    editionLabel: string;
+    artistName: string;
+    releaseDate: string;
+    albumName: string;
+    countryOfOrigin: string;
+    belongsToGenreGenres: { genreId: string; genreName: string }[];
+  };
+  onLocation: string;
 }
 
 const API_BASE_URL = "https://gramofer.work.gd";
@@ -381,7 +397,11 @@ const MyVinyls = () => {
               edition_mark={vinyl.editionLabel.editionLabel || "N/A"}
               album={vinyl.editionLabel.albumName || "ALBUM_NAME"}
               performer={vinyl.editionLabel.artistName || "PERFORMER"}
-              genre={vinyl.editionLabel.genres || "GENRES"}
+              genre={
+                vinyl.editionLabel.belongsToGenreGenres?.map(
+                  (genre) => genre.genreName
+                ) || [""]
+              }
               picture_urls={vinyl.coverImagePath1 || "pic_url"}
             />
           ))
