@@ -188,6 +188,7 @@ const MyVinyls = () => {
           },
         });
         clearImages();
+        window.location.reload();
       } else {
         alert("Failed to add vinyl. Please try again.");
       }

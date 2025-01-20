@@ -34,6 +34,7 @@ const AdminSiteUserElement: React.FC<AdminSiteUserElementProps> = ({
       );
       if (response.ok) {
         alert("Deleted user sucessfully");
+        window.location.reload();
       } else {
         alert("Something went wrong");
       }
