@@ -19,14 +19,13 @@ const AdminSiteUserElement: React.FC<AdminSiteUserElementProps> = ({
 }) => {
   const handleBan = async () => {
     const token = localStorage.getItem("aToken");
-    const id = parseInt(userId);
+    //const id = parseInt(userId);
     try {
       const response = await fetch(
-        `https://gramofer.work.gd/api/admintable/user/${id}`,
+        `https://gramofer.work.gd/api/admintable/user/${userId}`,
         {
-          method: "POST",
+          method: "DELETE",
           headers: {
-            "Content-Type": "application/json",
             Authorization: `Bearer ${token}`,
           },
           //nothing to send again
