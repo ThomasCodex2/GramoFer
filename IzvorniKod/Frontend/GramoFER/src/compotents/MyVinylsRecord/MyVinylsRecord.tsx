@@ -19,10 +19,10 @@ const MyVinylsRecord: React.FC<MyVinylsRecordProps> = ({
 }) => {
   const handleDelete = async () => {
     const token = localStorage.getItem("aToken");
-    const id = parseInt(vinyl_id);
+    //const id = parseInt(vinyl_id); number or string?
     try {
       const response = await fetch(
-        `https://gramofer.work.gd/api/vinyls/${id}`,
+        `https://gramofer.work.gd/api/vinyls/${vinyl_id}`,
         {
           method: "POST",
           headers: {
