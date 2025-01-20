@@ -24,9 +24,8 @@ const AdminSiteUserElement: React.FC<AdminSiteUserElementProps> = ({
       const response = await fetch(
         `https://gramofer.work.gd/api/admintable/user/${userId}`,
         {
-          method: "POST",
+          method: "DELETE",
           headers: {
-            "Content-Type": "application/json",
             Authorization: `Bearer ${token}`,
           },
           //nothing to send again

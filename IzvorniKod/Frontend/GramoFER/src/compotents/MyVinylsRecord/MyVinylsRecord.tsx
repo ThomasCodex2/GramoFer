@@ -24,7 +24,7 @@ const MyVinylsRecord: React.FC<MyVinylsRecordProps> = ({
       const response = await fetch(
         `https://gramofer.work.gd/api/vinyls/${vinyl_id}`,
         {
-          method: "POST",
+          method: "DELETE",
           headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${token}`,
