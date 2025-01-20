@@ -306,9 +306,6 @@ const VinylBox: React.FC<Vinyl_color> = ({ by_genre, color }) => {
               <div className={styles.buttonDiv}>
                 <div></div>
                 <button className={styles.buttonExtra}>Ponudi zamjenu</button>
-                <button className={styles.buttonTrash}>
-                  <img src="/images/trash_icon.webp" />
-                </button>
               </div>
             </div>
             <button className={styles.closeButton} onClick={closePopup}>

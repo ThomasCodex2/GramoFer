@@ -26,6 +26,7 @@ const TokenHandler = () => {
       if (expiresIn) {
         localStorage.setItem("expiresIn", expiresIn.toString());
       }
+      //const isAdmin = urlParams.get("isAdmin");
     }
     if (localStorage.getItem("aToken")) {
       console.log(

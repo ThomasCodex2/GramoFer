@@ -38,9 +38,8 @@ public class VinylController {
         System.out.println(user.getEmail());
         String zastavica = service.newVinyl(vinyl, user);
         if (zastavica == "uspjeh") {
-        return ResponseEntity.status(HttpStatus.SC_CREATED).body("Vinyl added successfully.");
-        }
-        else {
+            return ResponseEntity.status(HttpStatus.SC_CREATED).body("Vinyl added successfully.");
+        } else {
             return ResponseEntity.status(HttpStatus.SC_NOT_ACCEPTABLE).body("Edition already exists");
         }
     }
@@ -51,19 +50,18 @@ public class VinylController {
     }
 
     @PostMapping("/update/{id}")
-    public ResponseEntity<String> updateVinyl (@AuthenticationPrincipal UserAccount user, @PathVariable Integer id, @RequestBody VinylDto vinyl){
+    public ResponseEntity<String> updateVinyl(@AuthenticationPrincipal UserAccount user, @PathVariable Integer id,
+            @RequestBody VinylDto vinyl) {
         System.out.println("Mijenjanje vinila");
         System.out.println(user.getEmail());
         String poruka = service.updateV(id, user, vinyl);
-        if (poruka == "Greska1"){
+        if (poruka == "Greska1") {
             return ResponseEntity.status(HttpStatus.SC_NOT_ACCEPTABLE).body("Ploca ne postoji");
-        }
-        else if (poruka == "Greska2"){
+        } else if (poruka == "Greska2") {
             return ResponseEntity.status(HttpStatus.SC_NOT_ACCEPTABLE).body("Edition already exists");
-        }
-        else {
-        return ResponseEntity.status(HttpStatus.SC_CREATED).body("Vinyl added changed.");
+        } else {
+            return ResponseEntity.status(HttpStatus.SC_CREATED).body("Vinyl added changed.");
         }
     }
-    
+
 }
