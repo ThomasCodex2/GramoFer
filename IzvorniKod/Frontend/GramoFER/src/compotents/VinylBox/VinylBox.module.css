@@ -146,7 +146,7 @@
 }
 .buttonDiv{
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
 }
 .buttonTrash{
   justify-self: end;

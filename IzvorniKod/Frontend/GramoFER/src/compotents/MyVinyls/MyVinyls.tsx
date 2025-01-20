@@ -36,7 +36,7 @@ interface MyVinylsData {
     artistName: string;
     releaseDate: string;
     albumName: string;
-    countryOfOrigin: string;
+    countryOfOrigin: string; //umjesto toga
     belongsToGenreGenres: { genreId: string; genreName: string }[];
   };
   onLocation: string;
@@ -65,29 +65,7 @@ const MyVinyls = () => {
       genres: [],
     },
   });
-  const [MyVinylsData, setMyVinylsData] = useState<MyVinylsData[]>(
-    []
-    //{
-    //   vinylCondition: "",
-    //   coverCondition: "",
-    //   description: "",
-    //   vinylImagePath1: "",
-    //   vinylImagePath2: "",
-    //   coverImagePath1: "",
-    //   coverImagePath2: "",
-    //   onLocation: "",
-    //   edition: {
-    //     editionLabel: "",
-    //     artistName: "",
-    //     releaseDate: "",
-    //     albumName: "",
-    //     countryOfOrigin: "",
-    //     genres: [],
-    //   },
-    //   available: "",
-    //   vinylId: "",
-    // }
-  );
+  const [MyVinylsData, setMyVinylsData] = useState<MyVinylsData[]>([]);
   const maxImages = 4;
   const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -335,8 +313,8 @@ const MyVinyls = () => {
           Location:
           <input
             type="text"
-            name="edition.countryOfOrigin"
-            value={formData.edition.countryOfOrigin}
+            name="onLocation" //WAS PREVIOUSLY edition.countryOfOrigin
+            value={formData.onLocation} //WAS PREVIOUSLY formData.edition.countryOfOrigin
             onChange={handleInputChange}
             required
           ></input>
@@ -394,6 +372,7 @@ const MyVinyls = () => {
           MyVinylsData.map((vinyl, index) => (
             <MyVinylsRecord
               key={index}
+              vinyl_id={vinyl.vinylId}
               edition_mark={vinyl.editionLabel.editionLabel || "N/A"}
               album={vinyl.editionLabel.albumName || "ALBUM_NAME"}
               performer={vinyl.editionLabel.artistName || "PERFORMER"}
@@ -409,6 +388,7 @@ const MyVinyls = () => {
           <h2 className={styles.noVinylsAdded}>You have no Vinyl records</h2>
         )}
         <MyVinylsRecord
+          vinyl_id="x"
           edition_mark="1203"
           album="Wavelength"
           performer="lorem"
@@ -416,6 +396,7 @@ const MyVinyls = () => {
           picture_urls="pic_url"
         />
         <MyVinylsRecord
+          vinyl_id="x"
           edition_mark="1014"
           album="The Wild Boys"
           performer="ipsums"
