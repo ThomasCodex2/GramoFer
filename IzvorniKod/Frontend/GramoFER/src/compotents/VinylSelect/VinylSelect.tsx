@@ -1,26 +1,32 @@
 import styles from "./VinylSelect.module.css";
 import VinylBox from "../VinylBox/VinylBox";
 import React, { useState } from "react";
-import { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
+// import { useEffect } from "react";
+// import { useNavigate } from "react-router-dom";
 const VinylSelect = () => {
   const [selectedGenre, setSelectedGenre] = useState("Rock");
   const handleGenreChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setSelectedGenre(event.target.value);
   };
-  const navigate = useNavigate();
-  useEffect(() => {
-    const urlParams = new URLSearchParams(window.location.search);
-    const urltoken = urlParams.get("token");
-    if (urltoken) {
-      localStorage.setItem("aToken", urltoken);
-      navigate("/");
-      return;
-    }
-  });
+  // const navigate = useNavigate();
+  // useEffect(() => {
+  //   const urlParams = new URLSearchParams(window.location.search);
+  //   const urltoken = urlParams.get("token");
+  //   if (urltoken) {
+  //     localStorage.setItem("aToken", urltoken);
+  //     navigate("/");
+  //     return;
+  //   }
+  // });
 
   return (
     <div className={styles.container}>
+      <Link to="/admin-site">
+        <button className={styles.adminButton}>
+          Temporary Admin page button
+        </button>
+      </Link>
       <div className={styles.welcome_banner}>
         <div className={styles.image_crop}></div>
         <div className={styles.banner_text}>
@@ -35,7 +41,7 @@ const VinylSelect = () => {
         <div className={styles.filter}>
           <div className={styles.block_header}>
             <h2>
-              The <u>newest</u> additions:
+              List of <u>ALL</u> our vinyls!
             </h2>
           </div>
           <VinylBox by_genre={false} color={"random"}></VinylBox>

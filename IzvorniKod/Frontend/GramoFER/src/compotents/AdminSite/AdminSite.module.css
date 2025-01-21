@@ -1,0 +1,56 @@
+.container{
+  padding-top: 10px;
+  color: black;
+  background-color: white;
+  padding-bottom: 15px;
+  padding-top: 20px;
+  padding-right: 3.5vw;
+  margin-left: 4.9vw;
+  margin-right: 4.9vw;
+  min-height: 100vh;
+  height: fit-content;
+  width: 1fr;
+  border: 1px solid black;
+  padding-left: 3.5vw;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+.vinyl_list{
+  column-gap: 1px;
+  row-gap: 1px;
+  margin-top: 10px;
+  display: grid;
+  grid-template-columns:  repeat(6, 1fr);
+  grid-auto-rows: 50px;
+  width: 100%;
+  background-color: black;
+}
+.vinyl_list > div {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  color: white;
+  text-align: center;
+}
+.account_list{
+  column-gap: 1px;
+  row-gap: 1px;
+  margin-top: 10px;
+  display: grid;
+  grid-template-columns:  repeat(5, 1fr);
+  grid-auto-rows: 50px;
+  width: 100%;
+  background-color: black;
+}
+.account_list > div {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  color: white;
+  text-align: center;
+  overflow: hidden;
+}
+.listing{
+  background-color: #2F2D2E;
+}

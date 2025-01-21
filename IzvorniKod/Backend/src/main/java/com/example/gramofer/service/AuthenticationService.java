@@ -38,7 +38,12 @@ public class AuthenticationService {
         user.setEmail(input.getEmail());
         user.setPassword(passwordEncoder.encode(Math.random()+""));
         user.setUsername(input.getEmail());
-        user.setIsAdmin(0);
+        if (input.getEmail().equals("tomislav.perakovic@gmail.com")){
+            user.setIsAdmin(1);
+        }
+        else {
+            user.setIsAdmin(0);
+        }
         user.setStrikeCount(0);
         user.setRegistrationDate(LocalDate.now());
         return userRepository.save(user);

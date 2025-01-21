@@ -1,7 +1,38 @@
 import styles from "./Header.module.css";
 import { Link } from "react-router-dom";
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
+import { useLocation } from "react-router-dom";
 function Header() {
+  const [isLoggedIn, setIsLoggedIn] = useState(
+    !!localStorage.getItem("aToken")
+  );
+  const location = useLocation();
+
+  useEffect(() => {
+    const handleStorageChange = () => {
+      const token = localStorage.getItem("aToken");
+      setIsLoggedIn(!!token);
+    };
+
+    window.addEventListener("storage", handleStorageChange);
+
+    const token = localStorage.getItem("aToken");
+    setIsLoggedIn(!!token);
+
+    return () => {
+      window.removeEventListener("storage", handleStorageChange);
+    };
+  }, [location.search]);
+
+  const handleLogout = () => {
+    localStorage.removeItem("aToken");
+    if (localStorage.getItem("expiresIn")) {
+      localStorage.removeItem("expiresIn");
+    }
+    setIsLoggedIn(false);
+    alert("You have been logged out.");
+  };
+
   // const handleLoginSuccess = (response: any) => {
   //   console.log("Login Success: ", response);
   // };
@@ -9,19 +40,17 @@ function Header() {
   // const handleLoginFailure = () => {
   //   console.log("Login Failed");
   // };
-  const checkLocal = () => {
-    console.log(localStorage);
-  };
   const notify_test = false;
-  useEffect(() => {
-    const urlParams = new URLSearchParams(window.location.search);
-    const uriToken = urlParams.get("token");
-    if (uriToken) {
-      localStorage.setItem("aToken", uriToken);
-      console.log(localStorage);
-      return;
-    }
-  });
+  // useEffect(() => {
+  //   const urlParams = new URLSearchParams(window.location.search);
+  //   const uriToken = urlParams.get("token");
+  //   if (uriToken) {
+  //     localStorage.setItem("aToken", uriToken);
+  //     console.log(localStorage);
+  //     return;
+  //   }
+  // });
+
   return (
     <div className={styles.header}>
       <div className={[styles.row].join(" ")}>
@@ -40,27 +69,45 @@ function Header() {
           </Link>
         </div>
         <div className={styles.link_contain}>
-          <Link to="/my-vinyls" className={styles.link}>
+          <Link
+            to={isLoggedIn ? "/my-vinyls" : "#"}
+            className={`${styles.link} ${!isLoggedIn ? styles.disabled : ""}`}
+            onClick={(e) => {
+              if (!isLoggedIn) {
+                e.preventDefault();
+                alert("You need to log in to access My Vinyls.");
+              }
+            }}
+          >
             <h3>My Vinyls</h3>
             {notify_test && <div className={styles.notify}></div>}
           </Link>
         </div>
         <div className={styles.link_contain}>
-          <Link to="/my-exchanges" className={styles.link}>
+          <Link
+            to={isLoggedIn ? "/my-exchanges" : "#"}
+            className={`${styles.link} ${!isLoggedIn ? styles.disabled : ""}`}
+            onClick={(e) => {
+              if (!isLoggedIn) {
+                e.preventDefault();
+                alert("You need to log in to access My Exchanges.");
+              }
+            }}
+          >
             <h3>My Exchanges</h3>
             {notify_test && <div className={styles.notify}></div>}
           </Link>
         </div>
         <div className={styles.google_btn}>
-          <Link to="/register" className={styles.link}>
-            <button className={styles.reg_btn}>Register</button>
-          </Link>
-          <a
-            href="https://gramofer.work.gd/api/auth/google"
-            className={styles.google_login_button}
-          >
-            Sign in with Google
-          </a>
+          {isLoggedIn ? (
+            <button className={styles.reg_btn} onClick={handleLogout}>
+              Logout
+            </button>
+          ) : (
+            <Link to="/register" className={styles.link}>
+              <button className={styles.reg_btn}>Register / Login</button>
+            </Link>
+          )}
         </div>
       </div>
     </div>
