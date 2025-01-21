@@ -34,6 +34,7 @@ const MyVinylsRecord: React.FC<MyVinylsRecordProps> = ({
       );
       if (response.ok) {
         alert("Vinyl Deleted successfully!");
+        window.location.reload();
       } else {
         alert("Failed to delete Vinyl!");
       }

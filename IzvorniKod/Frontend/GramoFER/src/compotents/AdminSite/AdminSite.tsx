@@ -7,11 +7,11 @@ const AdminSite = () => {
     const fetchVinyls = async () => {
       const token = localStorage.getItem("aToken");
 
-      if (token !== null) {
-        console.log("Token found:", token);
-      } else {
-        console.log("No token found");
-      }
+      // if (token !== null) {
+      //   console.log("Token found:", token);
+      // } else {
+      //   console.log("No token found");
+      // }
       try {
         const response = await fetch(
           `https://gramofer.work.gd/api/admintable/allvinyls`,
@@ -25,9 +25,14 @@ const AdminSite = () => {
         );
 
         if (!response.ok) {
-          throw new Error("Failed to fetch vinyls");
+          throw new Error(`Failed to fetch vinyls: ${response.status}`);
         }
-        const allVinyls = await response.json();
+        const text = await response.text();
+        if (!text) {
+          console.error("Empty response from server for vinyls");
+          return;
+        }
+        const allVinyls = JSON.parse(text);
         // const myVinylsData: MyVinylsData[] = await response.json();
         // setMyVinylsData(myVinylsData); CHANGE FOR ADMINTABLE
         console.log("allVinyls data:", allVinyls);
@@ -59,9 +64,13 @@ const AdminSite = () => {
         );
 
         if (!response.ok) {
-          throw new Error("Failed to fetch users");
+          throw new Error(`Failed to fetch users: ${response.status}`);
         }
-        const allUsers = await response.json();
+        const text = await response.text();
+        if (!text) {
+          console.error("Empty response from server for users");
+        }
+        const allUsers = JSON.parse(text);
         // const myVinylsData: MyVinylsData[] = await response.json();
         // setMyVinylsData(myVinylsData); CHANGE FOR ADMINTABLE
         console.log("AllVinyls data:", allUsers);
