@@ -36,12 +36,12 @@ public class Wish {
     @Column(nullable = false)
     private String artistName;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
     @JsonBackReference
     private UserAccount user;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "edition_label_id")
     @JsonBackReference
     private Edition editionLabel;
