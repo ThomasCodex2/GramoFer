@@ -118,36 +118,11 @@ const VinylBox: React.FC<Vinyl_color> = ({ by_genre, color }) => {
     }
   };
 
-  const handleVinylClick = (
-    title: string,
-    url: string,
-    belongsToGenreGenres: string[],
-    performer: string,
-    YearOfRelease: number,
-    vinylCondition: string,
-    coverCondition: string,
-    editionMark: string,
-    location: string,
-    description: string,
-    vinylId?: number
-  ) => {
-    setSelectedVinyl({
-      title,
-      url,
-      belongsToGenreGenres,
-      performer,
-      YearOfRelease,
-      vinylCondition,
-      coverCondition,
-      editionMark,
-      location,
-      description,
-    });
+  const handleVinylClick = (vinylId?: number) => {
     navigate(`/vinyl/${vinylId || "placeholder"}`);
   };
 
   const closePopup = () => {
-    setSelectedVinyl(null);
     navigate("/");
   };
 
@@ -195,6 +170,8 @@ const VinylBox: React.FC<Vinyl_color> = ({ by_genre, color }) => {
           location: selected.onLocation,
           description: selected.description,
         });
+      } else {
+        setSelectedVinyl(null);
       }
     }
   }, [vinylId, vinylRecords]);
@@ -220,23 +197,7 @@ const VinylBox: React.FC<Vinyl_color> = ({ by_genre, color }) => {
               //vinyl_genre={`vinylBox_${index}`}
               title={vinyl.editionLabel.albumName}
               url={vinyl.coverImagePath1 || "/images/placeholder_vinyl.jpg"}
-              onClick={() =>
-                handleVinylClick(
-                  vinyl.editionLabel.albumName,
-                  vinyl.coverImagePath1,
-                  vinyl.editionLabel.belongsToGenreGenres.map(
-                    (genre) => genre.genreName
-                  ),
-                  vinyl.editionLabel.artistName,
-                  vinyl.editionLabel.releaseDate,
-                  vinyl.vinylCondition,
-                  vinyl.coverCondition,
-                  vinyl.editionLabel.editionLabel,
-                  vinyl.onLocation,
-                  vinyl.description,
-                  vinyl.vinylId
-                )
-              }
+              onClick={() => handleVinylClick(vinyl.vinylId)}
             />
           ))}
         {Array.from({ length: V_count }).map((_, index) => {
@@ -249,9 +210,7 @@ const VinylBox: React.FC<Vinyl_color> = ({ by_genre, color }) => {
               //vinyl_genre={`vinylBox_${number}`}
               title={naslov}
               url={url}
-              onClick={() =>
-                handleVinylClick(naslov, url, [""], "", 0, "", "", "", "", "")
-              }
+              onClick={() => handleVinylClick(0)}
             />
           );
         })}

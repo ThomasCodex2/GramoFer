@@ -4,7 +4,7 @@ import MyWishlistRecord from "./MyWishlistRecord/MyWishlistRecord";
 interface Wish {
   artistName: string;
   albumName: string;
-  wishId: string;
+  wishid: string;
 }
 interface WishFormData {
   artistName: string;
@@ -133,7 +133,7 @@ const MyWishlist = () => {
               <MyWishlistRecord
                 artistName={wish.artistName}
                 albumName={wish.albumName}
-                wishId={wish.wishId}
+                wishId={wish.wishid}
               />
             ))
           ) : (
