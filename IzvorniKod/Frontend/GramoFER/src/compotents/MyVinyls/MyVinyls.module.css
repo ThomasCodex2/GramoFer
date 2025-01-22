@@ -24,6 +24,9 @@
   width: 100%;
   background-color: black;
 }
+h1 > span{
+  color: #6bb1bc;
+}
 .listing_form{
   background-color: #2F2D2E;
   color: white;
@@ -38,9 +41,7 @@
   text-align: center;
   grid-column: span 2;
 }
-h1 > span{
-  color: #6bb1bc;
-}
+
 .listing_form > div{
   display: flex;
   flex-direction: column;
@@ -130,7 +131,13 @@ h1 > span{
   font-size: large;
   background-color: #b0423e;
 }
-
+.noVinylsAdded{
+  opacity: 0.7;
+  color: white;
+  font-style: italic;
+  text-align: center;
+  grid-column: span 6;
+}
 .desc{
   grid-column: span 2;
 }

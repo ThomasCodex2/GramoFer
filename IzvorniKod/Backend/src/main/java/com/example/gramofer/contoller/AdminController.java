@@ -29,7 +29,7 @@ public class AdminController {
 
     @GetMapping("/users")
     public List<UserResponse> getUsers(@AuthenticationPrincipal UserAccount user) {
-        if (user.getIsAdmin() == 1){
+        if (user.getIsAdmin() == 1) {
             return userService.getAllUsers();
         }
         return null;
@@ -37,7 +37,7 @@ public class AdminController {
 
     @GetMapping("/allvinyls")
     public List<VinylResponseDTO> getVinyls(@AuthenticationPrincipal UserAccount user) {
-        if (user.getIsAdmin() == 1){
+        if (user.getIsAdmin() == 1) {
             return vinylService.getAllVinyls();
         }
         return null;
@@ -45,20 +45,18 @@ public class AdminController {
 
     @DeleteMapping("/vinyl/{id}")
     public ResponseEntity<?> deleteVinyl(@PathVariable Integer id, @AuthenticationPrincipal UserAccount user) {
-        if (user.getIsAdmin() == 1){
+        if (user.getIsAdmin() == 1) {
             return vinylService.deleteVinylById(id);
-        } 
+        }
         return null;
     }
 
     @DeleteMapping("/user/{id}")
     public ResponseEntity<?> deleteUser(@PathVariable Integer id, @AuthenticationPrincipal UserAccount user) {
-        if (user.getIsAdmin() == 1){
+        if (user.getIsAdmin() == 1) {
             return userService.deleteUserById(id);
-        } 
+        }
         return null;
     }
-
-
 
 }

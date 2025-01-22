@@ -5,6 +5,7 @@ import VinylSelect from "./compotents/VinylSelect/VinylSelect";
 import AdminSite from "./compotents/AdminSite/AdminSite";
 import ErrorSite from "./compotents/ErrorSite/ErrorSite";
 import Register from "./compotents/Register/Register";
+import MyWishlist from "./compotents/MyWishlist/MyWishlist";
 import { useEffect } from "react";
 import {
   BrowserRouter as Router,
@@ -26,10 +27,11 @@ const TokenHandler = () => {
       if (expiresIn) {
         localStorage.setItem("expiresIn", expiresIn.toString());
       }
+      //const isAdmin = urlParams.get("isAdmin");
     }
     if (localStorage.getItem("aToken")) {
       console.log(
-        "Token stored in localStorage:",
+        "aToken stored in localStorage:",
         localStorage.getItem("aToken")
       );
     } else {
@@ -63,6 +65,7 @@ function App() {
             <Route path="*" element={<ErrorSite />} />
             <Route path="/register" element={<Register />} />
             <Route path="/admin-site" element={<AdminSite />} />
+            <Route path="/my-wishlist" element={<MyWishlist />} />
           </Routes>
         </div>
       </div>

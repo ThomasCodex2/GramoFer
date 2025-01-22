@@ -1,5 +1,5 @@
 import styles from "./MyVinyls.module.css";
-import MyVinylsRecord from "../MyVinylsRecord/MyVinylsRecord";
+import VinylsRecord from "../VinylsRecord/VinylsRecord";
 import { useState, useRef, useEffect } from "react";
 
 interface FormData {
@@ -21,38 +21,30 @@ interface FormData {
   onLocation: string;
   [key: string]: any; // Index signature for dynamic keys
 }
+interface MyVinylsData {
+  available: string;
+  vinylId: string;
+  vinylCondition: string;
+  coverCondition: string;
+  description: string;
+  vinylImagePath1: string;
+  vinylImagePath2: string;
+  coverImagePath1: string;
+  coverImagePath2: string;
+  editionLabel: {
+    editionLabel: string;
+    artistName: string;
+    releaseDate: string;
+    albumName: string;
+    countryOfOrigin: string; //umjesto toga
+    belongsToGenreGenres: { genreId: string; genreName: string }[];
+  };
+  onLocation: string;
+}
 
 const API_BASE_URL = "https://gramofer.work.gd";
 
 const MyVinyls = () => {
-  //const getToken = async () => {
-  //  const token = localStorage.getItem("aToken");
-  //
-  //  if (!token) {
-  //    try {
-  //      const response = await fetch("/auth/token", {
-  //        method: "GET",
-  //        headers: {
-  //          "Authorization": `Bearer ${token}`,
-  //        },
-  //      });
-  //
-  //      if (response.ok) {
-  //        const newToken = await response.text();
-  //        localStorage.setItem("aToken", newToken); // Store the new token
-  //        return newToken;
-  //      } else {
-  //        alert("Failed to refresh token. Please log in again.");
-  //        // Redirect to login page or clear session, etc.
-  //      }
-  //    } catch (error) {
-  //      console.error("Error fetching the token:", error);
-  //      alert("Error fetching the token.");
-  //    }
-  //  } else {
-  //    return token; // Return the existing token
-  //  }
-  //};
   const [images, setImages] = useState<string[]>([]);
 
   const [formData, setFormData] = useState<FormData>({
@@ -73,6 +65,7 @@ const MyVinyls = () => {
       genres: [],
     },
   });
+  const [MyVinylsData, setMyVinylsData] = useState<MyVinylsData[]>([]);
   const maxImages = 4;
   const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -195,6 +188,7 @@ const MyVinyls = () => {
           },
         });
         clearImages();
+        window.location.reload();
       } else {
         alert("Failed to add vinyl. Please try again.");
       }
@@ -204,41 +198,38 @@ const MyVinyls = () => {
     }
   };
 
-    useEffect(() => {
-      const fetchVinyls = async () => {
-        const token = localStorage.getItem("aToken");
+  useEffect(() => {
+    const fetchVinyls = async () => {
+      const token = localStorage.getItem("aToken");
 
-        if (token !== null) {
-          // If the value exists, print the value of atoken
-          console.log("Token found:", token);
-        } else {
-          // If it does not exist, print a message
-          console.log("No token found");
+      if (token !== null) {
+        console.log("Token found:", token);
+      } else {
+        console.log("No token found");
+      }
+      try {
+        const response = await fetch(`${API_BASE_URL}/api/vinyls/myVinyl`, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        });
+
+        if (!response.ok) {
+          throw new Error("Failed to fetch vinyls");
         }
-        try {
-          const response = await fetch(`${API_BASE_URL}/api/vinyls/myVinyl`, {
-            method: "GET",
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${token}`,
-            },
-          });
-  
-          if (!response.ok) {
-            throw new Error("Failed to fetch vinyls");
-          }
-  
-          const myVinylsData = await response.json();
-  
-          console.log("myVinyls data:", myVinylsData);
-        } catch (error) {
-          console.error("Error fetching vinyls:", error);
-        }
-      };
-  
-      fetchVinyls();
-    }, []);
-  
+
+        const myVinylsData: MyVinylsData[] = await response.json();
+        setMyVinylsData(myVinylsData);
+        console.log("myVinyls data:", myVinylsData);
+      } catch (error) {
+        console.error("Error fetching vinyls:", error);
+      }
+    };
+
+    fetchVinyls();
+  }, []);
 
   return (
     <div className={styles.container}>
@@ -323,8 +314,8 @@ const MyVinyls = () => {
           Location:
           <input
             type="text"
-            name="edition.countryOfOrigin"
-            value={formData.edition.countryOfOrigin}
+            name="onLocation" //WAS PREVIOUSLY edition.countryOfOrigin
+            value={formData.onLocation} //WAS PREVIOUSLY formData.edition.countryOfOrigin
             onChange={handleInputChange}
             required
           ></input>
@@ -378,19 +369,43 @@ const MyVinyls = () => {
         <div className={styles.listing}>Genre</div>
         <div className={styles.listing}>Display picture</div>
         <div className={styles.listing}>Edit/Delete record</div>
-        <MyVinylsRecord
+        {MyVinylsData.length > 0 ? (
+          MyVinylsData.map((vinyl, index) => (
+            <VinylsRecord
+              key={index}
+              vinyl_id={vinyl.vinylId}
+              edition_mark={vinyl.editionLabel.editionLabel || "N/A"}
+              album={vinyl.editionLabel.albumName || "ALBUM_NAME"}
+              performer={vinyl.editionLabel.artistName || "PERFORMER"}
+              genre={
+                vinyl.editionLabel.belongsToGenreGenres?.map(
+                  (genre) => genre.genreName
+                ) || [""]
+              }
+              picture_urls={vinyl.coverImagePath1 || "pic_url"}
+              adminSite={false}
+            />
+          ))
+        ) : (
+          <h2 className={styles.noVinylsAdded}>You have no Vinyl records</h2>
+        )}
+        <VinylsRecord
+          vinyl_id="x"
           edition_mark="1203"
           album="Wavelength"
           performer="lorem"
-          genre="pop"
+          genre={["pop"]}
           picture_urls="pic_url"
+          adminSite={false}
         />
-        <MyVinylsRecord
+        <VinylsRecord
+          vinyl_id="x"
           edition_mark="1014"
           album="The Wild Boys"
           performer="ipsums"
-          genre="pop"
+          genre={["pop"]}
           picture_urls="pic_url"
+          adminSite={false}
         />
       </div>
     </div>
