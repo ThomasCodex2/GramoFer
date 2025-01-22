@@ -25,12 +25,11 @@ interface VinylRecord {
   };
   onLocation: string;
   vinylCondition: string;
-  vinylId: number;
+  vinylId: string; //number
   vinylImagePath1: string;
   vinylImagePath2: string;
 }
-const VinylBox: React.FC<Vinyl_color> = ({ by_genre, color }) => {
-  const navigate = useNavigate();
+const VinylBox: React.FC<Vinyl_color> = ({ by_genre, color, navigate }) => {
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const [selectedVinyl, setSelectedVinyl] = useState<{
     title: string;
@@ -119,10 +118,27 @@ const VinylBox: React.FC<Vinyl_color> = ({ by_genre, color }) => {
   };
 
   const handleVinylClick = (vinylId?: number) => {
-    navigate(`/vinyl/${vinylId || "placeholder"}`);
+    if (vinylId === 500) {
+      // Placeholder logic
+      setSelectedVinyl({
+        title: "Placeholder Title",
+        url: "",
+        belongsToGenreGenres: ["Placeholder Genre"],
+        performer: "Placeholder Performer",
+        YearOfRelease: 1984,
+        vinylCondition: "Placeholder Condition",
+        coverCondition: "Placeholder Condition",
+        editionMark: "Placeholder Edition",
+        location: "Placeholder Location",
+        description: "This is a placeholder description.",
+      });
+    } else {
+      navigate(`/vinyl/${vinylId}`);
+    }
   };
 
   const closePopup = () => {
+    setSelectedVinyl(null);
     navigate("/");
   };
 
@@ -153,7 +169,7 @@ const VinylBox: React.FC<Vinyl_color> = ({ by_genre, color }) => {
   useEffect(() => {
     if (vinylId && vinylRecords.length > 0) {
       const selected = vinylRecords.find(
-        (vinyl) => vinyl.vinylId === Number(vinylId)
+        (vinyl) => parseInt(vinyl.vinylId) === Number(vinylId)
       );
       if (selected) {
         setSelectedVinyl({
@@ -175,6 +191,11 @@ const VinylBox: React.FC<Vinyl_color> = ({ by_genre, color }) => {
       }
     }
   }, [vinylId, vinylRecords]);
+  // useEffect(() => {
+  //   if (!vinylId) {
+  //     setSelectedVinyl(null);
+  //   }
+  // }, [vinylId]);
   const changePicture = (event: React.MouseEvent<HTMLImageElement>) => {
     const bigImage = document.getElementById("bigPicture") as HTMLImageElement;
     if (bigImage && event.target instanceof HTMLImageElement) {
@@ -197,7 +218,7 @@ const VinylBox: React.FC<Vinyl_color> = ({ by_genre, color }) => {
               //vinyl_genre={`vinylBox_${index}`}
               title={vinyl.editionLabel.albumName}
               url={vinyl.coverImagePath1 || "/images/placeholder_vinyl.jpg"}
-              onClick={() => handleVinylClick(vinyl.vinylId)}
+              onClick={() => handleVinylClick(parseInt(vinyl.vinylId))}
             />
           ))}
         {Array.from({ length: V_count }).map((_, index) => {
@@ -210,7 +231,7 @@ const VinylBox: React.FC<Vinyl_color> = ({ by_genre, color }) => {
               //vinyl_genre={`vinylBox_${number}`}
               title={naslov}
               url={url}
-              onClick={() => handleVinylClick(0)}
+              onClick={() => handleVinylClick(500)}
             />
           );
         })}
