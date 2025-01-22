@@ -60,12 +60,13 @@ const AdminSite = () => {
         if (!response.ok) {
           throw new Error(`Failed to fetch vinyls: ${response.status}`);
         }
-        const text = await response.text();
-        if (!text) {
-          console.error("Empty response from server for vinyls");
-          return;
-        }
-        const allVinyls = JSON.parse(text);
+        // const text = await response.text();
+        // if (!text) {
+        //   console.error("Empty response from server for vinyls");
+        //   return;
+        // }
+        // const allVinyls = JSON.parse(text);
+        const allVinyls: VinylsData[] = await response.json();
         setVinlysData(allVinyls);
         console.log("allVinyls data:", allVinyls);
       } catch (error) {
@@ -98,11 +99,11 @@ const AdminSite = () => {
         if (!response.ok) {
           throw new Error(`Failed to fetch users: ${response.status}`);
         }
-        const text = await response.text();
-        if (!text) {
-          console.error("Empty response from server for users");
-        }
-        const allUsers = JSON.parse(text);
+        // const text = await response.text();
+        // if (!text) {
+        //   console.error("Empty response from server for users");
+        // }
+        const allUsers: UserData[] = await response.json();
         setUsersData(allUsers);
         console.log("AllUsers data:", allUsers);
       } catch (error) {
