@@ -26,8 +26,47 @@ public class ExchangeController {
         this.service = service;
     }
 
-    @GetMapping("/myExchanges")
-    public List<Exchange> getExchangesForUser (@AuthenticationPrincipal UserAccount user) {
-        return service.getExchangesByUserAndStatusZero(user);
+    @GetMapping("/myExchangesActive")
+    public List<Exchange> getExchangesForUserActive (@AuthenticationPrincipal UserAccount user) {
+        return service.getExchangesByUserAndStatusActive(user);
+    }
+    @GetMapping("/incomingExchangesActive")
+    public List<Exchange> getIncExchangesForUserActive (@AuthenticationPrincipal UserAccount user) {
+        return service.getIncExchangesUserActive(user);
+    }
+    @GetMapping("/myExchangesDone")
+    public List<Exchange> getExchangesForUserDone (@AuthenticationPrincipal UserAccount user) {
+        return service.getExchangesByUserAndStatusDone(user);
+    }
+    @GetMapping("/incomingExchangesDone")
+    public List<Exchange> getIncExchangesForUserDone (@AuthenticationPrincipal UserAccount user) {
+        return service.getIncExchangesByUserAndStatusDone(user);
+    }
+
+    @PostMapping("/add")
+    public ResponseEntity<String> addExchange(@AuthenticationPrincipal UserAccount user, @RequestBody ExchangeDTO exchangedto) {
+        String zastavica = service.newExchange(exchangedto, user);
+        if (zastavica == "uspjeh") {
+        return ResponseEntity.status(HttpStatus.SC_CREATED).body("Vinyl added successfully.");
+        }
+        else {
+            return ResponseEntity.status(HttpStatus.SC_NOT_ACCEPTABLE).body("Edition already exists");
+        }
+    }
+
+    @PostMapping("/update/{id}")
+    public ResponseEntity<String> updateVinyl (@AuthenticationPrincipal UserAccount user, @PathVariable Integer id, @RequestBody ExchangeDTO exchangedto){
+        System.out.println("Mijenjanje exchange-a");
+        System.out.println(user.getEmail());
+        String poruka = service.updateExchange(id, user, exchangedto);
+        if (poruka == "Greska1"){
+            return ResponseEntity.status(HttpStatus.SC_NOT_ACCEPTABLE).body("Ploca ne postoji");
+        }
+        else if (poruka == "Greska2"){
+            return ResponseEntity.status(HttpStatus.SC_NOT_ACCEPTABLE).body("Edition already exists");
+        }
+        else {
+        return ResponseEntity.status(HttpStatus.SC_CREATED).body("Vinyl added changed.");
+        }
     }
 }

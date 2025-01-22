@@ -1,12 +1,19 @@
 package com.example.gramofer.service;
 
+import java.time.LocalDate;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 
+import com.example.gramofer.dtos.ExchangeDTO;
+import com.example.gramofer.dtos.VinylDto;
+import com.example.gramofer.model.Edition;
 import com.example.gramofer.model.Exchange;
+import com.example.gramofer.model.Genre;
 import com.example.gramofer.model.UserAccount;
 import com.example.gramofer.model.Vinyl;
 import com.example.gramofer.repo.EditionRepo;
@@ -34,23 +41,50 @@ public class ExchangeService {
 
     }
 
-     public List<Exchange> getExchangesByUserAndStatusZero(UserAccount user) {
+     public List<Exchange> getExchangesByUserAndStatusActive(UserAccount user) {
         return exchangerepo.findAllByUserAndStatusZero(user);
     }
-
     
-    public List<Exchange> getExchangesByIsOfferingUserAndStatusZero(UserAccount isOfferingUser) {
+    public List<Exchange> getIncExchangesUserActive(UserAccount isOfferingUser) {
         return exchangerepo.findAllByIsOfferingUserAndStatusZero(isOfferingUser);
     }
 
-    public List<Exchange> getExchangesByUserAndStatusOne(UserAccount user) {
+    public List<Exchange> getExchangesByUserAndStatusDone(UserAccount user) {
         return exchangerepo.findAllByUserAndStatusOne(user);
     }
 
-    public List<Exchange> getExchangesByIsOfferingUserAndStatusOne(UserAccount isOfferingUser) {
+    public List<Exchange> getIncExchangesByUserAndStatusDone(UserAccount isOfferingUser) {
         return exchangerepo.findAllByIsOfferingUserAndStatusOne(isOfferingUser);
     }
 
+    
+
+    public String newExchange(ExchangeDTO input, UserAccount user){
+        Exchange exchange = new Exchange();
+        exchange.setDate(LocalDate.now());
+        exchange.setIsOfferingUser(input.getVinylsid().getUser());
+        exchange.setIncludesOfferedVinyls(input.getIsOfferingVinylsToOther());
+        exchange.setStatus("ongoing");
+        exchange.setVinyl(input.getVinylsid());
+        exchange.setUser(user);
+        exchangerepo.save(exchange);
+    return "uspjeh";
+    }
+
+     public String updateExchange(Integer id, UserAccount user, ExchangeDTO input){
+        Optional<Exchange> optexchange = exchangerepo.findById(id); //exchange u bazi
+
+        if (optexchange.isPresent()){ //ispitivanje je li exchange u bazi
+            Exchange exchange = optexchange.get();
+            exchange.setVinyl(input.getVinylsid());
+            exchange.setIncludesOfferedVinyls(input.getIsOfferingVinylsToOther());
+            return "uspjeh";
+        } //exchange u bazi
+            
+        else { //ako ni Vinyl ne postoji u bazi
+            return "Greska1";
+        }
+    }
 
 
 }

@@ -3,20 +3,13 @@ package com.example.gramofer.service;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-
-import com.example.gramofer.dtos.VinylDto;
-import com.example.gramofer.dtos.WishDto;
-import com.example.gramofer.model.Edition;
 import com.example.gramofer.model.UserAccount;
-import com.example.gramofer.model.Vinyl;
 import com.example.gramofer.model.Wish;
-import com.example.gramofer.repo.EditionRepo;
-import com.example.gramofer.repo.GenreRepo;
-import com.example.gramofer.repo.UserRepo;
-import com.example.gramofer.repo.VinylRepo;
 import com.example.gramofer.repo.WishRepo;
-import com.example.gramofer.responses.VinylResponseDTO;
+import com.example.gramofer.dtos.WishDto;
+import com.example.gramofer.responses.WishResponse;
 
 @Service
 public class WishService {
@@ -27,12 +20,12 @@ public class WishService {
         this.wishrepo = wishrepo;
     }
 
-
-    public List<WishDto> getWishesByUser(UserAccount user) {
+    public List<WishResponse> getWishesByUser(UserAccount user) {
     List<Wish> wishes = wishrepo.findWByUser(user);
     return wishes.stream()
         .map(wish -> {
-            WishDto wdto = new WishDto();
+            WishResponse wdto = new WishResponse();
+            wdto.setWishid(wish.getWishId());
             wdto.setAlbumName(wish.getAlbumName());
             wdto.setArtistName(wish.getArtistName());
             return wdto;
@@ -49,4 +42,12 @@ public class WishService {
         return "uspjeh";
     }
     
+    public ResponseEntity<?> deleteWishById(Integer id) {
+        if (!wishrepo.existsById(id)) {
+            return ResponseEntity.status(404).body("Wish not found");
+        }
+
+        wishrepo.deleteById(id);
+        return ResponseEntity.ok("Wish deleted successfully");
+    }
 }
