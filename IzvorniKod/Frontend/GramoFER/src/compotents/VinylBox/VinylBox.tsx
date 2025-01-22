@@ -132,7 +132,26 @@ const VinylBox: React.FC<Vinyl_color> = ({ by_genre, color, navigate }) => {
         location: "Placeholder Location",
         description: "This is a placeholder description.",
       });
-    } else {
+    } else if (vinylId) {
+      const selected = vinylRecords.find(
+        (vinyl) => parseInt(vinyl.vinylId) === vinylId
+      );
+      if (selected) {
+        setSelectedVinyl({
+          title: selected.editionLabel.albumName,
+          url: selected.coverImagePath1,
+          belongsToGenreGenres: selected.editionLabel.belongsToGenreGenres.map(
+            (genre) => genre.genreName
+          ),
+          performer: selected.editionLabel.artistName,
+          YearOfRelease: selected.editionLabel.releaseDate,
+          vinylCondition: selected.vinylCondition,
+          coverCondition: selected.coverCondition,
+          editionMark: selected.editionLabel.editionLabel,
+          location: selected.onLocation,
+          description: selected.description,
+        });
+      }
       navigate(`/vinyl/${vinylId}`);
     }
   };
@@ -167,7 +186,7 @@ const VinylBox: React.FC<Vinyl_color> = ({ by_genre, color, navigate }) => {
   const { v_id } = useParams();
 
   useEffect(() => {
-    if (v_id && vinylRecords.length > 0) {
+    if (v_id) {
       const selected = vinylRecords.find(
         (vinyl) => parseInt(vinyl.vinylId) === Number(v_id)
       );
@@ -187,16 +206,11 @@ const VinylBox: React.FC<Vinyl_color> = ({ by_genre, color, navigate }) => {
           description: selected.description,
         });
       }
-      // } else {
-      //   setSelectedVinyl(null);
-      // }
-    }
-  }, [v_id, vinylRecords, selectedVinyl]);
-  useEffect(() => {
-    if (!v_id) {
+    } else {
+      // Clear the selected vinyl when there's no `v_id`
       setSelectedVinyl(null);
     }
-  }, [v_id]);
+  }, [v_id, vinylRecords]);
   const changePicture = (event: React.MouseEvent<HTMLImageElement>) => {
     const bigImage = document.getElementById("bigPicture") as HTMLImageElement;
     if (bigImage && event.target instanceof HTMLImageElement) {
