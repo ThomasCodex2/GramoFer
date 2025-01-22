@@ -1,10 +1,12 @@
 import styles from "./VinylBox.module.css";
 import Vinyl from "../Vinyl/Vinyl";
 import React, { useRef, useState, useEffect } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 
 interface Vinyl_color {
   by_genre: boolean;
   color: string;
+  navigate: ReturnType<typeof useNavigate>;
 }
 
 interface VinylRecord {
@@ -28,6 +30,7 @@ interface VinylRecord {
   vinylImagePath2: string;
 }
 const VinylBox: React.FC<Vinyl_color> = ({ by_genre, color }) => {
+  const navigate = useNavigate();
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const [selectedVinyl, setSelectedVinyl] = useState<{
     title: string;
@@ -125,7 +128,8 @@ const VinylBox: React.FC<Vinyl_color> = ({ by_genre, color }) => {
     coverCondition: string,
     editionMark: string,
     location: string,
-    description: string
+    description: string,
+    vinylId?: number
   ) => {
     setSelectedVinyl({
       title,
@@ -139,10 +143,12 @@ const VinylBox: React.FC<Vinyl_color> = ({ by_genre, color }) => {
       location,
       description,
     });
+    navigate(`/vinyl/${vinylId || "placeholder"}`);
   };
 
   const closePopup = () => {
     setSelectedVinyl(null);
+    navigate("/");
   };
 
   useEffect(() => {
@@ -165,9 +171,33 @@ const VinylBox: React.FC<Vinyl_color> = ({ by_genre, color }) => {
         console.error("Error fetching vinyls:", error);
       }
     };
-
     fetchVinyls();
   }, []);
+  const { vinylId } = useParams();
+
+  useEffect(() => {
+    if (vinylId && vinylRecords.length > 0) {
+      const selected = vinylRecords.find(
+        (vinyl) => vinyl.vinylId === Number(vinylId)
+      );
+      if (selected) {
+        setSelectedVinyl({
+          title: selected.editionLabel.albumName,
+          url: selected.coverImagePath1,
+          belongsToGenreGenres: selected.editionLabel.belongsToGenreGenres.map(
+            (genre) => genre.genreName
+          ),
+          performer: selected.editionLabel.artistName,
+          YearOfRelease: selected.editionLabel.releaseDate,
+          vinylCondition: selected.vinylCondition,
+          coverCondition: selected.coverCondition,
+          editionMark: selected.editionLabel.editionLabel,
+          location: selected.onLocation,
+          description: selected.description,
+        });
+      }
+    }
+  }, [vinylId, vinylRecords]);
   const changePicture = (event: React.MouseEvent<HTMLImageElement>) => {
     const bigImage = document.getElementById("bigPicture") as HTMLImageElement;
     if (bigImage && event.target instanceof HTMLImageElement) {
@@ -203,7 +233,8 @@ const VinylBox: React.FC<Vinyl_color> = ({ by_genre, color }) => {
                   vinyl.coverCondition,
                   vinyl.editionLabel.editionLabel,
                   vinyl.onLocation,
-                  vinyl.description
+                  vinyl.description,
+                  vinyl.vinylId
                 )
               }
             />

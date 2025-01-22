@@ -65,6 +65,7 @@ function App() {
         <div>
           <Routes>
             <Route path="/" element={<VinylSelect />} />
+            <Route path="/vinyl/:vinylId" element={<VinylSelect />} />
             <Route path="/my-vinyls" element={<MyVinyls />} />
             <Route path="/my-exchanges" element={<MyExchanges />} />
             <Route path="*" element={<ErrorSite />} />

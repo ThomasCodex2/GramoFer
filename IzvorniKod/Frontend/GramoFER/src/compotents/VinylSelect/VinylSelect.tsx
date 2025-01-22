@@ -1,6 +1,7 @@
 import styles from "./VinylSelect.module.css";
 import VinylBox from "../VinylBox/VinylBox";
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 // import { useEffect } from "react";
 // import { useNavigate } from "react-router-dom";
 const VinylSelect = () => {
@@ -18,7 +19,7 @@ const VinylSelect = () => {
   //     return;
   //   }
   // });
-
+  const navigate = useNavigate();
   return (
     <div className={styles.container}>
       <div className={styles.welcome_banner}>
@@ -38,7 +39,11 @@ const VinylSelect = () => {
               List of <u>ALL</u> our vinyls!
             </h2>
           </div>
-          <VinylBox by_genre={false} color={"random"}></VinylBox>
+          <VinylBox
+            by_genre={false}
+            color={"random"}
+            navigate={navigate}
+          ></VinylBox>
         </div>
         <hr></hr>
         <div className={[styles.filter].join(" ")}>
@@ -75,7 +80,11 @@ const VinylSelect = () => {
               </button>
             </form>
           </div>
-          <VinylBox by_genre={true} color={selectedGenre}></VinylBox>
+          <VinylBox
+            by_genre={true}
+            color={selectedGenre}
+            navigate={navigate}
+          ></VinylBox>
         </div>
       </div>
     </div>
