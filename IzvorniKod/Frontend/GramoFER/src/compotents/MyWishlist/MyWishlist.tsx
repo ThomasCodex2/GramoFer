@@ -60,7 +60,6 @@ const MyWishlist = () => {
       [name]: value,
     }));
   };
-
   useEffect(() => {
     const fetchWishes = async () => {
       const token = localStorage.getItem("aToken");
@@ -81,15 +80,10 @@ const MyWishlist = () => {
             },
           }
         );
-
         if (!response.ok) {
           throw new Error(`Failed to fetch users: ${response.status}`);
         }
-        const text = await response.text();
-        if (!text) {
-          console.error("Empty response from server for users");
-        }
-        const allWishes = JSON.parse(text);
+        const allWishes: Wish[] = await response.json();
         setAllWishes(allWishes);
         console.log("AllUsers data:", allWishes);
       } catch (error) {
