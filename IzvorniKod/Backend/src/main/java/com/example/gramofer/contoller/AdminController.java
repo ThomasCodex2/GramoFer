@@ -59,4 +59,8 @@ public class AdminController {
         return null;
     }
 
+    @GetMapping("/admin")
+    public Integer getadmin(@AuthenticationPrincipal UserAccount user) {
+        return userService.getifadmin(user);
+    }
 }

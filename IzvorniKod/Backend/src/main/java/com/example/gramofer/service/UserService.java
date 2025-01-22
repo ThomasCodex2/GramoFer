@@ -44,4 +44,8 @@ public class UserService {
         userrepo.deleteById(id);
         return ResponseEntity.ok("User deleted successfully");
     }
+
+    public Integer getifadmin (UserAccount user) {
+        return user.getIsAdmin();
+    }
 }
