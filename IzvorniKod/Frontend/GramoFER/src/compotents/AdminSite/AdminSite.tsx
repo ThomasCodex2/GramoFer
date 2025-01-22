@@ -132,7 +132,7 @@ const AdminSite = () => {
                 email={user.email}
                 firstName={user.firstName}
                 lastName={user.lastName}
-                registrationDate={user.registrationDate}
+                registrationDate={new Date(user.registrationDate)}
               />
             ))
           ) : (
