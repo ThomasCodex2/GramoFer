@@ -4,6 +4,7 @@ import MyWishlistRecord from "./MyWishlistRecord/MyWishlistRecord";
 interface Wish {
   artistName: string;
   albumName: string;
+  wishId: string;
 }
 interface WishFormData {
   artistName: string;
@@ -27,7 +28,7 @@ const MyWishlist = () => {
 
     console.log(JSON.stringify(WishFormData));
     try {
-      const response = await fetch(`https://gramofer.work.gd/wishes/add`, {
+      const response = await fetch(`https://gramofer.work.gd/api/wishes/add`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -132,6 +133,7 @@ const MyWishlist = () => {
               <MyWishlistRecord
                 artistName={wish.artistName}
                 albumName={wish.albumName}
+                wishId={wish.wishId}
               />
             ))
           ) : (
@@ -142,10 +144,12 @@ const MyWishlist = () => {
           <MyWishlistRecord
             artistName="placeholderArtist1"
             albumName="placeholderAlbum1"
+            wishId="x"
           />
           <MyWishlistRecord
             artistName="placeholderArtist2"
             albumName="placeholderAlbum2"
+            wishId="x"
           />
         </div>
       </div>
