@@ -46,7 +46,7 @@ const API_BASE_URL = "https://gramofer.work.gd";
 
 const MyVinyls = () => {
   const [images, setImages] = useState<string[]>([]);
-  const [isAdmin, setIsAdmin] = useState<string>("");
+  const [isAdmin, setIsAdmin] = useState<number>(0);
   const [formData, setFormData] = useState<FormData>({
     vinylCondition: "",
     coverCondition: "",
@@ -230,7 +230,7 @@ const MyVinyls = () => {
     const checkAdmin = () => {
       const A = localStorage.getItem("isAdmin");
       if (A) {
-        setIsAdmin(A);
+        setIsAdmin(parseInt(A));
       }
     };
     checkAdmin();

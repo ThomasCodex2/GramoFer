@@ -12,16 +12,14 @@ const MyWishlistRecord: React.FC<MyWish> = ({
 }) => {
   const handleDelete = async () => {
     const token = localStorage.getItem("aToken");
-    const id = parseInt(wishId);
     try {
       const response = await fetch(
-        `https://gramofer.work.gd/api/wishes/${id}`,
+        `https://gramofer.work.gd/api/wishes/${wishId}`,
         {
           method: "DELETE",
           headers: {
             Authorization: `Bearer ${token}`,
           },
-          //nothing to send again
         }
       );
       if (response.ok) {
