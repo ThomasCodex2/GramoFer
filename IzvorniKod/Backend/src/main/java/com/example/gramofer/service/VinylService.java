@@ -6,10 +6,7 @@ import com.example.gramofer.model.Edition;
 import com.example.gramofer.model.Genre;
 import com.example.gramofer.model.UserAccount;
 import com.example.gramofer.model.Vinyl;
-import com.example.gramofer.repo.EditionRepo;
-import com.example.gramofer.repo.GenreRepo;
-import com.example.gramofer.repo.UserRepo;
-import com.example.gramofer.repo.VinylRepo;
+import com.example.gramofer.repo.*;
 import com.example.gramofer.responses.VinylResponseDTO;
 
 import org.springframework.http.ResponseEntity;
@@ -29,13 +26,11 @@ public class VinylService {
     private final GenreRepo genreRepo;
     private final EditionRepo editionrepo;
 
-
     public VinylService(VinylRepo repoVinyl, UserRepo userRepo, GenreRepo genreRepo, EditionRepo editionrepo) {
         this.repoVinyl = repoVinyl;
         this.userRepo = userRepo;
         this.genreRepo = genreRepo;
         this.editionrepo = editionrepo;
-
     }
 
     public List<Vinyl> getAllVinylByUsername(String username) {
@@ -232,4 +227,24 @@ public class VinylService {
         }
     }
 
+    public List<VinylResponseDTO> getAllVinylsByGenre(String genre, Integer releaseDate){
+        List<Vinyl> vinyls = repoVinyl.findAllByGenreNameAndReleaseDate(genre, releaseDate);
+        return vinyls.stream()
+                .map(vinyl -> {
+                    VinylResponseDTO dto = new VinylResponseDTO();
+                    dto.setVinylId(vinyl.getVinylId());
+                    dto.setVinylCondition(vinyl.getVinylCondition());
+                    dto.setCoverCondition(vinyl.getCoverCondition());
+                    dto.setDescription(vinyl.getDescription());
+                    dto.setVinylImagePath1(vinyl.getVinylImagePath1());
+                    dto.setVinylImagePath2(vinyl.getVinylImagePath2());
+                    dto.setCoverImagePath1(vinyl.getCoverImagePath1());
+                    dto.setCoverImagePath2(vinyl.getCoverImagePath2());
+                    dto.setAvailable(vinyl.getAvailable());
+                    dto.setOnLocation(vinyl.getOnLocation());
+                    dto.setEditionLabel(vinyl.getEditionLabel());
+                    return dto;
+                })
+                .collect(Collectors.toList());
+    }
 }
