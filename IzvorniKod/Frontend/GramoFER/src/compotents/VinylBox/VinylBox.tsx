@@ -164,18 +164,14 @@ const VinylBox: React.FC<Vinyl_color> = ({ by_genre, color, navigate }) => {
     };
     fetchVinyls();
   }, []);
-  const { vinylId } = useParams();
+  const { v_id } = useParams();
 
   useEffect(() => {
-    if (vinylId && vinylRecords.length > 0) {
+    if (v_id && vinylRecords.length > 0) {
       const selected = vinylRecords.find(
-        (vinyl) => parseInt(vinyl.vinylId) === Number(vinylId)
+        (vinyl) => parseInt(vinyl.vinylId) === Number(v_id)
       );
-      if (
-        selected &&
-        (!selectedVinyl ||
-          selectedVinyl.title !== selected.editionLabel.albumName)
-      ) {
+      if (selected) {
         setSelectedVinyl({
           title: selected.editionLabel.albumName,
           url: selected.coverImagePath1,
@@ -190,16 +186,17 @@ const VinylBox: React.FC<Vinyl_color> = ({ by_genre, color, navigate }) => {
           location: selected.onLocation,
           description: selected.description,
         });
-      } else {
-        setSelectedVinyl(null);
       }
+      // } else {
+      //   setSelectedVinyl(null);
+      // }
     }
-  }, [vinylId, vinylRecords, selectedVinyl]);
+  }, [v_id, vinylRecords, selectedVinyl]);
   useEffect(() => {
-    if (!vinylId) {
+    if (!v_id) {
       setSelectedVinyl(null);
     }
-  }, [vinylId]);
+  }, [v_id]);
   const changePicture = (event: React.MouseEvent<HTMLImageElement>) => {
     const bigImage = document.getElementById("bigPicture") as HTMLImageElement;
     if (bigImage && event.target instanceof HTMLImageElement) {
