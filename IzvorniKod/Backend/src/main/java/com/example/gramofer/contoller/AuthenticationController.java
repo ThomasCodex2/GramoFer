@@ -6,6 +6,8 @@ import com.example.gramofer.dtos.RegisterUserDto;
 import com.example.gramofer.responses.LoginResponse;
 import com.example.gramofer.service.AuthenticationService;
 import com.example.gramofer.service.JWTService;
+
+import org.apache.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -25,10 +27,12 @@ public class AuthenticationController {
     }
 
     @PostMapping("/signup")
-    public ResponseEntity<UserAccount> register(@RequestBody RegisterUserDto registerUserDto) {
+    public ResponseEntity<String> register(@RequestBody RegisterUserDto registerUserDto) {
         UserAccount registeredUser = authenticationService.signup(registerUserDto);
-
-        return ResponseEntity.ok(registeredUser);
+        if (registeredUser == null) {
+            return ResponseEntity.status(HttpStatus.SC_NOT_ACCEPTABLE).body("Neispravan unos");
+        }
+        return ResponseEntity.status(HttpStatus.SC_ACCEPTED).body("Registracija uspješna.");
     }
 
     @PostMapping("/login")

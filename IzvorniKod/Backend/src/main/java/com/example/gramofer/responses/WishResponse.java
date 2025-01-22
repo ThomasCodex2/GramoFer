@@ -1,13 +1,13 @@
-package com.example.gramofer.dtos;
+package com.example.gramofer.responses;
 
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
-public class WishDto {
+public class WishResponse {
     
-
+    private Integer wishid;
     private String albumName;
     private String artistName;
     

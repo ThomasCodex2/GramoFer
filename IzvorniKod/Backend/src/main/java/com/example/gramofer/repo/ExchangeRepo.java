@@ -13,15 +13,15 @@ import com.example.gramofer.model.UserAccount;
 @Repository
 public interface ExchangeRepo extends JpaRepository<Exchange, Integer> {
 
-    @Query("SELECT e FROM Exchange e WHERE e.user = :user AND e.status = '0'")
+    @Query("SELECT e FROM Exchange e WHERE e.user = :user AND e.status = 'active'")
     List<Exchange> findAllByUserAndStatusZero(@Param("user") UserAccount user);
 
-    @Query("SELECT e FROM Exchange e WHERE e.isOfferingUser = :isOfferingUser AND e.status = '0'")
+    @Query("SELECT e FROM Exchange e WHERE e.isOfferingUser = :isOfferingUser AND e.status = 'active'")
     List<Exchange> findAllByIsOfferingUserAndStatusZero(@Param("isOfferingUser") UserAccount isOfferingUser);
 
-    @Query("SELECT e FROM Exchange e WHERE e.user = :user AND e.status = '1'")
+    @Query("SELECT e FROM Exchange e WHERE e.user = :user AND e.status = 'done'")
     List<Exchange> findAllByUserAndStatusOne(@Param("user") UserAccount user);
 
-    @Query("SELECT e FROM Exchange e WHERE e.isOfferingUser = :isOfferingUser AND e.status = '1'")
+    @Query("SELECT e FROM Exchange e WHERE e.isOfferingUser = :isOfferingUser AND e.status = 'done'")
     List<Exchange> findAllByIsOfferingUserAndStatusOne(@Param("isOfferingUser") UserAccount isOfferingUser);
 }

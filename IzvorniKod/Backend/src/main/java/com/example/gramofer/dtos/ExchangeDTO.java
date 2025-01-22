@@ -2,6 +2,9 @@ package com.example.gramofer.dtos;
 
 import java.util.Set;
 
+import com.example.gramofer.model.UserAccount;
+import com.example.gramofer.model.Vinyl;
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -9,9 +12,8 @@ import lombok.Setter;
 @Setter
 public class ExchangeDTO {
 
-    private String VinylId;
+    private Vinyl vinylsid;
 
-    private Set<String> IsOfferingVinylsToOther;
-
+    private Set<Vinyl> IsOfferingVinylsToOther;
 
 }
