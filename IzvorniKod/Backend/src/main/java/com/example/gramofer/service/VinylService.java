@@ -14,6 +14,7 @@ import com.example.gramofer.repo.VinylRepo;
 import com.example.gramofer.repo.WishRepo;
 import com.example.gramofer.responses.VinylResponseDTO;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -27,6 +28,8 @@ import java.util.stream.Collectors;
 
 @Service
 public class VinylService {
+    @Value("${spring.mail.username}")
+    private String email;
 
     private final VinylRepo repoVinyl;
     private final UserRepo userRepo;
@@ -270,7 +273,7 @@ public class VinylService {
                 vinyl.getEditionLabel().getArtistName(),
                 vinyl.getDescription()
         );
-        message.setFrom(System.getenv("GOOGLE_EMAIL"));
+        message.setFrom(email);
         message.setTo(email);
         message.setSubject(subject);
         message.setText(msg);
