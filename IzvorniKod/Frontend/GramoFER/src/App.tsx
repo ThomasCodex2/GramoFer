@@ -6,6 +6,7 @@ import AdminSite from "./compotents/AdminSite/AdminSite";
 import ErrorSite from "./compotents/ErrorSite/ErrorSite";
 import Register from "./compotents/Register/Register";
 import MyWishlist from "./compotents/MyWishlist/MyWishlist";
+import ExchangeSite from "./compotents/ExchangeSite/ExchangeSite";
 import { useEffect } from "react";
 import {
   BrowserRouter as Router,
@@ -72,6 +73,7 @@ function App() {
             <Route path="/register" element={<Register />} />
             <Route path="/admin-site" element={<AdminSite />} />
             <Route path="/my-wishlist" element={<MyWishlist />} />
+            <Route path="/exchange-site" element={<ExchangeSite />} />
           </Routes>
         </div>
       </div>
