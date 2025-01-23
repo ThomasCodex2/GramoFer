@@ -123,9 +123,15 @@ const ExchangeSite: React.FC = () => {
       if (!response.ok) {
         throw new Error("Failed to submit exchange data.");
       }
-      const result = await response.json();
-      console.log("Exchange data submitted successfully:", result);
-      navigate("/");
+      try {
+        const result = await response.json();
+        console.log("Exchange data submitted successfully:", result);
+        navigate("/");
+      } catch (err) {
+        console.error("Response is not valid JSON:", err);
+        const text = await response.text();
+        console.error("Raw response text:", text);
+      }
     } catch (error) {
       console.error("Error submitting exchange data:", error);
     }
@@ -147,10 +153,6 @@ const ExchangeSite: React.FC = () => {
             <div className={styles.first_row}>Goldmine Standard (Vinyl)</div>
             <div className={styles.first_row}>Goldmine Standard (Cover)</div>
             <div className={styles.first_row}>Mark for Exchange</div>
-            <div>Album Name</div>
-            <div>Goldmine Standard (Vinyl)</div>
-            <div>Goldmine Standard (Cover)</div>
-            <div>Mark for Exchange</div>
             {myVinyls.map((vinyl) => [
               <div key={`${vinyl.vinylId}-name`}>
                 {vinyl.editionLabel.albumName}
