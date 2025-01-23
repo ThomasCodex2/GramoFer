@@ -357,20 +357,19 @@ const VinylBox: React.FC<Vinyl_color> = ({ by_genre, color, navigate }) => {
               <div className={styles.buttonDiv}>
                 <div></div>
                 <Link
-                  to="/exchange-site" //{isLoggedIn ? "/exchange-site" : "#"}
-                  // TEMP REMOVAL className={`${styles.offer_button} ${
-                  //   !isLoggedIn ? styles.disabled : ""
-                  // }`}
-                  // onClick={(e) => {
-                  //   if (!isLoggedIn) {
-                  //     e.preventDefault();
-                  //     alert("You need to log in to offer an exchange!");
-                  //   }
-                  // }}
+                  to={isLoggedIn ? "/exchange-site" : "#"}
+                  className={`${styles.offer_button} ${
+                    !isLoggedIn ? styles.disabled : ""
+                  }`}
+                  onClick={(e) => {
+                    if (!isLoggedIn) {
+                      e.preventDefault();
+                      alert("You need to log in to offer an exchange!");
+                    }
+                  }}
                   state={vinylRecords.find(
                     (vinyl) =>
-                      parseInt(vinyl.vinylId) ===
-                      parseInt(selectedVinyl.vinylId)
+                      parseInt(vinyl.vinylId) == parseInt(selectedVinyl.vinylId)
                   )}
                 >
                   <button className={styles.buttonExtra}>Ponudi zamjenu</button>
