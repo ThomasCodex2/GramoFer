@@ -68,4 +68,14 @@ public class VinylController {
     public List<VinylResponseDTO> getVinylsByGenre(@PathVariable String genre, @PathVariable Integer releaseDate){
         return service.getAllVinylsByGenre(genre, releaseDate);
     }
+
+    @GetMapping("/vinyl/search/{genre}")
+    public List<VinylResponseDTO> getVinylsByGenreSearch(@PathVariable String genre, @RequestParam String searchTerm){
+        return service.getSearchVinylsByGenre(searchTerm, genre);
+    }
+
+    @GetMapping("/vinyl/searchAllVinyls")
+    public List<VinylResponseDTO> getAllVinylsBySearchTerm(@RequestParam String searchTerm){
+        return service.getSearchAllVinylsBySearchTerm(searchTerm);
+    }
 }

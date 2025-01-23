@@ -247,4 +247,46 @@ public class VinylService {
                 })
                 .collect(Collectors.toList());
     }
+
+    public List<VinylResponseDTO> getSearchVinylsByGenre(String searchTerm, String genre){
+        List<Vinyl> vinyls = repoVinyl.findAllVinylsBySearchAndByGenre(searchTerm, genre);
+        return vinyls.stream()
+                .map(vinyl -> {
+                    VinylResponseDTO dto = new VinylResponseDTO();
+                    dto.setVinylId(vinyl.getVinylId());
+                    dto.setVinylCondition(vinyl.getVinylCondition());
+                    dto.setCoverCondition(vinyl.getCoverCondition());
+                    dto.setDescription(vinyl.getDescription());
+                    dto.setVinylImagePath1(vinyl.getVinylImagePath1());
+                    dto.setVinylImagePath2(vinyl.getVinylImagePath2());
+                    dto.setCoverImagePath1(vinyl.getCoverImagePath1());
+                    dto.setCoverImagePath2(vinyl.getCoverImagePath2());
+                    dto.setAvailable(vinyl.getAvailable());
+                    dto.setOnLocation(vinyl.getOnLocation());
+                    dto.setEditionLabel(vinyl.getEditionLabel());
+                    return dto;
+                })
+                .collect(Collectors.toList());
+    }
+
+    public List<VinylResponseDTO> getSearchAllVinylsBySearchTerm(String searchTerm){
+        List<Vinyl> vinyls = repoVinyl.findAllVinylBySearchTerm(searchTerm);
+        return vinyls.stream()
+                .map(vinyl -> {
+                    VinylResponseDTO dto = new VinylResponseDTO();
+                    dto.setVinylId(vinyl.getVinylId());
+                    dto.setVinylCondition(vinyl.getVinylCondition());
+                    dto.setCoverCondition(vinyl.getCoverCondition());
+                    dto.setDescription(vinyl.getDescription());
+                    dto.setVinylImagePath1(vinyl.getVinylImagePath1());
+                    dto.setVinylImagePath2(vinyl.getVinylImagePath2());
+                    dto.setCoverImagePath1(vinyl.getCoverImagePath1());
+                    dto.setCoverImagePath2(vinyl.getCoverImagePath2());
+                    dto.setAvailable(vinyl.getAvailable());
+                    dto.setOnLocation(vinyl.getOnLocation());
+                    dto.setEditionLabel(vinyl.getEditionLabel());
+                    return dto;
+                })
+                .collect(Collectors.toList());
+    }
 }
