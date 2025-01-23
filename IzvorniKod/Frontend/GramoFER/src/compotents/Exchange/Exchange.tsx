@@ -20,8 +20,12 @@ const Exchange: React.FC<ExchangeInterface> = ({
     <>
       <div className={styles.e_container}>
         <h3>{outgoing ? receiverUsername : senderUsername}</h3>
-        <h3>{outgoing ? receiverAlbums : senderAlbums}</h3>
-        <h3>{outgoing ? senderAlbums : receiverAlbums}</h3>
+        <h3>
+          {outgoing ? receiverAlbums.join(", ") : senderAlbums.join(", ")}
+        </h3>
+        <h3>
+          {outgoing ? senderAlbums.join(", ") : receiverAlbums.join(", ")}
+        </h3>
         <div
           className={
             outgoing ? styles.exchange_buttons_double : styles.exchange_buttons
