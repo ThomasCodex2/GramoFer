@@ -1,13 +1,10 @@
 package com.example.gramofer.contoller;
 
 import com.example.gramofer.dtos.ExchangeDTO;
-import com.example.gramofer.dtos.VinylDto;
 import com.example.gramofer.model.Exchange;
 import com.example.gramofer.model.UserAccount;
-import com.example.gramofer.model.Vinyl;
-import com.example.gramofer.responses.VinylResponseDTO;
 import com.example.gramofer.service.ExchangeService;
-import com.example.gramofer.service.VinylService;
+
 
 import org.apache.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -69,6 +66,17 @@ public class ExchangeController {
             return ResponseEntity.status(HttpStatus.SC_NOT_ACCEPTABLE).body("Edition already exists");
         } else {
             return ResponseEntity.status(HttpStatus.SC_CREATED).body("Vinyl added changed.");
+        }
+    }
+
+    @PostMapping("/endexchange/{id}")
+    public ResponseEntity<String> endingExchange(@AuthenticationPrincipal UserAccount user, @PathVariable Integer id ) {
+        String zastavica = service.exchangeEnded(id, user);
+        if (zastavica == "uspjeh") {
+            return ResponseEntity.status(HttpStatus.SC_CREATED).body("Vinyl added successfully.");
+        }
+        else {
+            return ResponseEntity.status(HttpStatus.SC_NOT_ACCEPTABLE).body("Edition already exists");
         }
     }
 }
