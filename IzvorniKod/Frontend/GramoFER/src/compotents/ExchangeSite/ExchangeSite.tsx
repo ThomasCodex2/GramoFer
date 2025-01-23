@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import styles from "./ExchangeSite.module.css";
-import { Link } from "react-router-dom";
-import { useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+
 interface SelectedVinyl {
   available: number;
   coverCondition: string;
@@ -18,7 +18,7 @@ interface SelectedVinyl {
   };
   onLocation: string;
   vinylCondition: string;
-  vinylId: string;
+  vinylId: number;
   vinylImagePath1: string;
   vinylImagePath2: string;
 }
@@ -27,6 +27,7 @@ interface ExchangeInterface {
   IsOfferingVinylsToOther: Set<SelectedVinyl>;
 }
 const ExchangeSite: React.FC = () => {
+  const navigate = useNavigate();
   const location = useLocation();
   const [selectedVinyl, setSelectedVinyl] = useState<SelectedVinyl>();
   const [exchangeVinyls, setExchangeVinyls] = useState<ExchangeInterface>();
@@ -36,7 +37,12 @@ const ExchangeSite: React.FC = () => {
   const [myVinyls, setMyVInyls] = useState<SelectedVinyl[]>([]);
   useEffect(() => {
     console.log("Location state:", location.state);
-    const vinyl = location.state as SelectedVinyl;
+    //const vinyl = location.state as SelectedVinyl; PREV SOLUTION
+    const receivedVinyl = location.state;
+    const vinyl: SelectedVinyl = {
+      ...receivedVinyl, // Spread all properties
+      vinylId: parseInt(receivedVinyl.vinylId, 10), // Convert `vinylId` to a number
+    };
     if (vinyl) {
       setSelectedVinyl(vinyl);
       console.log("selected Vinyl: ", selectedVinyl);
@@ -61,7 +67,6 @@ const ExchangeSite: React.FC = () => {
         if (!response.ok) {
           throw new Error("Failed to fetch vinyls");
         }
-
         const vinylsData: SelectedVinyl[] = await response.json();
         setMyVInyls(vinylsData);
       } catch (error) {
@@ -103,9 +108,9 @@ const ExchangeSite: React.FC = () => {
       if (!response.ok) {
         throw new Error("Failed to submit exchange data.");
       }
-
       const result = await response.json();
       console.log("Exchange data submitted successfully:", result);
+      navigate("/");
     } catch (error) {
       console.error("Error submitting exchange data:", error);
     }
@@ -142,12 +147,18 @@ const ExchangeSite: React.FC = () => {
               <input
                 key={`${vinyl.vinylId}-checkbox`}
                 type="checkbox"
-                name={vinyl.vinylId}
+                name={vinyl.vinylId.toString()} //.toString() added
                 onChange={(e) => {
                   const isChecked = e.target.checked;
                   setMyVinylsForExchange((prev) => {
                     const updatedVinyls = isChecked
-                      ? [...prev, vinyl]
+                      ? [
+                          ...prev,
+                          {
+                            ...vinyl,
+                            vinylId: Number(vinyl.vinylId), // Convert vinylId to number here
+                          },
+                        ]
                       : prev.filter((v) => v.vinylId !== vinyl.vinylId);
 
                     console.log(
@@ -157,9 +168,26 @@ const ExchangeSite: React.FC = () => {
                       updatedVinyls.length
                     );
 
-                    return updatedVinyls;
+                    return updatedVinyls as SelectedVinyl[];
                   });
                 }}
+                // onChange={(e) => {
+                //   const isChecked = e.target.checked;
+                //   setMyVinylsForExchange((prev) => {
+                //     const updatedVinyls = isChecked
+                //       ? [...prev, vinyl]
+                //       : prev.filter((v) => v.vinylId !== vinyl.vinylId);
+
+                //     console.log(
+                //       "Updated Exchange Vinyls: ",
+                //       updatedVinyls,
+                //       " and length: ",
+                //       updatedVinyls.length
+                //     );
+
+                //     return updatedVinyls as SelectedVinyl[];
+                //   });
+                // }}
               />,
             ])}
           </div>
