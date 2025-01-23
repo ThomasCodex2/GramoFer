@@ -34,6 +34,7 @@ const ExchangeSite: React.FC = () => {
     const vinyl = location.state?.selectedVinyl as SelectedVinyl;
     if (vinyl) {
       setSelectedVinyl(vinyl);
+      console.log("selected Vinyl: ", selectedVinyl);
     }
   }, [location.state]);
   const [myVinylsForExchange, setMyVinylsForExchange] = useState<
@@ -118,27 +119,34 @@ const ExchangeSite: React.FC = () => {
             <div>Goldmine Standard (Vinyl)</div>
             <div>Goldmine Standard (Cover)</div>
             <div>Mark for Exchange</div>
-            {myVinyls.map((vinyl) => {
-              return (
-                <div key={vinyl.vinylId}>
-                  <div>{vinyl.editionLabel.albumName}</div>
-                  <div>{vinyl.vinylCondition}</div>
-                  <div>{vinyl.coverCondition}</div>
-                  <input
-                    type="checkbox"
-                    name={vinyl.vinylId}
-                    onChange={(e) => {
-                      const isChecked = e.target.checked;
-                      setMyVinylsForExchange((prev) =>
-                        isChecked
-                          ? [...prev, vinyl]
-                          : prev.filter((v) => v.vinylId !== vinyl.vinylId)
-                      );
-                    }}
-                  />
-                </div>
-              );
-            })}
+            {myVinyls.map((vinyl) => [
+              <div key={`${vinyl.vinylId}-name`}>
+                {vinyl.editionLabel.albumName}
+              </div>,
+              <div key={`${vinyl.vinylId}-condition`}>
+                {vinyl.vinylCondition}
+              </div>,
+              <div key={`${vinyl.vinylId}-cover`}>{vinyl.coverCondition}</div>,
+              <input
+                key={`${vinyl.vinylId}-checkbox`}
+                type="checkbox"
+                name={vinyl.vinylId}
+                onChange={(e) => {
+                  const isChecked = e.target.checked;
+                  setMyVinylsForExchange((prev) =>
+                    isChecked
+                      ? [...prev, vinyl]
+                      : prev.filter((v) => v.vinylId !== vinyl.vinylId)
+                  );
+                  console.log(
+                    "Current Exchange vinyls: ",
+                    myVinylsForExchange,
+                    " and length: ",
+                    myVinylsForExchange.length
+                  );
+                }}
+              />,
+            ])}
           </div>
           <button type="submit" className={styles.submit_button}>
             Submit Exchange

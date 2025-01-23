@@ -1,10 +1,108 @@
 import styles from "./MyExchanges.module.css";
 import Exchange from "../Exchange/Exchange";
+import { useEffect } from "react";
 const pending_out = true;
 const pending_in = true;
 const prev_out = true;
 const prev_in = true;
+const API_BASE_URL = "https://gramofer.work.gd";
+
 const MyExchanges = () => {
+  useEffect(() => {
+    const token = localStorage.getItem("aToken");
+    const fetchOutgoingActiveExchages = async () => {
+      try {
+        const response = await fetch(
+          `${API_BASE_URL}/api/exchange/myExchangesActive`,
+          {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        if (!response.ok) {
+          throw new Error("Failed to fetch exchanges");
+        }
+        const OutActExc = await response.json();
+        console.log("OutgoingActiveExchanges: ", OutActExc);
+        //TODO, SET FOR LOCAL VARIABLE
+      } catch (error) {
+        console.error("ERROR FETCHING OutActExc: ", error);
+      }
+    };
+    const fetchIncomingActiveExchages = async () => {
+      try {
+        const response = await fetch(
+          `${API_BASE_URL}/api/exchange/incomingExchangesActive`,
+          {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        if (!response.ok) {
+          throw new Error("Failed to fetch exchanges");
+        }
+        const IncActExc = await response.json();
+        console.log("IncomingActiveExchanges: ", IncActExc);
+        //TODO, SET FOR LOCAL VARIABLE
+      } catch (error) {
+        console.error("ERROR FETCHING IncActExc: ", error);
+      }
+    };
+    const fetchOutgoingDoneExchages = async () => {
+      try {
+        const response = await fetch(
+          `${API_BASE_URL}/api/exchange/myExchangesDone`,
+          {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        if (!response.ok) {
+          throw new Error("Failed to fetch exchanges");
+        }
+        const OutDoneExc = await response.json();
+        console.log("OutgoingDoneExchanges: ", OutDoneExc);
+        //TODO, SET FOR LOCAL VARIABLE
+      } catch (error) {
+        console.error("ERROR FETCHING OutDoneExc: ", error);
+      }
+    };
+    const fetchIncomingDoneExchages = async () => {
+      try {
+        const response = await fetch(
+          `${API_BASE_URL}/api/exchange/incomingExchangesDone`,
+          {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        if (!response.ok) {
+          throw new Error("Failed to fetch exchanges");
+        }
+        const IncDoneExc = await response.json();
+        console.log("IncomingDoneExchanges: ", IncDoneExc);
+        //TODO, SET FOR LOCAL VARIABLE
+      } catch (error) {
+        console.error("ERROR FETCHING IncDoneExc: ", error);
+      }
+    };
+    fetchOutgoingActiveExchages();
+    fetchIncomingActiveExchages();
+    fetchOutgoingDoneExchages();
+    fetchIncomingDoneExchages();
+  }, []);
   return (
     <>
       <div className={styles.container}>
