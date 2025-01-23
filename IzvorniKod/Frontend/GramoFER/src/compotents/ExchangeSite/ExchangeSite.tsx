@@ -30,17 +30,19 @@ const ExchangeSite: React.FC = () => {
   const location = useLocation();
   const [selectedVinyl, setSelectedVinyl] = useState<SelectedVinyl>();
   const [exchangeVinyls, setExchangeVinyls] = useState<ExchangeInterface>();
+  const [myVinylsForExchange, setMyVinylsForExchange] = useState<
+    SelectedVinyl[]
+  >([]);
+  const [myVinyls, setMyVInyls] = useState<SelectedVinyl[]>([]);
   useEffect(() => {
+    console.log("Location state:", location.state);
     const vinyl = location.state?.selectedVinyl as SelectedVinyl;
     if (vinyl) {
       setSelectedVinyl(vinyl);
       console.log("selected Vinyl: ", selectedVinyl);
     }
-  }, [location.state]);
-  const [myVinylsForExchange, setMyVinylsForExchange] = useState<
-    SelectedVinyl[]
-  >([]);
-  const [myVinyls, setMyVInyls] = useState<SelectedVinyl[]>([]);
+  }, [location.state, selectedVinyl]);
+
   useEffect(() => {
     const fetchVinyls = async () => {
       const token = localStorage.getItem("aToken");
@@ -111,10 +113,20 @@ const ExchangeSite: React.FC = () => {
 
   return (
     <div className={styles.container}>
-      <h1>Choose vinyls for exchange</h1>
-      {myVinyls.length > 0 ? ( // Change condition to > when backend is connected
+      {myVinyls.length == 0 ? ( // Change condition to > when backend is connected
         <form onSubmit={handleFormSubmit}>
+          <div className={styles.exchanges_header}>
+            <h1>Choose vinyls for exchange</h1>
+            <button type="submit" className={styles.submit_button}>
+              Submit Exchange
+            </button>
+          </div>
+
           <div className={styles.vinyl_choose}>
+            <div className={styles.first_row}>Album Name</div>
+            <div className={styles.first_row}>Goldmine Standard (Vinyl)</div>
+            <div className={styles.first_row}>Goldmine Standard (Cover)</div>
+            <div className={styles.first_row}>Mark for Exchange</div>
             <div>Album Name</div>
             <div>Goldmine Standard (Vinyl)</div>
             <div>Goldmine Standard (Cover)</div>
@@ -151,9 +163,6 @@ const ExchangeSite: React.FC = () => {
               />,
             ])}
           </div>
-          <button type="submit" className={styles.submit_button}>
-            Submit Exchange
-          </button>
         </form>
       ) : (
         <>
