@@ -28,7 +28,7 @@ interface SelectedVinyl {
 // }
 interface ExchangeIds {
   vinylsid: number;
-  IsOfferingVinylsToOther: Set<number>;
+  IsOfferingVinylsToOther: number[];
 }
 
 const ExchangeSite: React.FC = () => {
@@ -93,7 +93,7 @@ const ExchangeSite: React.FC = () => {
     if (selectedVinylid && myVinylIdsForExchage.length > 0) {
       const exchangeData: ExchangeIds = {
         vinylsid: selectedVinylid,
-        IsOfferingVinylsToOther: new Set(myVinylIdsForExchage),
+        IsOfferingVinylsToOther: myVinylIdsForExchage,
       };
       setExchangeVinylIds(exchangeData);
     }
