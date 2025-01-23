@@ -36,7 +36,7 @@ const ExchangeSite: React.FC = () => {
   const [myVinyls, setMyVInyls] = useState<SelectedVinyl[]>([]);
   useEffect(() => {
     console.log("Location state:", location.state);
-    const vinyl = location.state?.selectedVinyl as SelectedVinyl;
+    const vinyl = location.state as SelectedVinyl;
     if (vinyl) {
       setSelectedVinyl(vinyl);
       console.log("selected Vinyl: ", selectedVinyl);
@@ -113,7 +113,7 @@ const ExchangeSite: React.FC = () => {
 
   return (
     <div className={styles.container}>
-      {myVinyls.length == 0 ? ( // Change condition to > when backend is connected
+      {myVinyls.length > 0 ? ( // Change condition to > when backend is connected
         <form onSubmit={handleFormSubmit}>
           <div className={styles.exchanges_header}>
             <h1>Choose vinyls for exchange</h1>
