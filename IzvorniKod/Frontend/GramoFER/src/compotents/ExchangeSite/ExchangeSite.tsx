@@ -106,6 +106,7 @@ const ExchangeSite: React.FC = () => {
       return;
     }
     console.log("Data being send: ", exchangeVinylIds);
+    console.log(JSON.stringify(exchangeVinylIds));
     try {
       const token = localStorage.getItem("aToken");
       const response = await fetch(
