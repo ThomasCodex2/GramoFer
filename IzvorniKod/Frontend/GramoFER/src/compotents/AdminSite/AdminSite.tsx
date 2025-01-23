@@ -1,7 +1,7 @@
 import AdminSiteUserElement from "../AdminSiteUserElement/AdminSiteUserElement";
 import VinylsRecord from "../VinylsRecord/VinylsRecord";
 import styles from "./AdminSite.module.css";
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 interface UserData {
   email: string;
@@ -34,75 +34,85 @@ interface VinylsData {
 }
 
 const AdminSite = () => {
-  const [isAdmin, setIsAdmin] = useState<boolean | null>(null);
   const [UsersData, setUsersData] = useState<UserData[]>([]);
   const [VinylsData, setVinlysData] = useState<VinylsData[]>([]);
-  const alertTriggered = useRef(false);
+  const [errorHandled, setErrorHandled] = useState(false);
   const navigate = useNavigate();
+
   useEffect(() => {
-    const checkAdminAndFetchData = async () => {
-      const isAdminStored = localStorage.getItem("isAdmin");
+    const FetchData = async () => {
+      const token = localStorage.getItem("aToken");
 
-      if (isAdminStored) {
-        setIsAdmin(true);
-        const token = localStorage.getItem("aToken");
-
-        try {
-          // Fetch vinyls
-          const vinylResponse = await fetch(
-            `https://gramofer.work.gd/api/admintable/allvinyls`,
-            {
-              method: "GET",
-              headers: {
-                "Content-Type": "application/json",
-                Authorization: `Bearer ${token}`,
-              },
-            }
-          );
-          if (vinylResponse.ok) {
-            const allVinyls: VinylsData[] = await vinylResponse.json();
-            setVinlysData(allVinyls);
+      try {
+        const AdminResponse = await fetch(
+          `https://gramofer.work.gd/api/admintable/admin`,
+          {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
+            },
           }
+        );
 
-          // Fetch users
-          const userResponse = await fetch(
-            `https://gramofer.work.gd/api/admintable/users`,
-            {
-              method: "GET",
-              headers: {
-                "Content-Type": "application/json",
-                Authorization: `Bearer ${token}`,
-              },
+        if (AdminResponse.ok) {
+          try {
+            // Fetch vinyls
+            const vinylResponse = await fetch(
+              `https://gramofer.work.gd/api/admintable/allvinyls`,
+              {
+                method: "GET",
+                headers: {
+                  "Content-Type": "application/json",
+                  Authorization: `Bearer ${token}`,
+                },
+              }
+            );
+            if (vinylResponse.ok) {
+              const allVinyls: VinylsData[] = await vinylResponse.json();
+              setVinlysData(allVinyls);
             }
-          );
-          if (userResponse.ok) {
-            const allUsers: UserData[] = await userResponse.json();
-            setUsersData(allUsers);
+
+            // Fetch users
+            const userResponse = await fetch(
+              `https://gramofer.work.gd/api/admintable/users`,
+              {
+                method: "GET",
+                headers: {
+                  "Content-Type": "application/json",
+                  Authorization: `Bearer ${token}`,
+                },
+              }
+            );
+            if (userResponse.ok) {
+              const allUsers: UserData[] = await userResponse.json();
+              setUsersData(allUsers);
+            }
+          } catch (error) {
+            console.error("Error fetching data: ", error);
+            if (!errorHandled) {
+              setErrorHandled(true);
+              alert("An error occurred while fetching data.");
+            }
           }
-        } catch (error) {
-          console.error("Error fetching data:", error);
+        } else {
+          if (!errorHandled) {
+            setErrorHandled(true);
+            alert("Unauthorized user detected!");
+            navigate("/");
+          }
         }
-      } else {
-        if (!alertTriggered.current) {
-          alert("Unauthorized entry into admin site!");
-          alertTriggered.current = true;
+      } catch (error) {
+        console.error(error);
+        if (!errorHandled) {
+          setErrorHandled(true);
+          navigate("/");
+          alert("Unauthorized user detected!");
         }
-        navigate("/");
-        setIsAdmin(false);
       }
     };
-
-    checkAdminAndFetchData();
-  }, []);
-
-  if (isAdmin === null) {
-    return <div className={styles.container}></div>;
-  }
-
-  if (isAdmin === false) {
-    return <div className={styles.container}></div>;
-  }
-
+    FetchData();
+  }, [errorHandled, navigate]);
   const placeholderDate = new Date();
   return (
     <>

@@ -1,7 +1,7 @@
 import styles from "./MyVinyls.module.css";
 import VinylsRecord from "../VinylsRecord/VinylsRecord";
 import { useState, useRef, useEffect } from "react";
-import { Link } from "react-router-dom";
+// import { Link } from "react-router-dom";
 interface FormData {
   vinylCondition: string;
   coverCondition: string;
@@ -238,11 +238,11 @@ const MyVinyls = () => {
   }, []);
   return (
     <div className={styles.container}>
-      <Link to="/admin-site">
+      {/* <Link to="/admin-site">
         <button className={styles.adminButton}>
           Temporary Admin page button
         </button>
-      </Link>
+      </Link> */}
 
       <form className={styles.listing_form} onSubmit={handleSubmit}>
         <h1>

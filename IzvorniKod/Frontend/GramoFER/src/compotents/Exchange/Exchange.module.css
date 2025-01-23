@@ -1,6 +1,6 @@
 .e_container{
   display: grid;
-  grid-template-columns:19% 39% 1fr 10%;
+  grid-template-columns:14% 39% 1fr 15%;
   gap: 1.5px;
   text-align: center;
   width: 100%;
@@ -22,15 +22,39 @@
   height: 100px;
 }
 .exchange_buttons{
-  display: flex;
+  /* display: flex;
   flex-direction: column;
   justify-content: center;
   gap: 10px;
+  align-items: center; */
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 10px;
+  justify-content: center;
+  align-content: center;
+}
+.exchange_buttons_double{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
   align-items: center;
+}
+.exchange_buttons_double > div{
+  width: 40px;
+  height: 40px;
+  justify-self: center;
+}
+.exchange_buttons_double > div:hover{
+  opacity: 0.5;
+  cursor: pointer;
+}
+.exchange_buttons_double > div > img{
+  width: 100%;
 }
 .exchange_buttons > div{
   width: 40px;
   height: 40px;
+  justify-self: center;
 }
 .exchange_buttons > div:hover{
   opacity: 0.5;
