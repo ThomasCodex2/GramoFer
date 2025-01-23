@@ -1,0 +1,33 @@
+.container{
+  padding-top: 10px;
+  color: black;
+  background-color: white;
+  padding-bottom: 5px;
+  padding-top: 20px;
+  margin-left: 4.9vw;
+  margin-right: 4.9vw;
+  padding-right: 3.5vw;
+  min-height: 100vh;
+  height: fit-content;
+  width: 1fr;
+  border: 1px solid black;
+  padding-left: 3.5vw;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+.vinyl_choose{
+  padding: 10px;
+  color: white;
+  display: grid;
+  grid-template-columns: 30% 30% 30% 1fr;
+  background-color: black;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+.submit_button{
+  font-size: large;
+  margin-top: 10px;
+  background-color: #629460af;
+  color: white;
+  font-weight: bold;
+}

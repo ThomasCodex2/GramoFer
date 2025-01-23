@@ -1,8 +1,8 @@
 import styles from "./VinylBox.module.css";
 import Vinyl from "../Vinyl/Vinyl";
 import React, { useRef, useState, useEffect } from "react";
-import { useNavigate, useParams } from "react-router-dom";
-
+import { useNavigate, useParams, useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
 interface Vinyl_color {
   by_genre: boolean;
   color: string;
@@ -29,6 +29,7 @@ interface VinylRecord {
   vinylImagePath1: string;
   vinylImagePath2: string;
 }
+
 const VinylBox: React.FC<Vinyl_color> = ({ by_genre, color, navigate }) => {
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const [selectedVinyl, setSelectedVinyl] = useState<{
@@ -42,8 +43,29 @@ const VinylBox: React.FC<Vinyl_color> = ({ by_genre, color, navigate }) => {
     editionMark: string;
     location: string;
     description: string;
+    vinylId: string;
   } | null>(null);
   const [vinylRecords, setVinylRecords] = useState<VinylRecord[]>([]);
+  const [isLoggedIn, setIsLoggedIn] = useState(
+    !!localStorage.getItem("aToken")
+  );
+  const location = useLocation();
+
+  useEffect(() => {
+    const handleStorageChange = () => {
+      const token = localStorage.getItem("aToken");
+      setIsLoggedIn(!!token);
+    };
+
+    window.addEventListener("storage", handleStorageChange);
+
+    const token = localStorage.getItem("aToken");
+    setIsLoggedIn(!!token);
+
+    return () => {
+      window.removeEventListener("storage", handleStorageChange);
+    };
+  }, [location.search]);
 
   let number = 0;
   let V_count = 0;
@@ -131,6 +153,7 @@ const VinylBox: React.FC<Vinyl_color> = ({ by_genre, color, navigate }) => {
         editionMark: "Placeholder Edition",
         location: "Placeholder Location",
         description: "This is a placeholder description.",
+        vinylId: "x",
       });
     } else if (vinylId) {
       const selected = vinylRecords.find(
@@ -150,6 +173,7 @@ const VinylBox: React.FC<Vinyl_color> = ({ by_genre, color, navigate }) => {
           editionMark: selected.editionLabel.editionLabel,
           location: selected.onLocation,
           description: selected.description,
+          vinylId: selected.vinylId,
         });
       }
       navigate(`/vinyl/${vinylId}`);
@@ -204,6 +228,7 @@ const VinylBox: React.FC<Vinyl_color> = ({ by_genre, color, navigate }) => {
           editionMark: selected.editionLabel.editionLabel,
           location: selected.onLocation,
           description: selected.description,
+          vinylId: selected.vinylId,
         });
       }
     } else {
@@ -331,7 +356,25 @@ const VinylBox: React.FC<Vinyl_color> = ({ by_genre, color, navigate }) => {
               </p>
               <div className={styles.buttonDiv}>
                 <div></div>
-                <button className={styles.buttonExtra}>Ponudi zamjenu</button>
+                <Link
+                  to="/exchange-site" //{isLoggedIn ? "/exchange-site" : "#"}
+                  // TEMP REMOVAL className={`${styles.offer_button} ${
+                  //   !isLoggedIn ? styles.disabled : ""
+                  // }`}
+                  // onClick={(e) => {
+                  //   if (!isLoggedIn) {
+                  //     e.preventDefault();
+                  //     alert("You need to log in to offer an exchange!");
+                  //   }
+                  // }}
+                  state={vinylRecords.find(
+                    (vinyl) =>
+                      parseInt(vinyl.vinylId) ===
+                      parseInt(selectedVinyl.vinylId)
+                  )}
+                >
+                  <button className={styles.buttonExtra}>Ponudi zamjenu</button>
+                </Link>
               </div>
             </div>
             <button className={styles.closeButton} onClick={closePopup}>

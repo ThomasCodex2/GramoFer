@@ -56,44 +56,51 @@ const AdminSite = () => {
         );
 
         if (AdminResponse.ok) {
-          try {
-            // Fetch vinyls
-            const vinylResponse = await fetch(
-              `https://gramofer.work.gd/api/admintable/allvinyls`,
-              {
-                method: "GET",
-                headers: {
-                  "Content-Type": "application/json",
-                  Authorization: `Bearer ${token}`,
-                },
+          const checkAdmin = await AdminResponse.json();
+          if (parseInt(checkAdmin) == 1) {
+            try {
+              // Fetch vinyls
+              const vinylResponse = await fetch(
+                `https://gramofer.work.gd/api/admintable/allvinyls`,
+                {
+                  method: "GET",
+                  headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${token}`,
+                  },
+                }
+              );
+              if (vinylResponse.ok) {
+                const allVinyls: VinylsData[] = await vinylResponse.json();
+                setVinlysData(allVinyls);
               }
-            );
-            if (vinylResponse.ok) {
-              const allVinyls: VinylsData[] = await vinylResponse.json();
-              setVinlysData(allVinyls);
-            }
 
-            // Fetch users
-            const userResponse = await fetch(
-              `https://gramofer.work.gd/api/admintable/users`,
-              {
-                method: "GET",
-                headers: {
-                  "Content-Type": "application/json",
-                  Authorization: `Bearer ${token}`,
-                },
+              // Fetch users
+              const userResponse = await fetch(
+                `https://gramofer.work.gd/api/admintable/users`,
+                {
+                  method: "GET",
+                  headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${token}`,
+                  },
+                }
+              );
+              if (userResponse.ok) {
+                const allUsers: UserData[] = await userResponse.json();
+                setUsersData(allUsers);
               }
-            );
-            if (userResponse.ok) {
-              const allUsers: UserData[] = await userResponse.json();
-              setUsersData(allUsers);
+            } catch (error) {
+              console.error("Error fetching data: ", error);
+              if (!errorHandled) {
+                setErrorHandled(true);
+                alert("An error occurred while fetching data.");
+              }
             }
-          } catch (error) {
-            console.error("Error fetching data: ", error);
-            if (!errorHandled) {
-              setErrorHandled(true);
-              alert("An error occurred while fetching data.");
-            }
+          } else {
+            setErrorHandled(true);
+            alert("Unauthorized user detected!");
+            navigate("/");
           }
         } else {
           if (!errorHandled) {

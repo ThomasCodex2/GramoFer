@@ -1,8 +1,9 @@
 import styles from "./Header.module.css";
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 function Header() {
+  const navigate = useNavigate();
   const [isLoggedIn, setIsLoggedIn] = useState(
     !!localStorage.getItem("aToken")
   );
@@ -31,6 +32,7 @@ function Header() {
     }
     setIsLoggedIn(false);
     alert("You have been logged out.");
+    navigate("/");
   };
   const notify_test = false;
   return (

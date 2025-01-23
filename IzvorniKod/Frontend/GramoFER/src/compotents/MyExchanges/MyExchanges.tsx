@@ -1,6 +1,5 @@
 import styles from "./MyExchanges.module.css";
 import Exchange from "../Exchange/Exchange";
-import ExchangeHistory from "../ExchangeHistory/ExchangeHistory";
 const pending_out = true;
 const pending_in = true;
 const prev_out = true;

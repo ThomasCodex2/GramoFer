@@ -26,9 +26,13 @@ const VinylSelect = () => {
             },
           }
         );
-
         if (AdminResponse.ok) {
-          setIsAdmin(true);
+          const adminCheck = await AdminResponse.json();
+          if (parseInt(adminCheck) == 1) {
+            setIsAdmin(true);
+          } else {
+            setIsAdmin(false);
+          }
         } else {
           setIsAdmin(false);
         }

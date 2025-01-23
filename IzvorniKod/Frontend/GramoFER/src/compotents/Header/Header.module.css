@@ -121,7 +121,6 @@ button:hover {
   pointer-events: none;
   color: gray;
   text-decoration: line-through;
-
 }
 @media (max-width: 700px) {
   .header {

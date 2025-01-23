@@ -42,7 +42,16 @@
 .rightArrow {
   right: 0;
 }
-
+.offer_button > button{
+  background-color: #b0423eb6;
+  color: white;
+}
+.disabled {
+  pointer-events: none;
+  color: gray;
+  opacity: 0.5;
+  text-decoration: line-through;
+}
 .popupBackground {
   position: fixed;
   top: 0;
