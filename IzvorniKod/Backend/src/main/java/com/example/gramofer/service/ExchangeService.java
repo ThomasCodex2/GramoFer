@@ -72,7 +72,7 @@ public class ExchangeService {
         
         exchange.setDate(LocalDate.now());
         
-        exchange.setIsOfferingUser((repoVinyl.findById(input.getIsOfferingVinylsToOther().iterator().next())).get().getUser());
+        exchange.setIsOfferingUser(vinyl1.get().getUser());
         exchange.setIncludesOfferedVinyls(listaVinyla);
         exchange.setStatus("ongoing");
         exchange.setUser(user);
