@@ -22,32 +22,46 @@ interface SelectedVinyl {
   vinylImagePath1: string;
   vinylImagePath2: string;
 }
-interface ExchangeInterface {
-  vinylsid: SelectedVinyl;
-  IsOfferingVinylsToOther: Set<SelectedVinyl>;
+// interface ExchangeInterface {
+//   vinylsid: SelectedVinyl;
+//   IsOfferingVinylsToOther: Set<SelectedVinyl>;
+// }
+interface ExchangeIds {
+  vinylsid: number;
+  IsOfferingVinylsToOther: Set<number>;
 }
+
 const ExchangeSite: React.FC = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const [selectedVinyl, setSelectedVinyl] = useState<SelectedVinyl>();
-  const [exchangeVinyls, setExchangeVinyls] = useState<ExchangeInterface>();
-  const [myVinylsForExchange, setMyVinylsForExchange] = useState<
-    SelectedVinyl[]
-  >([]);
+  //const [selectedVinyl, setSelectedVinyl] = useState<SelectedVinyl>();
+  const [selectedVinylid, setSelectedVinylId] = useState<number>();
+
+  //const [exchangeVinyls, setExchangeVinyls] = useState<ExchangeInterface>();
+  const [exchangeVinylIds, setExchangeVinylIds] = useState<ExchangeIds>();
+
+  //const [myVinylsForExchange, setMyVinylsForExchange] = useState<
+  //  SelectedVinyl[]
+  //>([]);
+  const [myVinylIdsForExchage, setMyVinylIdsForExchange] = useState<number[]>(
+    []
+  );
+
   const [myVinyls, setMyVInyls] = useState<SelectedVinyl[]>([]);
   useEffect(() => {
     console.log("Location state:", location.state);
     //const vinyl = location.state as SelectedVinyl; PREV SOLUTION
-    const receivedVinyl = location.state;
-    const vinyl: SelectedVinyl = {
-      ...receivedVinyl, // Spread all properties
-      vinylId: parseInt(receivedVinyl.vinylId, 10), // Convert `vinylId` to a number
-    };
-    if (vinyl) {
-      setSelectedVinyl(vinyl);
-      console.log("selected Vinyl: ", selectedVinyl);
+    const receivedId = location.state as number;
+    // const receivedVinyl = location.state;
+    // const vinyl: SelectedVinyl = {
+    //   ...receivedVinyl, // Spread all properties
+    //   vinylId: parseInt(receivedVinyl.vinylId, 10), // Convert `vinylId` to a number
+    // };
+    if (receivedId) {
+      setSelectedVinylId(receivedId);
+      console.log("selected Vinyl: ", receivedId);
     }
-  }, [location.state, selectedVinyl]);
+  }, [location.state]);
 
   useEffect(() => {
     const fetchVinyls = async () => {
@@ -76,21 +90,22 @@ const ExchangeSite: React.FC = () => {
     fetchVinyls();
   }, []);
   useEffect(() => {
-    if (selectedVinyl && myVinylsForExchange.length > 0) {
-      const exchangeData: ExchangeInterface = {
-        vinylsid: selectedVinyl,
-        IsOfferingVinylsToOther: new Set(myVinylsForExchange),
+    if (selectedVinylid && myVinylIdsForExchage.length > 0) {
+      const exchangeData: ExchangeIds = {
+        vinylsid: selectedVinylid,
+        IsOfferingVinylsToOther: new Set(myVinylIdsForExchage),
       };
-      setExchangeVinyls(exchangeData);
+      setExchangeVinylIds(exchangeData);
     }
-  }, [selectedVinyl, myVinylsForExchange]);
+  }, [selectedVinylid, myVinylIdsForExchage]);
 
   const handleFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (!exchangeVinyls) {
+    if (!exchangeVinylIds) {
       console.error("No exchange data to submit.");
       return;
     }
+    console.log("Data being send: ", exchangeVinylIds);
     try {
       const token = localStorage.getItem("aToken");
       const response = await fetch(
@@ -101,7 +116,7 @@ const ExchangeSite: React.FC = () => {
             "Content-Type": "application/json",
             Authorization: `Bearer ${token}`,
           },
-          body: JSON.stringify(exchangeVinyls),
+          body: JSON.stringify(exchangeVinylIds),
         }
       );
 
@@ -150,25 +165,19 @@ const ExchangeSite: React.FC = () => {
                 name={vinyl.vinylId.toString()} //.toString() added
                 onChange={(e) => {
                   const isChecked = e.target.checked;
-                  setMyVinylsForExchange((prev) => {
+                  setMyVinylIdsForExchange((prev) => {
                     const updatedVinyls = isChecked
-                      ? [
-                          ...prev,
-                          {
-                            ...vinyl,
-                            vinylId: Number(vinyl.vinylId), // Convert vinylId to number here
-                          },
-                        ]
-                      : prev.filter((v) => v.vinylId !== vinyl.vinylId);
+                      ? [...prev, Number(vinyl.vinylId)]
+                      : prev.filter((id) => id !== Number(vinyl.vinylId));
 
                     console.log(
-                      "Updated Exchange Vinyls: ",
+                      "Updated Vinyl IDs: ",
                       updatedVinyls,
                       " and length: ",
                       updatedVinyls.length
                     );
 
-                    return updatedVinyls as SelectedVinyl[];
+                    return updatedVinyls;
                   });
                 }}
                 // onChange={(e) => {

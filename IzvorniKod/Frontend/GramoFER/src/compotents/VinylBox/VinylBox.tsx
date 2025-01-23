@@ -367,10 +367,11 @@ const VinylBox: React.FC<Vinyl_color> = ({ by_genre, color, navigate }) => {
                       alert("You need to log in to offer an exchange!");
                     }
                   }}
-                  state={vinylRecords.find(
-                    (vinyl) =>
-                      parseInt(vinyl.vinylId) == parseInt(selectedVinyl.vinylId)
-                  )}
+                  state={parseInt(selectedVinyl.vinylId)}
+                  // vinylRecords.find(
+                  //   (vinyl) =>
+                  //     parseInt(vinyl.vinylId) == parseInt(selectedVinyl.vinylId)
+                  // )
                 >
                   <button className={styles.buttonExtra}>Ponudi zamjenu</button>
                 </Link>

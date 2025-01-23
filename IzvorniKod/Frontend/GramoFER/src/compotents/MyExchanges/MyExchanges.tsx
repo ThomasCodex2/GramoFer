@@ -128,7 +128,7 @@ const MyExchanges = () => {
                 outgoing={true}
               />
               <Exchange
-                senderAlbums={["U njegovom srcu", "Black Hole Sun"]}
+                senderAlbums={["U njegovom srcu"]}
                 receiverAlbums={["Elektra"]}
                 receiverUsername="MusicLVR"
                 receiverId="numbers"
