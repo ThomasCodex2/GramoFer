@@ -60,6 +60,7 @@ public class ExchangeService {
         if (vinyl1.isPresent()) {
             Vinyl vinyl4 = vinyl1.get();
             exchange.setVinyl(vinyl4);
+            exchange.setIsOfferingUser(vinyl4.getUser());
         }
         Set <Vinyl> listaVinyla = new HashSet<Vinyl>();
         for(Integer oneid: listavinylid){
@@ -71,8 +72,6 @@ public class ExchangeService {
         }
         
         exchange.setDate(LocalDate.now());
-        
-        exchange.setIsOfferingUser(vinyl1.get().getUser());
         exchange.setIncludesOfferedVinyls(listaVinyla);
         exchange.setStatus("ongoing");
         exchange.setUser(user);
