@@ -133,17 +133,20 @@ const ExchangeSite: React.FC = () => {
                 name={vinyl.vinylId}
                 onChange={(e) => {
                   const isChecked = e.target.checked;
-                  setMyVinylsForExchange((prev) =>
-                    isChecked
+                  setMyVinylsForExchange((prev) => {
+                    const updatedVinyls = isChecked
                       ? [...prev, vinyl]
-                      : prev.filter((v) => v.vinylId !== vinyl.vinylId)
-                  );
-                  console.log(
-                    "Current Exchange vinyls: ",
-                    myVinylsForExchange,
-                    " and length: ",
-                    myVinylsForExchange.length
-                  );
+                      : prev.filter((v) => v.vinylId !== vinyl.vinylId);
+
+                    console.log(
+                      "Updated Exchange Vinyls: ",
+                      updatedVinyls,
+                      " and length: ",
+                      updatedVinyls.length
+                    );
+
+                    return updatedVinyls;
+                  });
                 }}
               />,
             ])}
