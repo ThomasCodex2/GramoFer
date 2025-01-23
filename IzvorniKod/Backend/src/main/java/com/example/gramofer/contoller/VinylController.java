@@ -37,12 +37,9 @@ public class VinylController {
 
     @PostMapping("/add")
     public ResponseEntity<String> addVinyl(@AuthenticationPrincipal UserAccount user, @RequestBody VinylDto vinyl) {
-        System.out.println("Dodavanje vinila");
-        System.out.println(user.getEmail());
         String zastavica = service.newVinyl(vinyl, user);
 
         if (zastavica == "uspjehimail") {
-
             return ResponseEntity.status(HttpStatus.SC_CREATED).body("Vinyl added successfully.");
         }
         else if (zastavica == "uspjeh") {
@@ -59,10 +56,7 @@ public class VinylController {
     }
 
     @PostMapping("/update/{id}")
-    public ResponseEntity<String> updateVinyl(@AuthenticationPrincipal UserAccount user, @PathVariable Integer id,
-            @RequestBody VinylDto vinyl) {
-        System.out.println("Mijenjanje vinila");
-        System.out.println(user.getEmail());
+    public ResponseEntity<String> updateVinyl(@AuthenticationPrincipal UserAccount user, @PathVariable Integer id, @RequestBody VinylDto vinyl){
         String poruka = service.updateV(id, user, vinyl);
         if (poruka == "Greska1") {
             return ResponseEntity.status(HttpStatus.SC_NOT_ACCEPTABLE).body("Ploca ne postoji");

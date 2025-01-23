@@ -208,7 +208,6 @@ public class VinylService {
             String editionTBD = vinyl.getEditionLabel().getEditionLabel();
             Edition edition = null;
             Edition sEdition = vinyl.getEditionLabel(); // edition ploce u bazi
-            String sEditionId = vinyl.getEditionLabel().getEditionLabel();
             String nEditionId = input.getEdition().getEditionLabel();
             Optional <Edition> optnEdition = editionrepo.findById(nEditionId);
             Optional <Edition> optedition = editionrepo.findById(sEdition.getEditionLabel()); //edition ploce u bazi
