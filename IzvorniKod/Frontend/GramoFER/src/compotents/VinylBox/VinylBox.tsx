@@ -72,7 +72,7 @@ const VinylBox: React.FC<Vinyl_color> = ({ filter, year, genre, navigate }) => {
       if (year) {
         try {
           const response = await fetch(
-            `https://gramofer.work.gd/api/vinyl/${genre}/${year}`
+            `https://gramofer.work.gd/api/vinyls/vinyl/${genre}/${year}`
           );
           if (!response.ok) {
             throw new Error(
@@ -91,7 +91,7 @@ const VinylBox: React.FC<Vinyl_color> = ({ filter, year, genre, navigate }) => {
       } else {
         try {
           const response = await fetch(
-            `https://gramofer.work.gd/api/vinyl/search/${genre}`
+            `https://gramofer.work.gd/api/vinyls/vinyl/search/${genre}`
           );
           if (!response.ok) {
             throw new Error("Failed to fetch filtered (genre) vinyls!");
