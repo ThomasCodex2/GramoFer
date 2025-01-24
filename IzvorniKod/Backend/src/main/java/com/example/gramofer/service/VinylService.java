@@ -41,7 +41,7 @@ public class VinylService {
     private JavaMailSender mailSender;
 
 
-    public VinylService(VinylRepo repoVinyl, UserRepo userRepo, GenreRepo genreRepo, EditionRepo editionrepo, WishRepo wishrepo, JavaMailSender mailSender) 
+    public VinylService(VinylRepo repoVinyl, UserRepo userRepo, GenreRepo genreRepo, EditionRepo editionrepo, WishRepo wishrepo, JavaMailSender mailSender){ 
         this.repoVinyl = repoVinyl;
         this.userRepo = userRepo;
         this.genreRepo = genreRepo;
