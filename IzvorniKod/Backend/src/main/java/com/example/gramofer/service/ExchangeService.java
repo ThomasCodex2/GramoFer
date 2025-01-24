@@ -8,6 +8,9 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
 import com.example.gramofer.dtos.ExchangeDTO;
@@ -15,6 +18,7 @@ import com.example.gramofer.model.Exchange;
 import com.example.gramofer.model.Genre;
 import com.example.gramofer.model.UserAccount;
 import com.example.gramofer.model.Vinyl;
+import com.example.gramofer.model.Wish;
 import com.example.gramofer.repo.EditionRepo;
 import com.example.gramofer.repo.ExchangeRepo;
 import com.example.gramofer.repo.GenreRepo;
@@ -26,19 +30,24 @@ import com.example.gramofer.responses.VinylResponseDTO;
 
 @Service
 public class ExchangeService {
-    
+    @Value("${spring.mail.username}")
+    private String email1;
+
     private final VinylRepo repoVinyl;
     private final UserRepo userRepo;
     private final GenreRepo genreRepo;
     private final EditionRepo editionrepo;
     private final ExchangeRepo exchangerepo;
+    private JavaMailSender mailSender;
 
-    public ExchangeService(VinylRepo repoVinyl, UserRepo userRepo, GenreRepo genreRepo, EditionRepo editionrepo, ExchangeRepo exchangerepo) {
+
+    public ExchangeService(VinylRepo repoVinyl, UserRepo userRepo, GenreRepo genreRepo, EditionRepo editionrepo, ExchangeRepo exchangerepo, JavaMailSender mailSender) {
         this.repoVinyl = repoVinyl;
         this.userRepo = userRepo;
         this.genreRepo = genreRepo;
         this.editionrepo = editionrepo;
         this.exchangerepo = exchangerepo;
+        this.mailSender = mailSender;
     }
 
      public List<ExchangeResponse> getExchangesByUserAndStatusActive(UserAccount user) {
@@ -136,6 +145,7 @@ public class ExchangeService {
         exchange.setStatus("ongoing");
         exchange.setUser(user);
         exchangerepo.save(exchange);
+        sendEmailToUser(exchange);
         return "uspjeh";
     }
 
@@ -178,6 +188,33 @@ public class ExchangeService {
        else { //ako Exchange ne postoji u bazi
            return "Greska1";
        }
+    }
+
+    public void sendEmailToUser(Exchange exchange) {
+        SimpleMailMessage message = new SimpleMailMessage();
+        String subject = "A new exchange for Vinyl on your MyVinyls has arrived!";
+        StringBuilder listVinyl = new StringBuilder();
+        for (Vinyl v : exchange.getIncludesOfferedVinyls()) {
+            if (listVinyl.length() > 0) {
+                listVinyl.append(", ");
+            }
+            listVinyl.append(v.getEditionLabel().getAlbumName());
+        }
+        String msg = String.format(
+                "Hello,\n\nSomeone wants to exchange their Vinyls for yours.\n\nDetails:\n" +
+                "- User: %s\n" +
+                "- Vinyls that he wants to exchange: %s\n" + 
+                "- Your vinyl he wants: %s\n\n" +
+                "Best regards,\nGramofer Team",
+                exchange.getIsOfferingUser().getEmail(), listVinyl.toString(),
+                exchange.getVinyl().getEditionLabel().getAlbumName()
+        );
+        message.setFrom(email1);
+        message.setTo(exchange.getIsOfferingUser().getEmail());
+        message.setSubject(subject);
+        message.setText(msg);
+        mailSender.send(message);
+        System.out.println("Email sent successfully to " + exchange.getIsOfferingUser().getEmail());
     }
 
 
