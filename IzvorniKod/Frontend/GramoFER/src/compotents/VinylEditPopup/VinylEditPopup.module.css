@@ -1,0 +1,154 @@
+.popupBackground {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .popupContent {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    background: #2F2D2E;
+    color: white;
+    padding: 20px;
+    border-radius: 12px;
+    text-align: center;
+    width: 50vw;
+    max-width: 600px;
+    height: auto;
+    min-height: 300px;
+    position: relative;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  }
+  
+  
+  /*.closeButton {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: none;
+    border: none;
+    color: gray;
+    font-size: 24px;
+    cursor: pointer;
+  }
+  
+  .formGroup {
+    margin-bottom: 15px;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .formGroup label {
+    font-size: 14px;
+    margin-bottom: 5px;
+    color: #ccc;
+  }
+  
+  .formGroup input,
+  .formGroup textarea,
+  .formGroup select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #555;
+    border-radius: 5px;
+    background: #444;
+    color: white;
+    font-size: 14px;
+  }
+  
+  .formGroup textarea {
+    resize: vertical;
+    min-height: 80px;
+  }
+  
+  .submitButton {
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: #1f8ef1;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+  }
+  
+  .submitButton:hover {
+    background-color: #0d6efd;
+  }
+  
+  .imagePreviewContainer {
+    display: flex;
+    gap: 10px;
+    margin-top: 15px;
+    flex-wrap: wrap;
+  }
+  
+  .imagePreview {
+    width: 100px;
+    height: 100px;
+    border: 2px solid gray;
+    border-radius: 5px;
+    overflow: hidden;
+    position: relative;
+  }
+  
+  .imagePreview img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  
+  .imagePreview .removeButton {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    background: rgba(255, 0, 0, 0.8);
+    border: none;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    color: white;
+    font-size: 14px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+  }
+  
+  .imagePreview .removeButton:hover {
+    background: red;
+  }
+  
+  @media (max-width: 700px) {
+    .popupContent {
+      width: 90vw;
+      height: 90vh;
+      padding: 15px;
+    }
+  
+    .formGroup input,
+    .formGroup textarea,
+    .formGroup select {
+      font-size: 12px;
+      padding: 8px;
+    }
+  
+    .submitButton {
+      font-size: 14px;
+      padding: 8px 16px;
+    }
+  
+    .imagePreview {
+      width: 80px;
+      height: 80px;
+    }
+  }
+    */
+  
