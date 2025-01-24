@@ -69,14 +69,14 @@ function Header() {
         </div>
         <div className={styles.link_contain}>
           <Link
-            to="/my-exchanges" //{isLoggedIn ? "/my-exchanges" : "#"}
-            // className={`${styles.link} ${!isLoggedIn ? styles.disabled : ""}`}
-            // onClick={(e) => {
-            //   if (!isLoggedIn) {
-            //     e.preventDefault();
-            //     alert("You need to log in to access your exchanges.");
-            //   }
-            // }}
+            to={isLoggedIn ? "/my-exchanges" : "#"}
+            className={`${styles.link} ${!isLoggedIn ? styles.disabled : ""}`}
+            onClick={(e) => {
+              if (!isLoggedIn) {
+                e.preventDefault();
+                alert("You need to log in to access your exchanges.");
+              }
+            }}
           >
             <h3>My Exchanges</h3>
             {notify_test && <div className={styles.notify}></div>}
