@@ -3,6 +3,7 @@ package com.example.gramofer.contoller;
 import com.example.gramofer.dtos.ExchangeDTO;
 import com.example.gramofer.model.Exchange;
 import com.example.gramofer.model.UserAccount;
+import com.example.gramofer.responses.ExchangeResponse;
 import com.example.gramofer.service.ExchangeService;
 
 
@@ -24,19 +25,19 @@ public class ExchangeController {
     }
 
     @GetMapping("/myExchangesActive")
-    public List<Exchange> getExchangesForUserActive (@AuthenticationPrincipal UserAccount user) {
+    public List<ExchangeResponse> getExchangesForUserActive (@AuthenticationPrincipal UserAccount user) {
         return service.getExchangesByUserAndStatusActive(user);
     }
     @GetMapping("/incomingExchangesActive")
-    public List<Exchange> getIncExchangesForUserActive (@AuthenticationPrincipal UserAccount user) {
+    public List<ExchangeResponse> getIncExchangesForUserActive (@AuthenticationPrincipal UserAccount user) {
         return service.getIncExchangesUserActive(user);
     }
     @GetMapping("/myExchangesDone")
-    public List<Exchange> getExchangesForUserDone (@AuthenticationPrincipal UserAccount user) {
+    public List<ExchangeResponse> getExchangesForUserDone (@AuthenticationPrincipal UserAccount user) {
         return service.getExchangesByUserAndStatusDone(user);
     }
     @GetMapping("/incomingExchangesDone")
-    public List<Exchange> getIncExchangesForUserDone (@AuthenticationPrincipal UserAccount user) {
+    public List<ExchangeResponse> getIncExchangesForUserDone (@AuthenticationPrincipal UserAccount user) {
         return service.getIncExchangesByUserAndStatusDone(user);
     }
 

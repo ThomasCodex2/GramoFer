@@ -1,10 +1,12 @@
 package com.example.gramofer.service;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 
@@ -18,6 +20,8 @@ import com.example.gramofer.repo.ExchangeRepo;
 import com.example.gramofer.repo.GenreRepo;
 import com.example.gramofer.repo.UserRepo;
 import com.example.gramofer.repo.VinylRepo;
+import com.example.gramofer.responses.ExchangeResponse;
+import com.example.gramofer.responses.VinylResponseDTO;
 
 
 @Service
@@ -37,20 +41,72 @@ public class ExchangeService {
         this.exchangerepo = exchangerepo;
     }
 
-     public List<Exchange> getExchangesByUserAndStatusActive(UserAccount user) {
-        return exchangerepo.findAllByUserAndStatusZero(user);
+     public List<ExchangeResponse> getExchangesByUserAndStatusActive(UserAccount user) {
+        List<Exchange> listOfExchanges = exchangerepo.findAllByUserAndStatusZero(user);
+        return listOfExchanges.stream()
+            .map(exchange -> {
+                ExchangeResponse response = new ExchangeResponse();
+                response.setExchangeid(exchange.getExchangeId());
+                response.setAlbumname(exchange.getVinyl().getEditionLabel().getAlbumName());
+                List<String> lista = new ArrayList<String>();
+                for (Vinyl v : exchange.getIncludesOfferedVinyls()) {
+                    lista.add(v.getEditionLabel().getAlbumName());
+                }
+                response.setIsoffering(lista);
+                return response;
+            })
+            .collect(Collectors.toList());
     }
     
-    public List<Exchange> getIncExchangesUserActive(UserAccount isOfferingUser) {
-        return exchangerepo.findAllByIsOfferingUserAndStatusZero(isOfferingUser);
+    public List<ExchangeResponse> getIncExchangesUserActive(UserAccount isOfferingUser) {
+        List<Exchange> listOfExchanges = exchangerepo.findAllByIsOfferingUserAndStatusZero(isOfferingUser);
+        return listOfExchanges.stream()
+            .map(exchange -> {
+                ExchangeResponse response = new ExchangeResponse();
+                response.setExchangeid(exchange.getExchangeId());
+                response.setAlbumname(exchange.getVinyl().getEditionLabel().getAlbumName());
+                List<String> lista = new ArrayList<String>();
+                for (Vinyl v : exchange.getIncludesOfferedVinyls()) {
+                    lista.add(v.getEditionLabel().getAlbumName());
+                }
+                response.setIsoffering(lista);
+                return response;
+            })
+            .collect(Collectors.toList());
     }
 
-    public List<Exchange> getExchangesByUserAndStatusDone(UserAccount user) {
-        return exchangerepo.findAllByUserAndStatusOne(user);
+    public List<ExchangeResponse> getExchangesByUserAndStatusDone(UserAccount user) {
+        List<Exchange> listOfExchanges = exchangerepo.findAllByUserAndStatusOne(user);
+        return listOfExchanges.stream()
+            .map(exchange -> {
+                ExchangeResponse response = new ExchangeResponse();
+                response.setExchangeid(exchange.getExchangeId());
+                response.setAlbumname(exchange.getVinyl().getEditionLabel().getAlbumName());
+                List<String> lista = new ArrayList<String>();
+                for (Vinyl v : exchange.getIncludesOfferedVinyls()) {
+                    lista.add(v.getEditionLabel().getAlbumName());
+                }
+                response.setIsoffering(lista);
+                return response;
+            })
+            .collect(Collectors.toList());
     }
 
-    public List<Exchange> getIncExchangesByUserAndStatusDone(UserAccount isOfferingUser) {
-        return exchangerepo.findAllByIsOfferingUserAndStatusOne(isOfferingUser);
+    public List<ExchangeResponse> getIncExchangesByUserAndStatusDone(UserAccount isOfferingUser) {
+        List<Exchange> listOfExchanges = exchangerepo.findAllByIsOfferingUserAndStatusOne(isOfferingUser);
+        return listOfExchanges.stream()
+            .map(exchange -> {
+                ExchangeResponse response = new ExchangeResponse();
+                response.setExchangeid(exchange.getExchangeId());
+                response.setAlbumname(exchange.getVinyl().getEditionLabel().getAlbumName());
+                List<String> lista = new ArrayList<String>();
+                for (Vinyl v : exchange.getIncludesOfferedVinyls()) {
+                    lista.add(v.getEditionLabel().getAlbumName());
+                }
+                response.setIsoffering(lista);
+                return response;
+            })
+            .collect(Collectors.toList());
     }
 
     public String newExchange(ExchangeDTO input, UserAccount user){

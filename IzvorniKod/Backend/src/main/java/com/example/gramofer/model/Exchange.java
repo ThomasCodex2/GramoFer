@@ -40,17 +40,17 @@ public class Exchange {
     @Column(nullable = false)
     private LocalDate date;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
     @JsonBackReference
     private UserAccount user;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "is_offering_user_id", nullable = false)
     @JsonBackReference
     private UserAccount isOfferingUser;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "vinyl_id", nullable = false)
     @JsonBackReference
     private Vinyl vinyl;
