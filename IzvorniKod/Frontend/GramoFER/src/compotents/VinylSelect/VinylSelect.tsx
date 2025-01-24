@@ -47,9 +47,7 @@ const VinylSelect = () => {
     <div className={styles.container}>
       {isAdmin && (
         <Link to="/admin-site">
-          <button className={styles.adminButton}>
-            Temporary Admin page button
-          </button>
+          <button className={styles.adminButton}>Admin Page button</button>
         </Link>
       )}
       <div className={styles.welcome_banner}>

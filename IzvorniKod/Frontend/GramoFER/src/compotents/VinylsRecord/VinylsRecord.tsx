@@ -73,11 +73,21 @@ const VinylsRecord: React.FC<MyVinylsRecordProps> = ({
   };
   return (
     <>
-      <div className={styles.list_element}>{edition_mark}</div>
-      <div>{album}</div>
-      <div>{performer}</div>
-      <div>{genre.join(", ")}</div>
-      <div>{picture_urls}</div>
+      <div className={styles.vinyl_element} data-full-text={edition_mark}>
+        {edition_mark}
+      </div>
+      <div className={styles.vinyl_element} data-full-text={album}>
+        {album}
+      </div>
+      <div className={styles.vinyl_element} data-full-text={performer}>
+        {performer}
+      </div>
+      <div className={styles.vinyl_element} data-full-text={genre.join(", ")}>
+        {genre.join(", ")}
+      </div>
+      <div className={styles.vinyl_element} data-full-text={picture_urls}>
+        {picture_urls}
+      </div>
       <div className={styles.exchange_buttons}>
         {adminSite == false ? (
           <div>

@@ -124,15 +124,9 @@ const ExchangeSite: React.FC = () => {
       if (!response.ok) {
         throw new Error("Failed to submit exchange data.");
       }
-      try {
-        const result = await response.json();
-        console.log("Exchange data submitted successfully:", result);
-        navigate("/");
-      } catch (err) {
-        console.error("Response is not valid JSON:", err);
-        const text = await response.text();
-        console.error("Raw response text:", text);
-      }
+      const result = await response.text();
+      console.log("Exchange added sucessfully: ", result);
+      navigate("/");
     } catch (error) {
       console.error("Error submitting exchange data:", error);
     }
