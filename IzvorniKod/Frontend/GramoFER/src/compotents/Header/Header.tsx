@@ -1,8 +1,9 @@
 import styles from "./Header.module.css";
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 function Header() {
+  const navigate = useNavigate();
   const [isLoggedIn, setIsLoggedIn] = useState(
     !!localStorage.getItem("aToken")
   );
@@ -31,26 +32,9 @@ function Header() {
     }
     setIsLoggedIn(false);
     alert("You have been logged out.");
+    navigate("/");
   };
-
-  // const handleLoginSuccess = (response: any) => {
-  //   console.log("Login Success: ", response);
-  // };
-
-  // const handleLoginFailure = () => {
-  //   console.log("Login Failed");
-  // };
   const notify_test = false;
-  // useEffect(() => {
-  //   const urlParams = new URLSearchParams(window.location.search);
-  //   const uriToken = urlParams.get("token");
-  //   if (uriToken) {
-  //     localStorage.setItem("aToken", uriToken);
-  //     console.log(localStorage);
-  //     return;
-  //   }
-  // });
-
   return (
     <div className={styles.header}>
       <div className={[styles.row].join(" ")}>

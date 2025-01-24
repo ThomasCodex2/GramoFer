@@ -1,10 +1,12 @@
 import styles from "./VinylBox.module.css";
 import Vinyl from "../Vinyl/Vinyl";
 import React, { useRef, useState, useEffect } from "react";
-
+import { useNavigate, useParams, useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
 interface Vinyl_color {
   by_genre: boolean;
   color: string;
+  navigate: ReturnType<typeof useNavigate>;
 }
 
 interface VinylRecord {
@@ -23,11 +25,12 @@ interface VinylRecord {
   };
   onLocation: string;
   vinylCondition: string;
-  vinylId: number;
+  vinylId: string; //number
   vinylImagePath1: string;
   vinylImagePath2: string;
 }
-const VinylBox: React.FC<Vinyl_color> = ({ by_genre, color }) => {
+
+const VinylBox: React.FC<Vinyl_color> = ({ by_genre, color, navigate }) => {
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const [selectedVinyl, setSelectedVinyl] = useState<{
     title: string;
@@ -40,8 +43,29 @@ const VinylBox: React.FC<Vinyl_color> = ({ by_genre, color }) => {
     editionMark: string;
     location: string;
     description: string;
+    vinylId: string;
   } | null>(null);
   const [vinylRecords, setVinylRecords] = useState<VinylRecord[]>([]);
+  const [isLoggedIn, setIsLoggedIn] = useState(
+    !!localStorage.getItem("aToken")
+  );
+  const location = useLocation();
+
+  useEffect(() => {
+    const handleStorageChange = () => {
+      const token = localStorage.getItem("aToken");
+      setIsLoggedIn(!!token);
+    };
+
+    window.addEventListener("storage", handleStorageChange);
+
+    const token = localStorage.getItem("aToken");
+    setIsLoggedIn(!!token);
+
+    return () => {
+      window.removeEventListener("storage", handleStorageChange);
+    };
+  }, [location.search]);
 
   let number = 0;
   let V_count = 0;
@@ -115,34 +139,50 @@ const VinylBox: React.FC<Vinyl_color> = ({ by_genre, color }) => {
     }
   };
 
-  const handleVinylClick = (
-    title: string,
-    url: string,
-    belongsToGenreGenres: string[],
-    performer: string,
-    YearOfRelease: number,
-    vinylCondition: string,
-    coverCondition: string,
-    editionMark: string,
-    location: string,
-    description: string
-  ) => {
-    setSelectedVinyl({
-      title,
-      url,
-      belongsToGenreGenres,
-      performer,
-      YearOfRelease,
-      vinylCondition,
-      coverCondition,
-      editionMark,
-      location,
-      description,
-    });
+  const handleVinylClick = (vinylId?: number) => {
+    if (vinylId === 500) {
+      // Placeholder logic
+      setSelectedVinyl({
+        title: "Placeholder Title",
+        url: "",
+        belongsToGenreGenres: ["Placeholder Genre"],
+        performer: "Placeholder Performer",
+        YearOfRelease: 1984,
+        vinylCondition: "Placeholder Condition",
+        coverCondition: "Placeholder Condition",
+        editionMark: "Placeholder Edition",
+        location: "Placeholder Location",
+        description: "This is a placeholder description.",
+        vinylId: "x",
+      });
+    } else if (vinylId) {
+      const selected = vinylRecords.find(
+        (vinyl) => parseInt(vinyl.vinylId) === vinylId
+      );
+      if (selected) {
+        setSelectedVinyl({
+          title: selected.editionLabel.albumName,
+          url: selected.coverImagePath1,
+          belongsToGenreGenres: selected.editionLabel.belongsToGenreGenres.map(
+            (genre) => genre.genreName
+          ),
+          performer: selected.editionLabel.artistName,
+          YearOfRelease: selected.editionLabel.releaseDate,
+          vinylCondition: selected.vinylCondition,
+          coverCondition: selected.coverCondition,
+          editionMark: selected.editionLabel.editionLabel,
+          location: selected.onLocation,
+          description: selected.description,
+          vinylId: selected.vinylId,
+        });
+      }
+      navigate(`/vinyl/${vinylId}`);
+    }
   };
 
   const closePopup = () => {
     setSelectedVinyl(null);
+    navigate("/");
   };
 
   useEffect(() => {
@@ -158,16 +198,44 @@ const VinylBox: React.FC<Vinyl_color> = ({ by_genre, color }) => {
 
         const vinylsData: VinylRecord[] = await response.json();
 
-        console.log("Vinyls data:", vinylsData);
+        //console.log("Vinyls data:", vinylsData);
 
         setVinylRecords(vinylsData);
       } catch (error) {
         console.error("Error fetching vinyls:", error);
       }
     };
-
     fetchVinyls();
   }, []);
+  const { v_id } = useParams();
+
+  useEffect(() => {
+    if (v_id) {
+      const selected = vinylRecords.find(
+        (vinyl) => parseInt(vinyl.vinylId) === Number(v_id)
+      );
+      if (selected) {
+        setSelectedVinyl({
+          title: selected.editionLabel.albumName,
+          url: selected.coverImagePath1,
+          belongsToGenreGenres: selected.editionLabel.belongsToGenreGenres.map(
+            (genre) => genre.genreName
+          ),
+          performer: selected.editionLabel.artistName,
+          YearOfRelease: selected.editionLabel.releaseDate,
+          vinylCondition: selected.vinylCondition,
+          coverCondition: selected.coverCondition,
+          editionMark: selected.editionLabel.editionLabel,
+          location: selected.onLocation,
+          description: selected.description,
+          vinylId: selected.vinylId,
+        });
+      }
+    } else {
+      // Clear the selected vinyl when there's no `v_id`
+      setSelectedVinyl(null);
+    }
+  }, [v_id, vinylRecords]);
   const changePicture = (event: React.MouseEvent<HTMLImageElement>) => {
     const bigImage = document.getElementById("bigPicture") as HTMLImageElement;
     if (bigImage && event.target instanceof HTMLImageElement) {
@@ -190,22 +258,7 @@ const VinylBox: React.FC<Vinyl_color> = ({ by_genre, color }) => {
               //vinyl_genre={`vinylBox_${index}`}
               title={vinyl.editionLabel.albumName}
               url={vinyl.coverImagePath1 || "/images/placeholder_vinyl.jpg"}
-              onClick={() =>
-                handleVinylClick(
-                  vinyl.editionLabel.albumName,
-                  vinyl.coverImagePath1,
-                  vinyl.editionLabel.belongsToGenreGenres.map(
-                    (genre) => genre.genreName
-                  ),
-                  vinyl.editionLabel.artistName,
-                  vinyl.editionLabel.releaseDate,
-                  vinyl.vinylCondition,
-                  vinyl.coverCondition,
-                  vinyl.editionLabel.editionLabel,
-                  vinyl.onLocation,
-                  vinyl.description
-                )
-              }
+              onClick={() => handleVinylClick(parseInt(vinyl.vinylId))}
             />
           ))}
         {Array.from({ length: V_count }).map((_, index) => {
@@ -218,9 +271,7 @@ const VinylBox: React.FC<Vinyl_color> = ({ by_genre, color }) => {
               //vinyl_genre={`vinylBox_${number}`}
               title={naslov}
               url={url}
-              onClick={() =>
-                handleVinylClick(naslov, url, [""], "", 0, "", "", "", "", "")
-              }
+              onClick={() => handleVinylClick(500)}
             />
           );
         })}
@@ -305,7 +356,25 @@ const VinylBox: React.FC<Vinyl_color> = ({ by_genre, color }) => {
               </p>
               <div className={styles.buttonDiv}>
                 <div></div>
-                <button className={styles.buttonExtra}>Ponudi zamjenu</button>
+                <Link
+                  to={isLoggedIn ? "/exchange-site" : "#"}
+                  className={`${styles.offer_button} ${
+                    !isLoggedIn ? styles.disabled : ""
+                  }`}
+                  onClick={(e) => {
+                    if (!isLoggedIn) {
+                      e.preventDefault();
+                      alert("You need to log in to offer an exchange!");
+                    }
+                  }}
+                  state={parseInt(selectedVinyl.vinylId)}
+                  // vinylRecords.find(
+                  //   (vinyl) =>
+                  //     parseInt(vinyl.vinylId) == parseInt(selectedVinyl.vinylId)
+                  // )
+                >
+                  <button className={styles.buttonExtra}>Ponudi zamjenu</button>
+                </Link>
               </div>
             </div>
             <button className={styles.closeButton} onClick={closePopup}>

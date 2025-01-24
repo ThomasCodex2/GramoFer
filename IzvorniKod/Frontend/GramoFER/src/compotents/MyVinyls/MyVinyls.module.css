@@ -141,3 +141,11 @@ h1 > span{
 .desc{
   grid-column: span 2;
 }
+.adminButton{
+  color: white;
+  width: 150px;
+  height: fit-content;
+  background-color: #62a0aa;
+  margin-left: 0;
+  margin-bottom: 10px;
+}

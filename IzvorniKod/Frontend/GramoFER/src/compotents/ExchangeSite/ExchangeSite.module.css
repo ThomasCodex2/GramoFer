@@ -1,0 +1,52 @@
+.container{
+  padding-top: 10px;
+  color: black;
+  background-color: white;
+  padding-bottom: 5px;
+  padding-top: 20px;
+  margin-left: 4.9vw;
+  margin-right: 4.9vw;
+  padding-right: 3.5vw;
+  min-height: 100vh;
+  height: fit-content;
+  width: 1fr;
+  border: 1px solid black;
+  padding-left: 3.5vw;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+.vinyl_choose{
+  color: white;
+  display: grid;
+  grid-template-columns: 30% 30% 30% 1fr;
+  column-gap: 1px;
+  background-color: black;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+.vinyl_choose > div{
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 50px;
+}
+.submit_button{
+  height: 40px;
+  font-size: large;
+  margin-top: 10px;
+  background-color: #629460af;
+  color: white;
+  font-weight: bold;
+}
+.first_row{
+  background-color: #2F2D2E;
+}
+.exchanges_header{
+  display: flex;
+  justify-content: space-between;
+}
+.exchanges_header > h1{
+  color:#629460af;
+}

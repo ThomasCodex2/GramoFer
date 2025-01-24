@@ -73,7 +73,6 @@ const Register = () => {
     } catch (error) {
       console.error("Error occurred during form submission", error);
     }
-    
   };
 
   const handleRegSubmit = async (e: React.FormEvent<HTMLFormElement>) => {

@@ -41,11 +41,9 @@ public class VinylController {
 
         if (zastavica == "uspjehimail") {
             return ResponseEntity.status(HttpStatus.SC_CREATED).body("Vinyl added successfully.");
-        }
-        else if (zastavica == "uspjeh") {
+        } else if (zastavica == "uspjeh") {
             return ResponseEntity.status(HttpStatus.SC_CREATED).body("Vinyl added successfully.");
-        }
-        else {
+        } else {
             return ResponseEntity.status(HttpStatus.SC_NOT_ACCEPTABLE).body("Edition already exists");
         }
     }

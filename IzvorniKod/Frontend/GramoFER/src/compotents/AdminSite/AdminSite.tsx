@@ -2,7 +2,7 @@ import AdminSiteUserElement from "../AdminSiteUserElement/AdminSiteUserElement";
 import VinylsRecord from "../VinylsRecord/VinylsRecord";
 import styles from "./AdminSite.module.css";
 import { useEffect, useState } from "react";
-
+import { useNavigate } from "react-router-dom";
 interface UserData {
   email: string;
   firstName: string;
@@ -36,18 +36,16 @@ interface VinylsData {
 const AdminSite = () => {
   const [UsersData, setUsersData] = useState<UserData[]>([]);
   const [VinylsData, setVinlysData] = useState<VinylsData[]>([]);
+  const [errorHandled, setErrorHandled] = useState(false);
+  const navigate = useNavigate();
+
   useEffect(() => {
-    const fetchVinyls = async () => {
+    const FetchData = async () => {
       const token = localStorage.getItem("aToken");
 
-      // if (token !== null) {
-      //   console.log("Token found:", token);
-      // } else {
-      //   console.log("No token found");
-      // }
       try {
-        const response = await fetch(
-          `https://gramofer.work.gd/api/admintable/allvinyls`,
+        const AdminResponse = await fetch(
+          `https://gramofer.work.gd/api/admintable/admin`,
           {
             method: "GET",
             headers: {
@@ -57,62 +55,71 @@ const AdminSite = () => {
           }
         );
 
-        if (!response.ok) {
-          throw new Error(`Failed to fetch vinyls: ${response.status}`);
-        }
-        // const text = await response.text();
-        // if (!text) {
-        //   console.error("Empty response from server for vinyls");
-        //   return;
-        // }
-        // const allVinyls = JSON.parse(text);
-        const allVinyls: VinylsData[] = await response.json();
-        setVinlysData(allVinyls);
-        console.log("allVinyls data:", allVinyls);
-      } catch (error) {
-        console.error("Error fetching vinyls:", error);
-      }
-    };
-    fetchVinyls();
-  }, []);
-  useEffect(() => {
-    const fetchUsers = async () => {
-      const token = localStorage.getItem("aToken");
+        if (AdminResponse.ok) {
+          const checkAdmin = await AdminResponse.json();
+          if (parseInt(checkAdmin) == 1) {
+            try {
+              // Fetch vinyls
+              const vinylResponse = await fetch(
+                `https://gramofer.work.gd/api/admintable/allvinyls`,
+                {
+                  method: "GET",
+                  headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${token}`,
+                  },
+                }
+              );
+              if (vinylResponse.ok) {
+                const allVinyls: VinylsData[] = await vinylResponse.json();
+                setVinlysData(allVinyls);
+              }
 
-      if (token !== null) {
-        console.log("Token found:", token);
-      } else {
-        console.log("No token found");
-      }
-      try {
-        const response = await fetch(
-          `https://gramofer.work.gd/api/admintable/users`,
-          {
-            method: "GET",
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${token}`,
-            },
+              // Fetch users
+              const userResponse = await fetch(
+                `https://gramofer.work.gd/api/admintable/users`,
+                {
+                  method: "GET",
+                  headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${token}`,
+                  },
+                }
+              );
+              if (userResponse.ok) {
+                const allUsers: UserData[] = await userResponse.json();
+                setUsersData(allUsers);
+              }
+            } catch (error) {
+              console.error("Error fetching data: ", error);
+              if (!errorHandled) {
+                setErrorHandled(true);
+                alert("An error occurred while fetching data.");
+              }
+            }
+          } else {
+            setErrorHandled(true);
+            alert("Unauthorized user detected!");
+            navigate("/");
           }
-        );
-
-        if (!response.ok) {
-          throw new Error(`Failed to fetch users: ${response.status}`);
+        } else {
+          if (!errorHandled) {
+            setErrorHandled(true);
+            alert("Unauthorized user detected!");
+            navigate("/");
+          }
         }
-        // const text = await response.text();
-        // if (!text) {
-        //   console.error("Empty response from server for users");
-        // }
-        const allUsers: UserData[] = await response.json();
-        setUsersData(allUsers);
-        console.log("AllUsers data:", allUsers);
       } catch (error) {
-        console.error("Error fetching users:", error);
+        console.error(error);
+        if (!errorHandled) {
+          setErrorHandled(true);
+          navigate("/");
+          alert("Unauthorized user detected!");
+        }
       }
     };
-    fetchUsers();
-  }, []);
-
+    FetchData();
+  }, [errorHandled, navigate]);
   const placeholderDate = new Date();
   return (
     <>
