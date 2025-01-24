@@ -8,7 +8,6 @@ function Header() {
     !!localStorage.getItem("aToken")
   );
   const location = useLocation();
-
   useEffect(() => {
     const handleStorageChange = () => {
       const token = localStorage.getItem("aToken");

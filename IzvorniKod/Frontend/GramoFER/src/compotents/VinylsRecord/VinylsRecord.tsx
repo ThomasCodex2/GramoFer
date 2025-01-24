@@ -1,6 +1,9 @@
 import styles from "./VinylsRecord.module.css";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-interface MyVinylsRecordProps {
+import VinylEditPopup from "../VinylEditPopup/VinylEditPopup";
+
+interface VinylsRecordProps {
   vinyl_id: string;
   edition_mark: string;
   album: string;
@@ -10,7 +13,7 @@ interface MyVinylsRecordProps {
   adminSite: boolean;
 }
 
-const VinylsRecord: React.FC<MyVinylsRecordProps> = ({
+const VinylsRecord: React.FC<VinylsRecordProps> = ({
   vinyl_id,
   edition_mark,
   album,
@@ -20,6 +23,20 @@ const VinylsRecord: React.FC<MyVinylsRecordProps> = ({
   adminSite,
 }) => {
   const navigate = useNavigate();
+  const [isVinylEditPopupOpen, setVinylEditPopupOpen] = useState<{
+    vinyl_id: string;
+    edition_mark: string;
+    year_of_release: string;
+    performer: string;
+    album_name: string;
+    goldmine_standard_vinyl: string;
+    goldmine_standard_wrap: string;
+    genre: string[];
+    location: string;
+    images: File[];
+    description?: string;
+  } | null>(null);
+
   const handleDelete = async () => {
     const token = localStorage.getItem("aToken");
     try {
@@ -44,6 +61,7 @@ const VinylsRecord: React.FC<MyVinylsRecordProps> = ({
       alert("An error occurred. Please try again.");
     }
   };
+
   const handleAdminDelete = async () => {
     const token = localStorage.getItem("aToken");
     try {
@@ -68,6 +86,34 @@ const VinylsRecord: React.FC<MyVinylsRecordProps> = ({
       alert("An error occurred. Please try again.");
     }
   };
+
+  const handleOpen = (
+    vinyl_id: string,
+    edition_mark: string,
+    album: string,
+    performer: string,
+    genre: string[],
+    picture_urls: string
+  ) => {
+    setVinylEditPopupOpen({
+      vinyl_id,
+      edition_mark,
+      year_of_release: "Unknown", 
+      performer,
+      album_name: album,
+      goldmine_standard_vinyl: "Unknown", 
+      goldmine_standard_wrap: "Unknown", 
+      genre,
+      location: "Unknown", 
+      images: [],
+      description: "", 
+    });
+  };
+
+  const handleClose = () => {
+    setVinylEditPopupOpen(null);
+  };
+
   return (
     <>
       <div className={styles.vinyl_element} data-full-text={edition_mark}>
@@ -86,21 +132,41 @@ const VinylsRecord: React.FC<MyVinylsRecordProps> = ({
         {picture_urls}
       </div>
       <div className={styles.exchange_buttons}>
-        {adminSite == false ? (
+        {!adminSite && (
           <div>
-            <img src="/images/pencil_icon.png" alt="" />
+            <img
+              src="/images/pencil_icon.png"
+              alt="Edit"
+              onClick={() =>
+                handleOpen(vinyl_id, edition_mark, album, performer, genre, picture_urls)
+              }
+            />
           </div>
-        ) : (
-          ""
         )}
         <div>
           <img
             src="/images/x_icon.png"
-            alt=""
-            onClick={adminSite == false ? handleDelete : handleAdminDelete}
+            alt="Delete"
+            onClick={adminSite ? handleAdminDelete : handleDelete}
           />
         </div>
       </div>
+      {isVinylEditPopupOpen && (
+        <div
+          className={styles.popupBackground}
+          onClick={handleClose} 
+        >
+          <div
+            className={styles.popupContent}
+            onClick={(e) => e.stopPropagation()}
+          >
+            <VinylEditPopup
+              vinyl={isVinylEditPopupOpen}
+              onClose={handleClose}
+            />
+          </div>
+        </div>
+      )}
     </>
   );
 };
