@@ -11,6 +11,8 @@ import lombok.Data;
 public class ExchangeResponse {
     private Integer exchangeid;
 
+    private String username;
+    
     private String albumname;
 
     private List<String> isoffering;
