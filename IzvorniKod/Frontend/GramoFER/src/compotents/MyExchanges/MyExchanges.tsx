@@ -1,13 +1,28 @@
 import styles from "./MyExchanges.module.css";
 import Exchange from "../Exchange/Exchange";
-import { useEffect } from "react";
-const pending_out = true;
-const pending_in = true;
-const prev_out = true;
-const prev_in = true;
+import { useEffect, useState } from "react";
 const API_BASE_URL = "https://gramofer.work.gd";
 
+interface userExchange {
+  albumname: string;
+  exchangeid: string;
+  isoffering: string[];
+  username: string;
+}
+
 const MyExchanges = () => {
+  const [IncomingActiveExchanges, setIncomingActiveExchanges] = useState<
+    userExchange[]
+  >([]);
+  const [OutgoingActiveExchanges, setOutgoingActiveExchanges] = useState<
+    userExchange[]
+  >([]);
+  const [IncomingDoneExchanges, setIncomingDoneExchanges] = useState<
+    userExchange[]
+  >([]);
+  const [OutgoingDoneExchanges, setOutgoingDoneExchanges] = useState<
+    userExchange[]
+  >([]);
   useEffect(() => {
     const token = localStorage.getItem("aToken");
     const fetchOutgoingActiveExchages = async () => {
@@ -27,6 +42,7 @@ const MyExchanges = () => {
         }
         const OutActExc = await response.json();
         console.log("OutgoingActiveExchanges: ", OutActExc);
+        setOutgoingActiveExchanges(OutActExc);
         //TODO, SET FOR LOCAL VARIABLE
       } catch (error) {
         console.error("ERROR FETCHING OutActExc: ", error);
@@ -49,6 +65,7 @@ const MyExchanges = () => {
         }
         const IncActExc = await response.json();
         console.log("IncomingActiveExchanges: ", IncActExc);
+        setIncomingActiveExchanges(IncActExc);
         //TODO, SET FOR LOCAL VARIABLE
       } catch (error) {
         console.error("ERROR FETCHING IncActExc: ", error);
@@ -71,6 +88,7 @@ const MyExchanges = () => {
         }
         const OutDoneExc = await response.json();
         console.log("OutgoingDoneExchanges: ", OutDoneExc);
+        setOutgoingDoneExchanges(OutDoneExc);
         //TODO, SET FOR LOCAL VARIABLE
       } catch (error) {
         console.error("ERROR FETCHING OutDoneExc: ", error);
@@ -93,6 +111,7 @@ const MyExchanges = () => {
         }
         const IncDoneExc = await response.json();
         console.log("IncomingDoneExchanges: ", IncDoneExc);
+        setIncomingDoneExchanges(IncDoneExc);
         //TODO, SET FOR LOCAL VARIABLE
       } catch (error) {
         console.error("ERROR FETCHING IncDoneExc: ", error);
@@ -109,8 +128,7 @@ const MyExchanges = () => {
         <h1 className={styles.prev}>Current Exchanges</h1>
         <h2 className={styles.out}>Outgoing pending</h2>
         <div className={styles.pending}>
-          {!pending_out && <h2>There are no current outgoing exchanges</h2>}
-          {pending_out && (
+          {OutgoingActiveExchanges.length > 0 ? (
             <>
               <div className={styles.exchanges}>
                 <div>To</div>
@@ -118,31 +136,34 @@ const MyExchanges = () => {
                 <div>For their</div>
                 <div>Action</div>
               </div>
+              {OutgoingActiveExchanges.map((exchange) => {
+                return (
+                  <Exchange
+                    albumname={exchange.albumname}
+                    exchangeid={exchange.exchangeid}
+                    isoffering={exchange.isoffering}
+                    username={exchange.username}
+                    outgoing={true}
+                    history={false}
+                  />
+                );
+              })}
               <Exchange
-                senderAlbums={["VanMorris"]}
-                receiverAlbums={["WaveLength", "Duran Duran"]}
-                receiverUsername="Penguin123"
-                receiverId="numbers"
-                senderUsername="Your username"
-                senderId="your id"
+                albumname={"albumName"}
+                exchangeid={"id"}
+                isoffering={["offers"]}
+                username={"username"}
                 outgoing={true}
-              />
-              <Exchange
-                senderAlbums={["U njegovom srcu"]}
-                receiverAlbums={["Elektra"]}
-                receiverUsername="MusicLVR"
-                receiverId="numbers"
-                senderUsername="Your username"
-                senderId="your id"
-                outgoing={true}
+                history={false}
               />
             </>
+          ) : (
+            <h2>There are no current outgoing exchanges</h2>
           )}
         </div>
         <h2 className={styles.in}>Incoming pending</h2>
         <div className={styles.pending}>
-          {!pending_in && <h2>There are no current incoming exchanges</h2>}
-          {pending_in && (
+          {IncomingActiveExchanges.length > 0 ? (
             <>
               <div className={styles.exchanges}>
                 <div>From</div>
@@ -150,63 +171,98 @@ const MyExchanges = () => {
                 <div>For Your</div>
                 <div>Action</div>
               </div>
+              {IncomingActiveExchanges.map((exchange) => {
+                return (
+                  <Exchange
+                    albumname={exchange.albumname}
+                    exchangeid={exchange.exchangeid}
+                    isoffering={exchange.isoffering}
+                    username={exchange.username}
+                    outgoing={true}
+                    history={false}
+                  />
+                );
+              })}
               <Exchange
-                senderAlbums={["GT", "Diamond"]}
-                receiverAlbums={["84"]}
-                receiverUsername="Yourusername"
-                receiverId="numbers"
-                senderUsername="MusicLVR"
-                senderId="your id"
+                albumname={"albumName"}
+                exchangeid={"id"}
+                isoffering={["offers"]}
+                username={"username"}
                 outgoing={false}
+                history={false}
               />
             </>
+          ) : (
+            <h2>There are no current incoming exchanges</h2>
           )}
         </div>
         <h1 className={styles.prev}>Previous exchanges</h1>
         <h2 className={styles.out}>Outgoing history</h2>
         <div className={styles.pending}>
-          {!prev_out && <h2>There were no previous outgoing exchanges</h2>}
-          {prev_out && (
+          {OutgoingDoneExchanges.length > 0 ? (
             <>
-              <div className={styles.exchanges}>
+              <div className={styles.history_exchange}>
                 <div>From</div>
                 <div>Their</div>
                 <div>For Your</div>
-                <div>Action</div>
               </div>
+              {OutgoingDoneExchanges.map((exchange) => {
+                return (
+                  <Exchange
+                    albumname={exchange.albumname}
+                    exchangeid={exchange.exchangeid}
+                    isoffering={exchange.isoffering}
+                    username={exchange.username}
+                    outgoing={true}
+                    history={false}
+                  />
+                );
+              })}
               <Exchange
-                senderAlbums={["Wave"]}
-                receiverAlbums={["some album"]}
-                receiverUsername="Yourusername"
-                receiverId="numbers"
-                senderUsername="MusicLVR"
-                senderId="your id"
+                albumname={"albumName"}
+                exchangeid={"id"}
+                isoffering={["offers"]}
+                username={"username"}
                 outgoing={true}
+                history={true}
               />
             </>
+          ) : (
+            <h2>There were no previous outgoing exchanges</h2>
           )}
         </div>
         <h2 className={styles.in}>Incoming history</h2>
         <div className={styles.pending}>
-          {!prev_in && <h2>There were no previous incoming exchanges</h2>}
-          {prev_in && (
+          {IncomingDoneExchanges.length > 0 ? (
             <>
-              <div className={styles.exchanges}>
+              <div className={styles.history_exchange}>
                 <div>From</div>
                 <div>Their</div>
                 <div>For Your</div>
-                <div>Action</div>
               </div>
+              {IncomingDoneExchanges.map((exchange) => {
+                return (
+                  <Exchange
+                    albumname={exchange.albumname}
+                    exchangeid={exchange.exchangeid}
+                    isoffering={exchange.isoffering}
+                    username={exchange.username}
+                    outgoing={true}
+                    history={false}
+                  />
+                );
+              })}
               <Exchange
-                senderAlbums={["All", "Beut"]}
-                receiverAlbums={["Kate"]}
-                receiverUsername="Yourusername"
-                receiverId="numbers"
-                senderUsername="MusicLVR"
-                senderId="your id"
+                albumname={"albumName"}
+                exchangeid={"id"}
+                isoffering={["offers"]}
+                username={"username"}
                 outgoing={false}
+                history={true}
               />
             </>
+          ) : (
+            <h2>There were no previous incoming exchanges</h2>
           )}
         </div>
       </div>

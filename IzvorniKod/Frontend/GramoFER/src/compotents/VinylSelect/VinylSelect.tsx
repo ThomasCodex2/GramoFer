@@ -2,15 +2,25 @@ import styles from "./VinylSelect.module.css";
 import VinylBox from "../VinylBox/VinylBox";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-// import { useEffect } from "react";
-// import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 const VinylSelect = () => {
-  const [selectedGenre, setSelectedGenre] = useState("Rock");
-  const handleGenreChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    setSelectedGenre(event.target.value);
-  };
   const navigate = useNavigate();
+  const [year, setYear] = useState<number | null>(null);
+  const [genre, setGenre] = useState<string>("");
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    const yearInput = (
+      e.currentTarget.elements.namedItem("year") as HTMLInputElement
+    )?.value;
+    const genreInput = (
+      e.currentTarget.elements.namedItem("genre") as HTMLInputElement
+    )?.value;
+
+    setYear(yearInput ? parseInt(yearInput) : null);
+    setGenre(genreInput || "");
+  };
+
   const [isAdmin, setIsAdmin] = useState(false);
   useEffect(() => {
     const token = localStorage.getItem("aToken");
@@ -47,9 +57,7 @@ const VinylSelect = () => {
     <div className={styles.container}>
       {isAdmin && (
         <Link to="/admin-site">
-          <button className={styles.adminButton}>
-            Temporary Admin page button
-          </button>
+          <button className={styles.adminButton}>Admin Page button</button>
         </Link>
       )}
       <div className={styles.welcome_banner}>
@@ -70,8 +78,9 @@ const VinylSelect = () => {
             </h2>
           </div>
           <VinylBox
-            by_genre={false}
-            color={"random"}
+            filter={false}
+            year={0}
+            genre={""}
             navigate={navigate}
           ></VinylBox>
         </div>
@@ -81,38 +90,38 @@ const VinylSelect = () => {
             <h2>
               Got the <i>groove</i> but not the note? Try by genre or year:
             </h2>
-            <form className={styles.genre_select}>
+            <form className={styles.genre_select} onSubmit={handleSubmit}>
               <div className={styles.input_fields}>
                 {" "}
+                <label htmlFor="year">Year: </label>
                 <input
-                  type="text"
+                  type="number"
+                  min="1948"
+                  max="2025"
                   name="year"
                   id="year"
                   className={styles.select}
                   placeholder="Input year"
                 />
-                <label htmlFor="options"> genre: </label>
-                <select
-                  id="options"
-                  name="options"
+                <label htmlFor="genre"> genre: </label>
+                <input
+                  type="text"
+                  name="genre"
+                  id="genre"
                   className={styles.select}
-                  value={selectedGenre}
-                  onChange={handleGenreChange}
-                >
-                  <option value="Rock">Rock</option>
-                  <option value="Blues">Blues</option>
-                  <option value="Pop">Pop</option>
-                </select>
+                  placeholder="Input genre"
+                />
               </div>
-
-              <button className={styles.icon_contain}>
+              <button type="submit" className={styles.icon_contain}>
+                Search
                 <img src="/images/magnify_icon.webp" alt=""></img>
               </button>
             </form>
           </div>
           <VinylBox
-            by_genre={true}
-            color={selectedGenre}
+            filter={true}
+            year={year || 0}
+            genre={genre}
             navigate={navigate}
           ></VinylBox>
         </div>

@@ -1,5 +1,5 @@
 import styles from "./AdminSiteUserElement.module.css";
-
+import { useNavigate } from "react-router-dom";
 interface AdminSiteUserElementProps {
   userId: string;
   username: string;
@@ -17,6 +17,7 @@ const AdminSiteUserElement: React.FC<AdminSiteUserElementProps> = ({
   lastName,
   registrationDate, //not shown (show it?)
 }) => {
+  const navigate = useNavigate();
   const handleBan = async () => {
     const token = localStorage.getItem("aToken");
     //const id = parseInt(userId);
@@ -33,7 +34,7 @@ const AdminSiteUserElement: React.FC<AdminSiteUserElementProps> = ({
       );
       if (response.ok) {
         alert("Deleted user sucessfully");
-        window.location.reload();
+        navigate("/admin-site");
       } else {
         alert("Something went wrong");
       }

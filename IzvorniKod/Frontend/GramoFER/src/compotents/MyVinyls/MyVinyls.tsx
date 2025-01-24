@@ -1,6 +1,7 @@
 import styles from "./MyVinyls.module.css";
 import VinylsRecord from "../VinylsRecord/VinylsRecord";
 import { useState, useRef, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 // import { Link } from "react-router-dom";
 interface FormData {
   vinylCondition: string;
@@ -45,6 +46,7 @@ interface MyVinylsData {
 const API_BASE_URL = "https://gramofer.work.gd";
 
 const MyVinyls = () => {
+  const navigate = useNavigate();
   const [images, setImages] = useState<string[]>([]);
   //const [isAdmin, setIsAdmin] = useState<number>(0);
   const [formData, setFormData] = useState<FormData>({
@@ -188,7 +190,7 @@ const MyVinyls = () => {
           },
         });
         clearImages();
-        window.location.reload();
+        navigate("/my-vinyls");
       } else {
         alert("Failed to add vinyl. Please try again.");
       }
@@ -372,7 +374,7 @@ const MyVinyls = () => {
         </div>
         <button className={styles.add_button}>Add Vinyl</button>
       </form>
-      <h1>My Vinyls</h1>
+      <h1 className={styles.yellow}>My Vinyls</h1>
       <div className={styles.vinyl_list}>
         <div className={styles.listing}>Edition mark</div>
         <div className={styles.listing}>Album name</div>

@@ -11,6 +11,19 @@
   justify-content: center; 
   align-items: center;    
 }
+.history_container{
+  display: grid;
+  grid-template-columns: 20% 40% 1fr;
+  gap: 1.5px;
+  text-align: center;
+  width: 100%;
+  background-color: black;
+}
+.history_container > h3{
+  display: flex;
+  justify-content: center; 
+  align-items: center;   
+}
 .vinyl_container{
   padding-top: 5px;
   padding-bottom: 5px;
@@ -62,4 +75,20 @@
 }
 .exchange_buttons > div > img{
   width: 100%;
+}
+.list_element{
+  white-space: nowrap; 
+  text-overflow: ellipsis;
+}
+.list_element:hover::after {
+  content: attr(data-full-text);
+  position: absolute;
+  background: #2F2D2E;
+  color: white;
+  padding: 5px;
+  border-radius: 3px;
+  white-space: nowrap;
+  transform: translateY(-120%);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+  z-index: 10;
 }

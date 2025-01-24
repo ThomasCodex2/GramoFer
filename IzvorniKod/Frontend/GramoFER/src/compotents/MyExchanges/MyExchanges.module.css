@@ -42,6 +42,20 @@
   padding-block-end: 1em;
   background-color: #2F2D2E;
 }
+.history_exchange{
+  border-bottom: 1px solid black;
+  display: grid;
+  grid-template-columns:20% 40% 1fr;
+  gap: 1.5px;
+  text-align: center;
+  width: 100%;
+  background-color: black;
+}
+.history_exchange > div{
+  padding-block-start: 1em;
+  padding-block-end: 1em;
+  background-color: #2F2D2E;
+}
 .out{
   color: #5b969fa8;
 }

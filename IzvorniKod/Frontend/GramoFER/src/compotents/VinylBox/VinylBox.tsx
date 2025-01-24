@@ -4,8 +4,9 @@ import React, { useRef, useState, useEffect } from "react";
 import { useNavigate, useParams, useLocation } from "react-router-dom";
 import { Link } from "react-router-dom";
 interface Vinyl_color {
-  by_genre: boolean;
-  color: string;
+  filter: boolean;
+  year: number;
+  genre: string;
   navigate: ReturnType<typeof useNavigate>;
 }
 
@@ -30,7 +31,7 @@ interface VinylRecord {
   vinylImagePath2: string;
 }
 
-const VinylBox: React.FC<Vinyl_color> = ({ by_genre, color, navigate }) => {
+const VinylBox: React.FC<Vinyl_color> = ({ filter, year, genre, navigate }) => {
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const [selectedVinyl, setSelectedVinyl] = useState<{
     title: string;
@@ -66,9 +67,70 @@ const VinylBox: React.FC<Vinyl_color> = ({ by_genre, color, navigate }) => {
       window.removeEventListener("storage", handleStorageChange);
     };
   }, [location.search]);
+  useEffect(() => {
+    const fetchFilteredVinyls = async () => {
+      if (year) {
+        try {
+          const response = await fetch(
+            `https://gramofer.work.gd/api/vinyls/vinyl/${genre}/${year}`
+          );
+          if (!response.ok) {
+            throw new Error(
+              "Failed to fetch filtered (year and genre) vinyls!"
+            );
+          }
+          const vinylsData: VinylRecord[] = await response.json();
 
-  let number = 0;
-  let V_count = 0;
+          setVinylRecords(vinylsData);
+        } catch (error) {
+          console.error(
+            "Failed to fetch filtered (year and genre) vinyls",
+            error
+          );
+        }
+      } else {
+        try {
+          const response = await fetch(
+            `https://gramofer.work.gd/api/vinyls/vinyl/search/${genre}`
+          );
+          if (!response.ok) {
+            throw new Error("Failed to fetch filtered (genre) vinyls!");
+          }
+          const vinylsData: VinylRecord[] = await response.json();
+
+          setVinylRecords(vinylsData);
+        } catch (error) {
+          console.error("Failed to fetch filtered (genre) vinyls", error);
+        }
+      }
+    };
+
+    const fetchVinyls = async () => {
+      try {
+        const response = await fetch(
+          "https://gramofer.work.gd/api/vinyls/vinyl"
+        );
+
+        if (!response.ok) {
+          throw new Error("Failed to fetch vinyls");
+        }
+
+        const vinylsData: VinylRecord[] = await response.json();
+
+        //console.log("Vinyls data:", vinylsData);
+
+        setVinylRecords(vinylsData);
+      } catch (error) {
+        console.error("Error fetching vinyls:", error);
+      }
+    };
+
+    if (filter) {
+      fetchFilteredVinyls();
+    } else {
+      fetchVinyls();
+    }
+  }, [year, genre, filter]);
 
   const Naslovi = [
     "Wavelength",
@@ -98,29 +160,6 @@ const VinylBox: React.FC<Vinyl_color> = ({ by_genre, color, navigate }) => {
     "/images/Beut.jpg",
     "/images/GT.jpg",
   ];
-
-  if (by_genre) {
-    switch (color) {
-      case "Rock":
-        number = 1;
-        V_count = 4;
-        break;
-      case "Blues":
-        number = 2;
-        V_count = 7;
-        break;
-      case "Pop":
-        number = 3;
-        V_count = 12;
-        break;
-      default:
-        number = 1;
-        V_count = 1;
-    }
-  } else {
-    number = 6;
-    V_count = 4;
-  }
 
   const scrollLeft = () => {
     if (scrollContainerRef.current) {
@@ -185,28 +224,6 @@ const VinylBox: React.FC<Vinyl_color> = ({ by_genre, color, navigate }) => {
     navigate("/");
   };
 
-  useEffect(() => {
-    const fetchVinyls = async () => {
-      try {
-        const response = await fetch(
-          "https://gramofer.work.gd/api/vinyls/vinyl"
-        );
-
-        if (!response.ok) {
-          throw new Error("Failed to fetch vinyls");
-        }
-
-        const vinylsData: VinylRecord[] = await response.json();
-
-        //console.log("Vinyls data:", vinylsData);
-
-        setVinylRecords(vinylsData);
-      } catch (error) {
-        console.error("Error fetching vinyls:", error);
-      }
-    };
-    fetchVinyls();
-  }, []);
   const { v_id } = useParams();
 
   useEffect(() => {
@@ -232,7 +249,6 @@ const VinylBox: React.FC<Vinyl_color> = ({ by_genre, color, navigate }) => {
         });
       }
     } else {
-      // Clear the selected vinyl when there's no `v_id`
       setSelectedVinyl(null);
     }
   }, [v_id, vinylRecords]);
@@ -251,7 +267,8 @@ const VinylBox: React.FC<Vinyl_color> = ({ by_genre, color, navigate }) => {
         <img src="/images/left.png" alt="" />
       </button>
       <div className={styles.filter_row} ref={scrollContainerRef}>
-        {!by_genre &&
+        {
+          //!by_year && maybe change?
           vinylRecords.map((vinyl) => (
             <Vinyl
               key={vinyl.vinylId}
@@ -260,8 +277,9 @@ const VinylBox: React.FC<Vinyl_color> = ({ by_genre, color, navigate }) => {
               url={vinyl.coverImagePath1 || "/images/placeholder_vinyl.jpg"}
               onClick={() => handleVinylClick(parseInt(vinyl.vinylId))}
             />
-          ))}
-        {Array.from({ length: V_count }).map((_, index) => {
+          ))
+        }
+        {Array.from({ length: 5 }).map((_, index) => {
           const naslov =
             index < Naslovi.length ? Naslovi[index] : "Placeholder Title";
           const url = index < Url_slika.length ? Url_slika[index] : "";
