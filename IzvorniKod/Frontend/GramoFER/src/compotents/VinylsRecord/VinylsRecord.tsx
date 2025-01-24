@@ -39,7 +39,6 @@ const VinylsRecord: React.FC<VinylsRecordProps> = ({
 
   const handleDelete = async () => {
     const token = localStorage.getItem("aToken");
-    console.log("Token found:", token); 
     try {
       const response = await fetch(
         `https://gramofer.work.gd/api/vinyls/${vinyl_id}`,
@@ -65,7 +64,6 @@ const VinylsRecord: React.FC<VinylsRecordProps> = ({
 
   const handleAdminDelete = async () => {
     const token = localStorage.getItem("aToken");
-    console.log("Token found:", token); 
     try {
       const response = await fetch(
         `https://gramofer.work.gd/api/admintable/vinyl/${vinyl_id}`,
@@ -97,24 +95,22 @@ const VinylsRecord: React.FC<VinylsRecordProps> = ({
     genre: string[],
     picture_urls: string
   ) => {
-    console.log("Opening popup for vinyl:", vinyl_id); 
     setVinylEditPopupOpen({
       vinyl_id,
       edition_mark,
-      year_of_release: "Unknown", 
+      year_of_release: "Unknown", // Default value
       performer,
       album_name: album,
-      goldmine_standard_vinyl: "Unknown", 
-      goldmine_standard_wrap: "Unknown", 
+      goldmine_standard_vinyl: "Unknown", // Default value
+      goldmine_standard_wrap: "Unknown", // Default value
       genre,
-      location: "Unknown", 
-      images: [], 
-      description: "", 
+      location: "Unknown", // Default value
+      images: [], // Default value
+      description: "", // Default value
     });
   };
 
   const handleClose = () => {
-    console.log("Closing popup"); 
     setVinylEditPopupOpen(null);
   };
 
@@ -151,31 +147,25 @@ const VinylsRecord: React.FC<VinylsRecordProps> = ({
           <img
             src="/images/x_icon.png"
             alt="Delete"
-            onClick={() => {
-              console.log("Admin site flag:", adminSite);  
-              adminSite ? handleAdminDelete() : handleDelete();
-            }}
+            onClick={adminSite ? handleAdminDelete : handleDelete}
           />
         </div>
       </div>
       {isVinylEditPopupOpen && (
-        <>
-          {console.log("Popup state is open:", isVinylEditPopupOpen)}  {/* Log the state when it's open */}
+        <div
+          className={styles.popupBackground}
+          onClick={handleClose} // Closes the popup when the background is clicked
+        >
           <div
-            className={styles.popupBackground}
-            onClick={handleClose} 
+            className={styles.popupContent}
+            onClick={(e) => e.stopPropagation()} // Prevents closing when clicking inside the popup
           >
-            <div
-              className={styles.popupContent}
-              onClick={(e) => e.stopPropagation()} 
-            >
-              <VinylEditPopup
-                vinyl={isVinylEditPopupOpen}
-                onClose={handleClose}
-              />
-            </div>
+            <VinylEditPopup
+              vinyl={isVinylEditPopupOpen}
+              onClose={handleClose}
+            />
           </div>
-        </>
+        </div>
       )}
     </>
   );
