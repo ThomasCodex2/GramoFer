@@ -71,6 +71,7 @@ const VinylBox: React.FC<Vinyl_color> = ({ filter, year, genre, navigate }) => {
     const fetchFilteredVinyls = async () => {
       if (year) {
         try {
+          console.log("YEAR: ", year, " GENRE: ", genre);
           const response = await fetch(
             `https://gramofer.work.gd/api/vinyls/vinyl/${genre}/${year}`
           );
@@ -104,7 +105,6 @@ const VinylBox: React.FC<Vinyl_color> = ({ filter, year, genre, navigate }) => {
         }
       }
     };
-
     const fetchVinyls = async () => {
       try {
         const response = await fetch(
@@ -126,7 +126,9 @@ const VinylBox: React.FC<Vinyl_color> = ({ filter, year, genre, navigate }) => {
     };
 
     if (filter) {
-      fetchFilteredVinyls();
+      if (genre) {
+        fetchFilteredVinyls();
+      }
     } else {
       fetchVinyls();
     }

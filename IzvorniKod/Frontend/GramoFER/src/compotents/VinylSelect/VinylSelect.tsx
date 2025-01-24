@@ -19,6 +19,12 @@ const VinylSelect = () => {
 
     setYear(yearInput ? parseInt(yearInput) : null);
     setGenre(genreInput || "");
+    console.log(
+      "YEAR BEING SEND: ",
+      parseInt(yearInput),
+      " GENRE BEING SEND: ",
+      genreInput
+    );
   };
 
   const [isAdmin, setIsAdmin] = useState(false);
@@ -110,6 +116,7 @@ const VinylSelect = () => {
                   id="genre"
                   className={styles.select}
                   placeholder="Input genre"
+                  required
                 />
               </div>
               <button type="submit" className={styles.icon_contain}>
