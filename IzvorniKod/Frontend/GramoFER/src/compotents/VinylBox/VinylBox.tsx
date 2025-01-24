@@ -7,6 +7,7 @@ interface Vinyl_color {
   filter: boolean;
   year: number;
   genre: string;
+  searchTerm: string;
   navigate: ReturnType<typeof useNavigate>;
 }
 
@@ -31,7 +32,13 @@ interface VinylRecord {
   vinylImagePath2: string;
 }
 
-const VinylBox: React.FC<Vinyl_color> = ({ filter, year, genre, navigate }) => {
+const VinylBox: React.FC<Vinyl_color> = ({
+  filter,
+  year,
+  genre,
+  searchTerm,
+  navigate,
+}) => {
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const [selectedVinyl, setSelectedVinyl] = useState<{
     title: string;
@@ -69,10 +76,12 @@ const VinylBox: React.FC<Vinyl_color> = ({ filter, year, genre, navigate }) => {
   }, [location.search]);
   useEffect(() => {
     const token = localStorage.getItem("aToken");
-    const fetchFilteredVinyls = async () => {
+    const fetchByYearAndGenre = async () => {
       try {
+        console.log("YEAR: ", year, " GENRE: ", genre);
+
         const response = await fetch(
-          `https://gramofer.work.gd/api/vinyls/vinyl/rock/1950`,
+          `https://gramofer.work.gd/api/vinyls/vinyl/${genre}/${year}`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -80,59 +89,62 @@ const VinylBox: React.FC<Vinyl_color> = ({ filter, year, genre, navigate }) => {
           }
         );
         if (!response.ok) {
-          throw new Error("FAILED TO FETCH TEST FETCH");
+          throw new Error("Failed to fetch filtered (year and genre) vinyls!");
         }
-        const RETURNED_JSON = await response.json();
+        const vinylsData: VinylRecord[] = await response.json();
 
-        console.log(RETURNED_JSON);
+        setVinylRecords(vinylsData);
       } catch (error) {
-        console.error("FAILED TO FETCH TEST FETCH", error);
+        console.error(
+          "Failed to fetch filtered (year and genre) vinyls",
+          error
+        );
       }
-      if (year) {
-        try {
-          console.log("YEAR: ", year, " GENRE: ", genre);
-
-          const response = await fetch(
-            `https://gramofer.work.gd/api/vinyls/vinyl/${genre}/${year}`,
-            {
-              headers: {
-                Authorization: `Bearer ${token}`,
-              },
-            }
-          );
-          if (!response.ok) {
-            throw new Error(
-              "Failed to fetch filtered (year and genre) vinyls!"
-            );
+    };
+    const fetchByGenreAndSearch = async () => {
+      try {
+        const response = await fetch(
+          `https://gramofer.work.gd/api/vinyls/vinyl/search/${genre}?searchTerm=${encodeURIComponent(
+            searchTerm
+          )}`,
+          {
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
+            },
           }
-          const vinylsData: VinylRecord[] = await response.json();
-
-          setVinylRecords(vinylsData);
-        } catch (error) {
-          console.error(
-            "Failed to fetch filtered (year and genre) vinyls",
-            error
-          );
+        );
+        if (!response.ok) {
+          throw new Error("Failed to fetch filtered (genre) vinyls!");
         }
-      } else {
-        try {
-          const response = await fetch(
-            `https://gramofer.work.gd/api/vinyls/vinyl/search/${genre}`,
-            {
-              headers: {
-                Authorization: `Bearer ${token}`,
-              },
-            }
-          );
-          if (!response.ok) {
-            throw new Error("Failed to fetch filtered (genre) vinyls!");
+        const vinylsData: VinylRecord[] = await response.json();
+
+        setVinylRecords(vinylsData);
+      } catch (error) {
+        console.error("Failed to fetch filtered (genre, search) vinyls", error);
+      }
+    };
+    const fetchBySearchAlone = async () => {
+      try {
+        const response = await fetch(
+          `https://gramofer.work.gd/api/vinyls/vinyl/searchAllVinyls?searchTerm=${encodeURIComponent(
+            searchTerm
+          )}`,
+          {
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
+            },
           }
-          const vinylsData: VinylRecord[] = await response.json();
-
-          setVinylRecords(vinylsData);
-        } catch (error) {
-          console.error("Failed to fetch filtered (genre) vinyls", error);
+        );
+        if (!response.ok) {
+          throw new Error("Failed to fetch filtered (search) vinyls!");
         }
+        const vinylsData: VinylRecord[] = await response.json();
+
+        setVinylRecords(vinylsData);
+      } catch (error) {
+        console.error("Failed to fetch filtered (genre) vinyls", error);
       }
     };
     const fetchVinyls = async () => {
@@ -156,8 +168,12 @@ const VinylBox: React.FC<Vinyl_color> = ({ filter, year, genre, navigate }) => {
     };
 
     if (filter) {
-      if (genre) {
-        fetchFilteredVinyls();
+      if (genre && year) {
+        fetchByYearAndGenre();
+      } else if (genre && searchTerm) {
+        fetchByGenreAndSearch();
+      } else {
+        fetchBySearchAlone();
       }
     } else {
       fetchVinyls();

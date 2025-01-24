@@ -7,6 +7,7 @@ const VinylSelect = () => {
   const navigate = useNavigate();
   const [year, setYear] = useState<number | null>(null);
   const [genre, setGenre] = useState<string>("");
+  const [searchTerm, setSearchTerm] = useState<string>("");
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
@@ -16,14 +17,20 @@ const VinylSelect = () => {
     const genreInput = (
       e.currentTarget.elements.namedItem("genre") as HTMLInputElement
     )?.value;
+    const searhTermInput = (
+      e.currentTarget.elements.namedItem("search") as HTMLInputElement
+    )?.value;
 
     setYear(yearInput ? parseInt(yearInput) : null);
     setGenre(genreInput || "");
+    setSearchTerm(searhTermInput || "");
     console.log(
       "YEAR BEING SEND: ",
       parseInt(yearInput),
       " GENRE BEING SEND: ",
-      genreInput
+      genreInput,
+      " TERM BEING SEND: ",
+      searhTermInput
     );
   };
 
@@ -87,6 +94,7 @@ const VinylSelect = () => {
             filter={false}
             year={0}
             genre={""}
+            searchTerm={""}
             navigate={navigate}
           ></VinylBox>
         </div>
@@ -118,6 +126,15 @@ const VinylSelect = () => {
                   placeholder="Input genre"
                   required
                 />
+                <label htmlFor="search"> search term: </label>
+                <input
+                  type="text"
+                  name="search"
+                  id="search"
+                  className={styles.select}
+                  placeholder="Input search term"
+                  required
+                />
               </div>
               <button type="submit" className={styles.icon_contain}>
                 Search
@@ -129,6 +146,7 @@ const VinylSelect = () => {
             filter={true}
             year={year || 0}
             genre={genre}
+            searchTerm={searchTerm}
             navigate={navigate}
           ></VinylBox>
         </div>
