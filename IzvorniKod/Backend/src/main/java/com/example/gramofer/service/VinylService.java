@@ -161,7 +161,7 @@ public class VinylService {
     }
 
     public List<VinylResponseDTO> getAllVinyls() {
-    List<Vinyl> vinyls = repoVinyl.findAll();
+    List<Vinyl> vinyls = repoVinyl.findAllByAvailable(0);
     return vinyls.stream()
         .map(vinyl -> {
             VinylResponseDTO dto = new VinylResponseDTO();
@@ -197,8 +197,9 @@ public class VinylService {
         if (!repoVinyl.existsById(id)) {
             return ResponseEntity.status(404).body("Vinyl not found");
         }
-
+        String e = repoVinyl.findById(id).get().getEditionLabel().getEditionLabel();
         repoVinyl.deleteById(id);
+        deleteEdition(e);
         return ResponseEntity.ok("Vinyl deleted successfully");
     }
 

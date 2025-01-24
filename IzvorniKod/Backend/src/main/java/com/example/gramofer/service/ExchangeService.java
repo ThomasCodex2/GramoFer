@@ -155,6 +155,15 @@ public class ExchangeService {
             Exchange exchange = otpexchange.get();
             exchange.setStatus("done");
             exchangerepo.save(exchange);
+            Vinyl doneV = exchange.getVinyl();
+            doneV.setAvailable(1);
+            repoVinyl.save(doneV);
+            Set<Vinyl> tochange = exchange.getIncludesOfferedVinyls();
+            List<Vinyl> vinylsToProcess = new ArrayList<>(tochange);
+            for (Vinyl v : vinylsToProcess) {
+                v.setAvailable(1);
+                repoVinyl.save(v);
+            }
             return "uspjeh";
 
         }

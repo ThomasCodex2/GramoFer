@@ -16,6 +16,9 @@ public interface VinylRepo extends JpaRepository<Vinyl,Integer> {
     
     Optional<Vinyl> findById(Integer id);
 
+    @Query("SELECT v FROM Vinyl v WHERE v.available = :available")
+    List<Vinyl> findAllByAvailable(@Param("available") int available);
+  
     @Query("SELECT v FROM Vinyl v " +
             "JOIN v.editionLabel e " +
             "JOIN e.belongsToGenreGenres g " +

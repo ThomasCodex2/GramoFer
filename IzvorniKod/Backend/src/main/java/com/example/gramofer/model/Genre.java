@@ -1,5 +1,6 @@
 package com.example.gramofer.model;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -32,7 +33,7 @@ public class Genre {
     @Column(nullable = false, length = 30)
     private String genreName;
 
-    @ManyToMany(mappedBy = "belongsToGenreGenres")
+    @ManyToMany(mappedBy = "belongsToGenreGenres", cascade = CascadeType.ALL)
     @JsonBackReference
     private Set<Edition> belongsToGenreEditions;
 

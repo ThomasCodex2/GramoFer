@@ -1,5 +1,6 @@
 package com.example.gramofer.model;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -68,16 +69,16 @@ public class Vinyl {
     @JsonBackReference
     private UserAccount user;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "edition_label_id", nullable = false)
     @JsonBackReference
     private Edition editionLabel;
 
-    @OneToMany(mappedBy = "vinyl")
+    @OneToMany(mappedBy = "vinyl", cascade = CascadeType.ALL)
     @JsonManagedReference
     private Set<Exchange> vinylExchanges;
 
-    @ManyToMany(mappedBy = "includesOfferedVinyls")
+    @ManyToMany(mappedBy = "includesOfferedVinyls", cascade = CascadeType.ALL)
     @JsonManagedReference
     private Set<Exchange> includesOfferedExchanges;
 
