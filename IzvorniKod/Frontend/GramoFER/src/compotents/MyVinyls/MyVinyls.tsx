@@ -1,7 +1,7 @@
 import styles from "./MyVinyls.module.css";
 import VinylsRecord from "../VinylsRecord/VinylsRecord";
 import { useState, useRef, useEffect } from "react";
-
+// import { Link } from "react-router-dom";
 interface FormData {
   vinylCondition: string;
   coverCondition: string;
@@ -46,7 +46,7 @@ const API_BASE_URL = "https://gramofer.work.gd";
 
 const MyVinyls = () => {
   const [images, setImages] = useState<string[]>([]);
-
+  //const [isAdmin, setIsAdmin] = useState<number>(0);
   const [formData, setFormData] = useState<FormData>({
     vinylCondition: "",
     coverCondition: "",
@@ -227,12 +227,23 @@ const MyVinyls = () => {
         console.error("Error fetching vinyls:", error);
       }
     };
-
+    // const checkAdmin = () => {
+    //   const A = localStorage.getItem("isAdmin");
+    //   if (A) {
+    //     setIsAdmin(parseInt(A));
+    //   }
+    // };
+    // checkAdmin();
     fetchVinyls();
   }, []);
-
   return (
     <div className={styles.container}>
+      {/* <Link to="/admin-site">
+        <button className={styles.adminButton}>
+          Temporary Admin page button
+        </button>
+      </Link> */}
+
       <form className={styles.listing_form} onSubmit={handleSubmit}>
         <h1>
           Add <span>YOUR</span> records here!

@@ -75,6 +75,8 @@ jobs:
             export GOOGLE_CLIENT_ID=${{ secrets.GOOGLE_CLIENT_ID }}
             export GOOGLE_CLIENT_SECRET=${{ secrets.GOOGLE_CLIENT_SECRET }}
             export AIVEN_PASSWORD=${{ secrets.AIVEN_PASSWORD }}
+            export GOOGLE_EMAIL=${{ secrets.GOOGLE_EMAIL }}
+            export GOOGLE_EMAIL_PASSWORD=${{ secrets.GOOGLE_EMAIL_PASSWORD }}
             cd GramoFer_Deploy_Backend/
             kill $(cat ./backend.pid) || true
             rm current.jar || true
