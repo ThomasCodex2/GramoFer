@@ -131,7 +131,6 @@ const ExchangeSite: React.FC = () => {
       console.error("Error submitting exchange data:", error);
     }
   };
-
   return (
     <div className={styles.container}>
       {myVinyls.length > 0 ? ( // Change condition to > when backend is connected

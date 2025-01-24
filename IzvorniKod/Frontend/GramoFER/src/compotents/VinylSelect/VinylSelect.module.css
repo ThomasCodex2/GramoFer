@@ -126,6 +126,45 @@ hr{
   margin-left: 0;
   margin-bottom: 10px;
 }
+
+.hover_container {
+  margin-bottom: 10px;
+  height: 32px;
+  border-radius: 5px;
+  background-color: #6b8951;
+  position: relative;
+  display: inline-block;
+  align-self: baseline;
+}
+.hover_container img {
+  width: 32px;
+  cursor: pointer;
+}
+
+.hover_container .hover_text {
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity 0.3s;
+  background-color:#52868e;
+  border: 2px solid black;
+  color: #fff;
+  text-align: center;
+  border-radius: 5px;
+  padding: 5px;
+  position: absolute;
+  left: 100%; 
+  top: 50%;
+  transform: translateY(-50%);
+  margin-left: 8px; 
+  white-space: nowrap;
+  z-index: 1;
+}
+
+.hover_container:hover .hover_text {
+  visibility: visible;
+  opacity: 1;
+}
+
 @media (max-width: 700px){
   .welcome_banner{
     grid-template-rows: 50% 50%;

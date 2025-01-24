@@ -18,7 +18,7 @@ const Exchange: React.FC<ExchangeInterface> = ({
   history,
 }) => {
   const navigate = useNavigate();
-  const handleDelete = async () => {
+  const handleAccept = async () => {
     const token = localStorage.getItem("aToken");
     const id = parseInt(exchangeid);
     try {
@@ -72,14 +72,18 @@ const Exchange: React.FC<ExchangeInterface> = ({
           >
             {!outgoing && (
               <div>
-                <img src="/images/checkmark.webp" alt="" />
+                <img
+                  src="/images/checkmark.webp"
+                  alt=""
+                  onClick={handleAccept}
+                />
               </div>
             )}
             <div>
               <img src="/images/pencil_icon.png" alt="" />
             </div>
             <div>
-              <img src="/images/x_icon.png" alt="" onClick={handleDelete} />
+              <img src="/images/x_icon.png" alt="" />
             </div>
           </div>
         ) : (

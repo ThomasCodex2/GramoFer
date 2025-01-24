@@ -122,6 +122,7 @@ const MyExchanges = () => {
     fetchOutgoingDoneExchages();
     fetchIncomingDoneExchages();
   }, []);
+
   return (
     <>
       <div className={styles.container}>
