@@ -179,7 +179,7 @@ const MyExchanges = () => {
                     exchangeid={exchange.exchangeid}
                     isoffering={exchange.isoffering}
                     username={exchange.username}
-                    outgoing={true}
+                    outgoing={false}
                     history={false}
                   />
                 );
