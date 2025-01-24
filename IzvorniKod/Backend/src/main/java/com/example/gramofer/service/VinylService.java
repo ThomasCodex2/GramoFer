@@ -31,7 +31,7 @@ import java.util.stream.Collectors;
 @Service
 public class VinylService {
     @Value("${spring.mail.username}")
-    private String email;
+    private String email1;
 
     private final VinylRepo repoVinyl;
     private final UserRepo userRepo;
@@ -338,7 +338,7 @@ public class VinylService {
                 vinyl.getEditionLabel().getArtistName(),
                 vinyl.getDescription()
         );
-        message.setFrom(email);
+        message.setFrom(email1);
         message.setTo(email);
         message.setSubject(subject);
         message.setText(msg);
