@@ -38,12 +38,12 @@ public class Wish {
     @Column(nullable = false)
     private String artistName;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
     @JsonBackReference
     private UserAccount user;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "edition_label_id")
     @JsonBackReference
     private Edition editionLabel;

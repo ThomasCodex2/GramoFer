@@ -126,13 +126,15 @@ public class ExchangeService {
         Exchange exchange = new Exchange();
         Optional <Vinyl> vinyl1 = repoVinyl.findById(input.getVinylsid());
         Set <Integer> listavinylid = input.getIsOfferingVinylsToOther();
+        List<Integer> vinylsToProcess = new ArrayList<>(listavinylid);
+        System.out.print(input.getIsOfferingVinylsToOther());
         if (vinyl1.isPresent()) {
             Vinyl vinyl4 = vinyl1.get();
             exchange.setVinyl(vinyl4);
             exchange.setIsOfferingUser(vinyl4.getUser());
         }
         Set <Vinyl> listaVinyla = new HashSet<Vinyl>();
-        for(Integer oneid: listavinylid){
+        for(Integer oneid: vinylsToProcess){
             Optional <Vinyl> vinyl2 = repoVinyl.findById(oneid);
             if (vinyl2.isPresent()) {
                 Vinyl vinyl3 = vinyl2.get();
