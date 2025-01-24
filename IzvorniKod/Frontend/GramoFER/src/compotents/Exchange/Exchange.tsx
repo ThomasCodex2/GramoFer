@@ -35,7 +35,7 @@ const Exchange: React.FC<ExchangeInterface> = ({
       );
       if (response.ok) {
         alert("Exchange Deleted successfully!");
-        navigate("/");
+        navigate("/my-exchanges");
       } else {
         alert("Failed to delete Exchange!");
       }

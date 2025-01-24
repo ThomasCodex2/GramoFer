@@ -1,5 +1,5 @@
 import styles from "./VinylsRecord.module.css";
-
+import { useNavigate } from "react-router-dom";
 interface MyVinylsRecordProps {
   vinyl_id: string;
   edition_mark: string;
@@ -19,6 +19,7 @@ const VinylsRecord: React.FC<MyVinylsRecordProps> = ({
   picture_urls,
   adminSite,
 }) => {
+  const navigate = useNavigate();
   const handleDelete = async () => {
     const token = localStorage.getItem("aToken");
     //const id = parseInt(vinyl_id); number or string?
@@ -36,7 +37,7 @@ const VinylsRecord: React.FC<MyVinylsRecordProps> = ({
       );
       if (response.ok) {
         alert("Vinyl Deleted successfully!");
-        window.location.reload();
+        navigate("/my-vinyls");
       } else {
         alert("Failed to delete Vinyl!");
       }
@@ -62,7 +63,7 @@ const VinylsRecord: React.FC<MyVinylsRecordProps> = ({
       );
       if (response.ok) {
         alert("Vinyl ADMIN Deleted successfully!");
-        window.location.reload();
+        navigate("/admin-site");
       } else {
         alert("Failed to ADMIN delete Vinyl!");
       }

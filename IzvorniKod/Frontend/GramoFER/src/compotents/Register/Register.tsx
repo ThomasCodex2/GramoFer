@@ -22,15 +22,6 @@ const Register = () => {
     setActiveButton(event.currentTarget.id);
   };
   const navigate = useNavigate();
-  // useEffect(() => {
-  //   const urlParams = new URLSearchParams(window.location.search);
-  //   const uriToken = urlParams.get("token");
-  //   if (uriToken) {
-  //     localStorage.setItem("aToken", uriToken);
-  //     console.log(localStorage.getItem("aToken"));
-  //     return;
-  //   }
-  // });
   const handleLogResult = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault(); //dodano?!?!?!
     const formData = new FormData(e.target as HTMLFormElement);
@@ -65,8 +56,7 @@ const Register = () => {
         localStorage.setItem("aToken", token);
         console.log("Form submitted successfully", data);
         localStorage.setItem("expiresIn", expiresIn.toString());
-        navigate("/");
-        window.location.reload();
+        navigate("/register");
       } else {
         console.error("Failed to submit form");
       }

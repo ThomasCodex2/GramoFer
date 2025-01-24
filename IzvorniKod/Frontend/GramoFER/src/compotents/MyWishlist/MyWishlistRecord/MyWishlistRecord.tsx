@@ -1,4 +1,5 @@
 import styles from "./MyWishlistRecord.module.css";
+import { useNavigate } from "react-router-dom";
 interface MyWish {
   albumName: string;
   artistName: string;
@@ -10,6 +11,7 @@ const MyWishlistRecord: React.FC<MyWish> = ({
   artistName,
   wishId,
 }) => {
+  const navigate = useNavigate();
   const handleDelete = async () => {
     const token = localStorage.getItem("aToken");
     try {
@@ -24,7 +26,7 @@ const MyWishlistRecord: React.FC<MyWish> = ({
       );
       if (response.ok) {
         alert("Deleted wish sucessfully");
-        window.location.reload();
+        navigate("/my-wishlist");
       } else {
         alert("Something went wrong");
       }
