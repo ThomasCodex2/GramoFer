@@ -68,12 +68,37 @@ const VinylBox: React.FC<Vinyl_color> = ({ filter, year, genre, navigate }) => {
     };
   }, [location.search]);
   useEffect(() => {
+    const token = localStorage.getItem("aToken");
     const fetchFilteredVinyls = async () => {
+      try {
+        const response = await fetch(
+          `https://gramofer.work.gd/api/vinyls/vinyl/rock/1950`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        if (!response.ok) {
+          throw new Error("FAILED TO FETCH TEST FETCH");
+        }
+        const RETURNED_JSON = await response.json();
+
+        console.log(RETURNED_JSON);
+      } catch (error) {
+        console.error("FAILED TO FETCH TEST FETCH", error);
+      }
       if (year) {
         try {
           console.log("YEAR: ", year, " GENRE: ", genre);
+
           const response = await fetch(
-            `https://gramofer.work.gd/api/vinyls/vinyl/${genre}/${year}`
+            `https://gramofer.work.gd/api/vinyls/vinyl/${genre}/${year}`,
+            {
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            }
           );
           if (!response.ok) {
             throw new Error(
@@ -92,7 +117,12 @@ const VinylBox: React.FC<Vinyl_color> = ({ filter, year, genre, navigate }) => {
       } else {
         try {
           const response = await fetch(
-            `https://gramofer.work.gd/api/vinyls/vinyl/search/${genre}`
+            `https://gramofer.work.gd/api/vinyls/vinyl/search/${genre}`,
+            {
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            }
           );
           if (!response.ok) {
             throw new Error("Failed to fetch filtered (genre) vinyls!");
