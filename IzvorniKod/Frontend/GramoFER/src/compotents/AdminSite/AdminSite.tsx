@@ -59,7 +59,6 @@ const AdminSite = () => {
           const checkAdmin = await AdminResponse.json();
           if (parseInt(checkAdmin) == 1) {
             try {
-              // Fetch vinyls
               const vinylResponse = await fetch(
                 `https://gramofer.work.gd/api/admintable/allvinyls`,
                 {
@@ -75,7 +74,6 @@ const AdminSite = () => {
                 setVinlysData(allVinyls);
               }
 
-              // Fetch users
               const userResponse = await fetch(
                 `https://gramofer.work.gd/api/admintable/users`,
                 {

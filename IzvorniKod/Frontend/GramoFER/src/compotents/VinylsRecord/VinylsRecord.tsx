@@ -22,7 +22,6 @@ const VinylsRecord: React.FC<MyVinylsRecordProps> = ({
   const navigate = useNavigate();
   const handleDelete = async () => {
     const token = localStorage.getItem("aToken");
-    //const id = parseInt(vinyl_id); number or string?
     try {
       const response = await fetch(
         `https://gramofer.work.gd/api/vinyls/${vinyl_id}`,
@@ -32,7 +31,6 @@ const VinylsRecord: React.FC<MyVinylsRecordProps> = ({
             "Content-Type": "application/json",
             Authorization: `Bearer ${token}`,
           },
-          //NOTHING TO SEND
         }
       );
       if (response.ok) {
@@ -48,7 +46,6 @@ const VinylsRecord: React.FC<MyVinylsRecordProps> = ({
   };
   const handleAdminDelete = async () => {
     const token = localStorage.getItem("aToken");
-    //const id = parseInt(vinyl_id); number or string?
     try {
       const response = await fetch(
         `https://gramofer.work.gd/api/admintable/vinyl/${vinyl_id}`,
@@ -58,7 +55,6 @@ const VinylsRecord: React.FC<MyVinylsRecordProps> = ({
             "Content-Type": "application/json",
             Authorization: `Bearer ${token}`,
           },
-          //NOTHING TO SEND
         }
       );
       if (response.ok) {

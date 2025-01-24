@@ -105,7 +105,7 @@ const MyWishlist = () => {
             Album name:
             <input
               type="text"
-              name="albumName" //will need change?
+              name="albumName"
               value={WishFormData.albumName}
               onChange={handleInputChange}
               required
@@ -116,7 +116,7 @@ const MyWishlist = () => {
             Performer:
             <input
               type="text"
-              name="artistName" //will need change?
+              name="artistName"
               value={WishFormData.artistName}
               onChange={handleInputChange}
               required

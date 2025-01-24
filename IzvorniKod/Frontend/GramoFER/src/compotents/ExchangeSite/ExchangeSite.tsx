@@ -34,15 +34,10 @@ interface ExchangeIds {
 const ExchangeSite: React.FC = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  //const [selectedVinyl, setSelectedVinyl] = useState<SelectedVinyl>();
   const [selectedVinylid, setSelectedVinylId] = useState<number>();
 
-  //const [exchangeVinyls, setExchangeVinyls] = useState<ExchangeInterface>();
   const [exchangeVinylIds, setExchangeVinylIds] = useState<ExchangeIds>();
 
-  //const [myVinylsForExchange, setMyVinylsForExchange] = useState<
-  //  SelectedVinyl[]
-  //>([]);
   const [myVinylIdsForExchage, setMyVinylIdsForExchange] = useState<number[]>(
     []
   );
@@ -50,13 +45,7 @@ const ExchangeSite: React.FC = () => {
   const [myVinyls, setMyVInyls] = useState<SelectedVinyl[]>([]);
   useEffect(() => {
     console.log("Location state:", location.state);
-    //const vinyl = location.state as SelectedVinyl; PREV SOLUTION
     const receivedId = location.state as number;
-    // const receivedVinyl = location.state;
-    // const vinyl: SelectedVinyl = {
-    //   ...receivedVinyl, // Spread all properties
-    //   vinylId: parseInt(receivedVinyl.vinylId, 10), // Convert `vinylId` to a number
-    // };
     if (receivedId) {
       setSelectedVinylId(receivedId);
       console.log("selected Vinyl: ", receivedId);
@@ -131,10 +120,9 @@ const ExchangeSite: React.FC = () => {
       console.error("Error submitting exchange data:", error);
     }
   };
-
   return (
     <div className={styles.container}>
-      {myVinyls.length > 0 ? ( // Change condition to > when backend is connected
+      {myVinyls.length > 0 ? (
         <form onSubmit={handleFormSubmit}>
           <div className={styles.exchanges_header}>
             <h1>Choose vinyls for exchange</h1>
@@ -159,7 +147,7 @@ const ExchangeSite: React.FC = () => {
               <input
                 key={`${vinyl.vinylId}-checkbox`}
                 type="checkbox"
-                name={vinyl.vinylId.toString()} //.toString() added
+                name={vinyl.vinylId.toString()}
                 onChange={(e) => {
                   const isChecked = e.target.checked;
                   setMyVinylIdsForExchange((prev) => {
@@ -177,23 +165,6 @@ const ExchangeSite: React.FC = () => {
                     return updatedVinyls;
                   });
                 }}
-                // onChange={(e) => {
-                //   const isChecked = e.target.checked;
-                //   setMyVinylsForExchange((prev) => {
-                //     const updatedVinyls = isChecked
-                //       ? [...prev, vinyl]
-                //       : prev.filter((v) => v.vinylId !== vinyl.vinylId);
-
-                //     console.log(
-                //       "Updated Exchange Vinyls: ",
-                //       updatedVinyls,
-                //       " and length: ",
-                //       updatedVinyls.length
-                //     );
-
-                //     return updatedVinyls as SelectedVinyl[];
-                //   });
-                // }}
               />,
             ])}
           </div>
@@ -211,36 +182,4 @@ const ExchangeSite: React.FC = () => {
     </div>
   );
 };
-{
-  /* <div className={styles.container}>
-<h1>Choose vinyls for exchange</h1>
-{myVinyls.length == 0 ? ( //change to > later
-  <>
-    <div className={styles.vinyl_choose}>
-      <div>album name</div>
-      <div>Goldmine standard (vinyl)</div>
-      <div>Goldmine standard (cover)</div>
-      <div>Mark for exchange</div>
-      {myVinyls.map((vinyl) => {
-        return (
-          <>
-            <div>{vinyl.editionLabel.albumName}</div>
-            <div>{vinyl.vinylCondition}</div>
-            <div>{vinyl.coverCondition}</div>
-            <input type="checkbox" name={vinyl.vinylId} id="" />
-          </>
-        );
-      })}
-    </div>
-  </>
-) : (
-  <>
-    <h2>You have no vinyls to choose from!</h2>
-    <Link to="/my-vinyls">
-      <button>You can add your vinyls here</button>
-    </Link>
-  </>
-)}
-</div> */
-}
 export default ExchangeSite;

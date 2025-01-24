@@ -102,8 +102,15 @@ const VinylSelect = () => {
         <div className={[styles.filter].join(" ")}>
           <div className={styles.block_header}>
             <h2>
-              Got the <i>groove</i> but not the note? Try by genre or year:
+              Got the <i>groove</i> but not the note? Try searching for it:
             </h2>
+            <div className={styles.hover_container}>
+              <img src="/images/question-mark.webp" alt="?" />
+              <div className={styles.hover_text}>
+                Search will prioritize: 1. genre/year, 2. genre/term, 3. term
+                alone
+              </div>
+            </div>
             <form className={styles.genre_select} onSubmit={handleSubmit}>
               <div className={styles.input_fields}>
                 {" "}
@@ -124,7 +131,6 @@ const VinylSelect = () => {
                   id="genre"
                   className={styles.select}
                   placeholder="Input genre"
-                  required
                 />
                 <label htmlFor="search"> search term: </label>
                 <input
@@ -133,7 +139,6 @@ const VinylSelect = () => {
                   id="search"
                   className={styles.select}
                   placeholder="Input search term"
-                  required
                 />
               </div>
               <button type="submit" className={styles.icon_contain}>

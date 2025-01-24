@@ -6,7 +6,6 @@ import com.example.gramofer.model.UserAccount;
 import com.example.gramofer.responses.ExchangeResponse;
 import com.example.gramofer.service.ExchangeService;
 
-
 import org.apache.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -26,22 +25,22 @@ public class ExchangeController {
 
     @GetMapping("/myExchangesActive")
 
-    public List<ExchangeResponse> getExchangesForUserActive (@AuthenticationPrincipal UserAccount user) {
+    public List<ExchangeResponse> getExchangesForUserActive(@AuthenticationPrincipal UserAccount user) {
         return service.getExchangesByUserAndStatusActive(user);
     }
 
     @GetMapping("/incomingExchangesActive")
-    public List<ExchangeResponse> getIncExchangesForUserActive (@AuthenticationPrincipal UserAccount user) {
+    public List<ExchangeResponse> getIncExchangesForUserActive(@AuthenticationPrincipal UserAccount user) {
         return service.getIncExchangesUserActive(user);
     }
 
     @GetMapping("/myExchangesDone")
-    public List<ExchangeResponse> getExchangesForUserDone (@AuthenticationPrincipal UserAccount user) {
+    public List<ExchangeResponse> getExchangesForUserDone(@AuthenticationPrincipal UserAccount user) {
         return service.getExchangesByUserAndStatusDone(user);
     }
 
     @GetMapping("/incomingExchangesDone")
-    public List<ExchangeResponse> getIncExchangesForUserDone (@AuthenticationPrincipal UserAccount user) {
+    public List<ExchangeResponse> getIncExchangesForUserDone(@AuthenticationPrincipal UserAccount user) {
         return service.getIncExchangesByUserAndStatusDone(user);
     }
 
@@ -72,12 +71,11 @@ public class ExchangeController {
     }
 
     @PostMapping("/endexchange/{id}")
-    public ResponseEntity<String> endingExchange(@AuthenticationPrincipal UserAccount user, @PathVariable Integer id ) {
+    public ResponseEntity<String> endingExchange(@AuthenticationPrincipal UserAccount user, @PathVariable Integer id) {
         String zastavica = service.exchangeEnded(id, user);
         if (zastavica == "uspjeh") {
             return ResponseEntity.status(HttpStatus.SC_CREATED).body("Vinyl added successfully.");
-        }
-        else {
+        } else {
             return ResponseEntity.status(HttpStatus.SC_NOT_ACCEPTABLE).body("Edition already exists");
         }
     }

@@ -229,23 +229,10 @@ const MyVinyls = () => {
         console.error("Error fetching vinyls:", error);
       }
     };
-    // const checkAdmin = () => {
-    //   const A = localStorage.getItem("isAdmin");
-    //   if (A) {
-    //     setIsAdmin(parseInt(A));
-    //   }
-    // };
-    // checkAdmin();
     fetchVinyls();
-  }, [MyVinylsData]); //add MyVinylsData?
+  }, []);
   return (
     <div className={styles.container}>
-      {/* <Link to="/admin-site">
-        <button className={styles.adminButton}>
-          Temporary Admin page button
-        </button>
-      </Link> */}
-
       <form className={styles.listing_form} onSubmit={handleSubmit}>
         <h1>
           Add <span>YOUR</span> records here!
@@ -327,8 +314,8 @@ const MyVinyls = () => {
           Location:
           <input
             type="text"
-            name="onLocation" //WAS PREVIOUSLY edition.countryOfOrigin
-            value={formData.onLocation} //WAS PREVIOUSLY formData.edition.countryOfOrigin
+            name="onLocation"
+            value={formData.onLocation}
             onChange={handleInputChange}
             required
           ></input>
