@@ -323,7 +323,7 @@ public class VinylService {
                 })
                 .collect(Collectors.toList());
     }
-}
+
     public void sendEmailToUser(String email, Vinyl vinyl, Wish wish) {
         SimpleMailMessage message = new SimpleMailMessage();
         String subject = "A Vinyl Matching Your Wish is Now Available!";
