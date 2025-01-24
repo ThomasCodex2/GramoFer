@@ -33,7 +33,7 @@ public class Genre {
     @Column(nullable = false, length = 30)
     private String genreName;
 
-    @ManyToMany(mappedBy = "belongsToGenreGenres", cascade = CascadeType.ALL)
+    @ManyToMany(mappedBy = "belongsToGenreGenres")
     @JsonBackReference
     private Set<Edition> belongsToGenreEditions;
 

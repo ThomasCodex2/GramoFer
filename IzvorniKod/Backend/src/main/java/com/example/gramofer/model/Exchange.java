@@ -41,22 +41,22 @@ public class Exchange {
     @Column(nullable = false)
     private LocalDate date;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
     @JsonBackReference
     private UserAccount user;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "is_offering_user_id", nullable = false)
     @JsonBackReference
     private UserAccount isOfferingUser;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "vinyl_id", nullable = false)
     @JsonBackReference
     private Vinyl vinyl;
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany
     @JoinTable(
             name = "IncludesOffered",
             joinColumns = @JoinColumn(name = "exchangeId"),

@@ -36,7 +36,7 @@ public class Edition {
     @Column(nullable = false)
     private String countryOfOrigin;
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany
     @JoinTable(
             name = "BelongsToGenre",
             joinColumns = @JoinColumn(name = "editionLabel"),
@@ -45,11 +45,11 @@ public class Edition {
     @JsonManagedReference
     private Set<Genre> belongsToGenreGenres;
 
-    @OneToMany(mappedBy = "editionLabel", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "editionLabel")
     @JsonBackReference
     private Set<Vinyl> editionLabelVinyls;
 
-    @OneToMany(mappedBy = "editionLabel", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "editionLabel")
     @JsonBackReference
     private Set<Wish> editionLabelWishes;
 

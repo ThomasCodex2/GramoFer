@@ -69,16 +69,16 @@ public class Vinyl {
     @JsonBackReference
     private UserAccount user;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "edition_label_id", nullable = false)
     @JsonBackReference
     private Edition editionLabel;
 
-    @OneToMany(mappedBy = "vinyl", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "vinyl")
     @JsonManagedReference
     private Set<Exchange> vinylExchanges;
 
-    @ManyToMany(mappedBy = "includesOfferedVinyls", cascade = CascadeType.ALL)
+    @ManyToMany(mappedBy = "includesOfferedVinyls")
     @JsonManagedReference
     private Set<Exchange> includesOfferedExchanges;
 

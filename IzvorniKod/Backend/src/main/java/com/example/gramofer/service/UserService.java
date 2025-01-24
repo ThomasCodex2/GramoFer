@@ -1,13 +1,18 @@
 package com.example.gramofer.service;
 
+import com.example.gramofer.model.Exchange;
 import com.example.gramofer.model.UserAccount;
+import com.example.gramofer.model.Vinyl;
 import com.example.gramofer.repo.UserRepo;
 import com.example.gramofer.responses.UserResponse;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -36,13 +41,15 @@ public class UserService {
         .collect(Collectors.toList());
     }
 
-    public ResponseEntity<?> deleteUserById(Integer id) {
-        if (!userrepo.existsById(id)) {
-            return ResponseEntity.status(404).body("User not found");
-        }
-
-        userrepo.deleteById(id);
-        return ResponseEntity.ok("User deleted successfully");
+    public ResponseEntity<?> banUserById(Integer id) {
+        Optional<UserAccount> otpUser = userrepo.findById(id);
+        if (otpUser.isPresent()) {
+            UserAccount user = otpUser.get();
+            user.setStrikeCount(1);
+            userrepo.save(user);
+            return ResponseEntity.ok("User deleted successfully");
+            }
+        return ResponseEntity.status(404).body("User ne postoji");
     }
 
     public Integer getifadmin (UserAccount user) {
