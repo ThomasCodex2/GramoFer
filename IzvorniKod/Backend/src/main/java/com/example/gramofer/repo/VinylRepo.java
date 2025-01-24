@@ -8,10 +8,13 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface VinylRepo extends JpaRepository<Vinyl,Integer> {
     List<Vinyl> findByUser(UserAccount user);
+    
+    Optional<Vinyl> findById(Integer id);
 
     @Query("SELECT v FROM Vinyl v " +
             "JOIN v.editionLabel e " +

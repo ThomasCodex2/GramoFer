@@ -1,32 +1,57 @@
 import styles from "./VinylSelect.module.css";
 import VinylBox from "../VinylBox/VinylBox";
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 // import { useEffect } from "react";
 // import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 const VinylSelect = () => {
   const [selectedGenre, setSelectedGenre] = useState("Rock");
   const handleGenreChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setSelectedGenre(event.target.value);
   };
-  // const navigate = useNavigate();
-  // useEffect(() => {
-  //   const urlParams = new URLSearchParams(window.location.search);
-  //   const urltoken = urlParams.get("token");
-  //   if (urltoken) {
-  //     localStorage.setItem("aToken", urltoken);
-  //     navigate("/");
-  //     return;
-  //   }
-  // });
-
+  const navigate = useNavigate();
+  const [isAdmin, setIsAdmin] = useState(false);
+  useEffect(() => {
+    const token = localStorage.getItem("aToken");
+    const fetchAdmin = async () => {
+      try {
+        const AdminResponse = await fetch(
+          `https://gramofer.work.gd/api/admintable/admin`,
+          {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        if (AdminResponse.ok) {
+          const adminCheck = await AdminResponse.json();
+          if (parseInt(adminCheck) == 1) {
+            setIsAdmin(true);
+          } else {
+            setIsAdmin(false);
+          }
+        } else {
+          setIsAdmin(false);
+        }
+      } catch (error) {
+        setIsAdmin(false);
+        console.error(error);
+      }
+    };
+    fetchAdmin();
+  });
   return (
     <div className={styles.container}>
-      <Link to="/admin-site">
-        <button className={styles.adminButton}>
-          Temporary Admin page button
-        </button>
-      </Link>
+      {isAdmin && (
+        <Link to="/admin-site">
+          <button className={styles.adminButton}>
+            Temporary Admin page button
+          </button>
+        </Link>
+      )}
       <div className={styles.welcome_banner}>
         <div className={styles.image_crop}></div>
         <div className={styles.banner_text}>
@@ -44,7 +69,11 @@ const VinylSelect = () => {
               List of <u>ALL</u> our vinyls!
             </h2>
           </div>
-          <VinylBox by_genre={false} color={"random"}></VinylBox>
+          <VinylBox
+            by_genre={false}
+            color={"random"}
+            navigate={navigate}
+          ></VinylBox>
         </div>
         <hr></hr>
         <div className={[styles.filter].join(" ")}>
@@ -81,7 +110,11 @@ const VinylSelect = () => {
               </button>
             </form>
           </div>
-          <VinylBox by_genre={true} color={selectedGenre}></VinylBox>
+          <VinylBox
+            by_genre={true}
+            color={selectedGenre}
+            navigate={navigate}
+          ></VinylBox>
         </div>
       </div>
     </div>

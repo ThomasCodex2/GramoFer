@@ -6,10 +6,20 @@ import com.example.gramofer.model.Edition;
 import com.example.gramofer.model.Genre;
 import com.example.gramofer.model.UserAccount;
 import com.example.gramofer.model.Vinyl;
+
 import com.example.gramofer.repo.*;
+import com.example.gramofer.model.Wish;
+import com.example.gramofer.repo.EditionRepo;
+import com.example.gramofer.repo.GenreRepo;
+import com.example.gramofer.repo.UserRepo;
+import com.example.gramofer.repo.VinylRepo;
+import com.example.gramofer.repo.WishRepo;
 import com.example.gramofer.responses.VinylResponseDTO;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
@@ -20,17 +30,25 @@ import java.util.stream.Collectors;
 
 @Service
 public class VinylService {
+    @Value("${spring.mail.username}")
+    private String email;
 
     private final VinylRepo repoVinyl;
     private final UserRepo userRepo;
     private final GenreRepo genreRepo;
     private final EditionRepo editionrepo;
+    private final WishRepo wishrepo;
+    private JavaMailSender mailSender;
 
-    public VinylService(VinylRepo repoVinyl, UserRepo userRepo, GenreRepo genreRepo, EditionRepo editionrepo) {
+
+    public VinylService(VinylRepo repoVinyl, UserRepo userRepo, GenreRepo genreRepo, EditionRepo editionrepo, WishRepo wishrepo, JavaMailSender mailSender) 
         this.repoVinyl = repoVinyl;
         this.userRepo = userRepo;
         this.genreRepo = genreRepo;
         this.editionrepo = editionrepo;
+        this.wishrepo = wishrepo;
+        this.mailSender = mailSender;
+
     }
 
     public List<Vinyl> getAllVinylByUsername(String username) {
@@ -105,11 +123,15 @@ public class VinylService {
 
     public String newVinyl(VinylDto input, UserAccount user){
         Vinyl vinyl = new Vinyl();
+
         Edition edition = newEdition(input.getEdition());
         if (edition == null) {
             return "Edition vec postoji";
         }
         else {
+        List<Wish> matching = wishrepo.findByArtistNameAndAlbumName(
+            input.getEdition().getArtistName(), 
+            input.getEdition().getAlbumName());
         vinyl.setEditionLabel(edition);
         vinyl.setDescription(input.getDescription());
         vinyl.setVinylCondition(input.getVinylCondition());
@@ -122,6 +144,18 @@ public class VinylService {
         vinyl.setAvailable(0);
         vinyl.setOnLocation(input.getOnLocation());
         repoVinyl.save(vinyl);
+
+        if (!matching.isEmpty()) {
+            for (Wish wish : matching){
+                System.out.println(wish.getUser().getEmail());
+                
+                sendEmailToUser(wish.getUser().getEmail(), vinyl, wish);
+            }
+            return "uspjehimail";
+        }
+        else {
+            System.out.println("Wish ne postoji");
+        }
         return "uspjeh";
         }
     }
@@ -176,7 +210,6 @@ public class VinylService {
             String editionTBD = vinyl.getEditionLabel().getEditionLabel();
             Edition edition = null;
             Edition sEdition = vinyl.getEditionLabel(); // edition ploce u bazi
-            String sEditionId = vinyl.getEditionLabel().getEditionLabel();
             String nEditionId = input.getEdition().getEditionLabel();
             Optional <Edition> optnEdition = editionrepo.findById(nEditionId);
             Optional <Edition> optedition = editionrepo.findById(sEdition.getEditionLabel()); //edition ploce u bazi
@@ -226,6 +259,7 @@ public class VinylService {
             return "Greska1";
         }
     }
+
 
     public List<VinylResponseDTO> getAllVinylsByGenre(String genre, Integer releaseDate){
         List<Vinyl> vinyls = repoVinyl.findAllByGenreNameAndReleaseDate(genre, releaseDate);
@@ -290,3 +324,27 @@ public class VinylService {
                 .collect(Collectors.toList());
     }
 }
+    public void sendEmailToUser(String email, Vinyl vinyl, Wish wish) {
+        SimpleMailMessage message = new SimpleMailMessage();
+        String subject = "A Vinyl Matching Your Wish is Now Available!";
+        String msg = String.format(
+                "Hello,\n\nA vinyl matching your wish for '%s' by '%s' is now available.\n\nDetails:\n" +
+                "- Album Name: %s\n" +
+                "- Artist Name: %s\n" +
+                "- Description: %s\n\n" +
+                "Best regards,\nGramofer Team",
+                wish.getAlbumName(), wish.getArtistName(),
+                vinyl.getEditionLabel().getAlbumName(),
+                vinyl.getEditionLabel().getArtistName(),
+                vinyl.getDescription()
+        );
+        message.setFrom(email);
+        message.setTo(email);
+        message.setSubject(subject);
+        message.setText(msg);
+        mailSender.send(message);
+        System.out.println("Email sent successfully to " + email);
+    }
+
+}
+

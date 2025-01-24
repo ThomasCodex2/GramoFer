@@ -36,7 +36,7 @@ public class Reports {
     @Column(nullable = false, length = 511)
     private String details;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
     @JsonBackReference
     private UserAccount user;

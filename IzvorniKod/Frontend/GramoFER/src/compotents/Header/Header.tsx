@@ -1,8 +1,9 @@
 import styles from "./Header.module.css";
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 function Header() {
+  const navigate = useNavigate();
   const [isLoggedIn, setIsLoggedIn] = useState(
     !!localStorage.getItem("aToken")
   );
@@ -31,26 +32,9 @@ function Header() {
     }
     setIsLoggedIn(false);
     alert("You have been logged out.");
+    navigate("/");
   };
-
-  // const handleLoginSuccess = (response: any) => {
-  //   console.log("Login Success: ", response);
-  // };
-
-  // const handleLoginFailure = () => {
-  //   console.log("Login Failed");
-  // };
   const notify_test = false;
-  // useEffect(() => {
-  //   const urlParams = new URLSearchParams(window.location.search);
-  //   const uriToken = urlParams.get("token");
-  //   if (uriToken) {
-  //     localStorage.setItem("aToken", uriToken);
-  //     console.log(localStorage);
-  //     return;
-  //   }
-  // });
-
   return (
     <div className={styles.header}>
       <div className={[styles.row].join(" ")}>
@@ -75,7 +59,7 @@ function Header() {
             onClick={(e) => {
               if (!isLoggedIn) {
                 e.preventDefault();
-                alert("You need to log in to access My Vinyls.");
+                alert("You need to log in to access my vinyls.");
               }
             }}
           >
@@ -90,11 +74,26 @@ function Header() {
             onClick={(e) => {
               if (!isLoggedIn) {
                 e.preventDefault();
-                alert("You need to log in to access My Exchanges.");
+                alert("You need to log in to access your exchanges.");
               }
             }}
           >
             <h3>My Exchanges</h3>
+            {notify_test && <div className={styles.notify}></div>}
+          </Link>
+        </div>
+        <div className={styles.link_contain}>
+          <Link
+            to={isLoggedIn ? "/my-wishlist" : "#"}
+            className={`${styles.link} ${!isLoggedIn ? styles.disabled : ""}`}
+            onClick={(e) => {
+              if (!isLoggedIn) {
+                e.preventDefault();
+                alert("You need to log in to access your wishlist.");
+              }
+            }}
+          >
+            <h3>My Wishlist</h3>
             {notify_test && <div className={styles.notify}></div>}
           </Link>
         </div>

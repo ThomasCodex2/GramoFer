@@ -1,39 +1,43 @@
 import styles from "./Exchange.module.css";
+interface ExchangeInterface {
+  senderAlbums: string[];
+  receiverAlbums: string[];
+  senderUsername: string;
+  receiverUsername: string;
+  senderId: string;
+  receiverId: string;
+  outgoing: boolean;
+}
 
-const Exchange = () => {
+const Exchange: React.FC<ExchangeInterface> = ({
+  senderAlbums,
+  receiverAlbums,
+  senderUsername,
+  receiverUsername,
+  outgoing,
+}) => {
   return (
     <>
       <div className={styles.e_container}>
-        <h3>Penguin123</h3>
-        <div className={styles.vinyl_container}>
-          <img src="/images/Wave.jpg" />
-          <img src="/images/84.jpg" />
-        </div>
-        <div className={styles.vinyl_container}>
-          <img src="/images/Beut.jpg" />
-          <img src="/images/DIA.jpg" />
-          <img src="/images/Duran.jpg" />
-        </div>
-        <div className={styles.exchange_buttons}>
+        <h3>{outgoing ? receiverUsername : senderUsername}</h3>
+        <h3>
+          {outgoing ? receiverAlbums.join(", ") : senderAlbums.join(", ")}
+        </h3>
+        <h3>
+          {outgoing ? senderAlbums.join(", ") : receiverAlbums.join(", ")}
+        </h3>
+        <div
+          className={
+            outgoing ? styles.exchange_buttons_double : styles.exchange_buttons
+          }
+        >
+          {!outgoing && (
+            <div>
+              <img src="/images/pencil_icon.png" alt="" />
+            </div>
+          )}
           <div>
-            <img src="/images/pencil_icon.png" alt="" />
-          </div>
-          <div>
-            <img src="/images/x_icon.png" alt="" />
-          </div>
-        </div>
-      </div>
-      <div className={styles.e_container}>
-        <h3>MusicLVR</h3>
-        <div className={styles.vinyl_container}>
-          <img src="/images/GT.jpg" />
-        </div>
-        <div className={styles.vinyl_container}>
-          <img src="/images/Haustor.jpg" />
-        </div>
-        <div className={styles.exchange_buttons}>
-          <div>
-            <img src="/images/pencil_icon.png" alt="" />
+            <img src="/images/checkmark.webp" alt="" />
           </div>
           <div>
             <img src="/images/x_icon.png" alt="" />

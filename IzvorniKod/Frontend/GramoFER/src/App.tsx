@@ -5,6 +5,8 @@ import VinylSelect from "./compotents/VinylSelect/VinylSelect";
 import AdminSite from "./compotents/AdminSite/AdminSite";
 import ErrorSite from "./compotents/ErrorSite/ErrorSite";
 import Register from "./compotents/Register/Register";
+import MyWishlist from "./compotents/MyWishlist/MyWishlist";
+import ExchangeSite from "./compotents/ExchangeSite/ExchangeSite";
 import { useEffect } from "react";
 import {
   BrowserRouter as Router,
@@ -26,11 +28,16 @@ const TokenHandler = () => {
       if (expiresIn) {
         localStorage.setItem("expiresIn", expiresIn.toString());
       }
-      //const isAdmin = urlParams.get("isAdmin");
+      const isAdmin = urlParams.get("isAdmin");
+      if (isAdmin) {
+        localStorage.setItem("isAdmin", isAdmin);
+      }
     }
+    console.log("isAdmin variable: " + localStorage.getItem("isAdmin"));
+
     if (localStorage.getItem("aToken")) {
       console.log(
-        "Token stored in localStorage:",
+        "aToken stored in localStorage:",
         localStorage.getItem("aToken")
       );
     } else {
@@ -59,11 +66,14 @@ function App() {
         <div>
           <Routes>
             <Route path="/" element={<VinylSelect />} />
+            <Route path="/vinyl/:vinylId" element={<VinylSelect />} />
             <Route path="/my-vinyls" element={<MyVinyls />} />
             <Route path="/my-exchanges" element={<MyExchanges />} />
             <Route path="*" element={<ErrorSite />} />
             <Route path="/register" element={<Register />} />
             <Route path="/admin-site" element={<AdminSite />} />
+            <Route path="/my-wishlist" element={<MyWishlist />} />
+            <Route path="/exchange-site" element={<ExchangeSite />} />
           </Routes>
         </div>
       </div>

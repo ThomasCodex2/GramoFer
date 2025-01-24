@@ -20,7 +20,7 @@
 .site_links {
   padding-top: 10px;
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(5, 1fr);
   align-items: center; 
   height: fit-content;
   color: black;
@@ -121,7 +121,6 @@ button:hover {
   pointer-events: none;
   color: gray;
   text-decoration: line-through;
-
 }
 @media (max-width: 700px) {
   .header {
