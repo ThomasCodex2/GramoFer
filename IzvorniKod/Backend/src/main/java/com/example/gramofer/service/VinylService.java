@@ -38,10 +38,6 @@ public class VinylService {
 
     }
 
-    public List<Vinyl> getVinylByUser(UserAccount user) {
-        return repoVinyl.findByUser(user);
-    }
-
     public List<Vinyl> fetchVinyls() {
         return repoVinyl.findAll();
     }
