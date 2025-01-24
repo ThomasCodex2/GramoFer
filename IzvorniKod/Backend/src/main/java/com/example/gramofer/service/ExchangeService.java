@@ -46,6 +46,7 @@ public class ExchangeService {
         return listOfExchanges.stream()
             .map(exchange -> {
                 ExchangeResponse response = new ExchangeResponse();
+                response.setUsername(exchange.getIsOfferingUser().getUsername());
                 response.setExchangeid(exchange.getExchangeId());
                 response.setAlbumname(exchange.getVinyl().getEditionLabel().getAlbumName());
                 List<String> lista = new ArrayList<String>();
@@ -63,6 +64,7 @@ public class ExchangeService {
         return listOfExchanges.stream()
             .map(exchange -> {
                 ExchangeResponse response = new ExchangeResponse();
+                response.setUsername(exchange.getUser().getUsername());
                 response.setExchangeid(exchange.getExchangeId());
                 response.setAlbumname(exchange.getVinyl().getEditionLabel().getAlbumName());
                 List<String> lista = new ArrayList<String>();
@@ -80,6 +82,7 @@ public class ExchangeService {
         return listOfExchanges.stream()
             .map(exchange -> {
                 ExchangeResponse response = new ExchangeResponse();
+                response.setUsername(exchange.getIsOfferingUser().getUsername());
                 response.setExchangeid(exchange.getExchangeId());
                 response.setAlbumname(exchange.getVinyl().getEditionLabel().getAlbumName());
                 List<String> lista = new ArrayList<String>();
@@ -97,6 +100,7 @@ public class ExchangeService {
         return listOfExchanges.stream()
             .map(exchange -> {
                 ExchangeResponse response = new ExchangeResponse();
+                response.setUsername(exchange.getUser().getUsername());
                 response.setExchangeid(exchange.getExchangeId());
                 response.setAlbumname(exchange.getVinyl().getEditionLabel().getAlbumName());
                 List<String> lista = new ArrayList<String>();
