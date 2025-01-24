@@ -1,5 +1,5 @@
 import styles from "./AdminSiteUserElement.module.css";
-
+import { useNavigate } from "react-router-dom";
 interface AdminSiteUserElementProps {
   userId: string;
   username: string;
@@ -17,9 +17,9 @@ const AdminSiteUserElement: React.FC<AdminSiteUserElementProps> = ({
   lastName,
   registrationDate,
 }) => {
+  const navigate = useNavigate();
   const handleBan = async () => {
     const token = localStorage.getItem("aToken");
-    //const id = parseInt(userId);
     try {
       const response = await fetch(
         `https://gramofer.work.gd/api/admintable/user/${userId}`,
@@ -28,12 +28,11 @@ const AdminSiteUserElement: React.FC<AdminSiteUserElementProps> = ({
           headers: {
             Authorization: `Bearer ${token}`,
           },
-          //nothing to send again
         }
       );
       if (response.ok) {
         alert("Deleted user sucessfully");
-        window.location.reload();
+        navigate("/admin-site");
       } else {
         alert("Something went wrong");
       }
@@ -44,10 +43,19 @@ const AdminSiteUserElement: React.FC<AdminSiteUserElementProps> = ({
   };
   return (
     <>
-      <div className={styles.list_element}>{email}</div>
-      <div>{firstName}</div>
-      <div>{lastName}</div>
-      <div>{username}</div>
+      <div className={styles.user_element} data-full-text={email}>
+        {email}
+      </div>
+      <div className={styles.user_element} data-full-text={firstName}>
+        {firstName}
+      </div>
+      <div className={styles.user_element} data-full-text={lastName}>
+        {lastName}
+      </div>
+      <div className={styles.user_element} data-full-text={username}>
+        {username}
+      </div>
+      <div>{registrationDate.toLocaleDateString()}</div>
       <div className={styles.exchange_buttons}>
         <div>
           <img src="/images/x_icon.png" alt="" onClick={handleBan} />

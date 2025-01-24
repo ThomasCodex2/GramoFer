@@ -22,15 +22,6 @@ const Register = () => {
     setActiveButton(event.currentTarget.id);
   };
   const navigate = useNavigate();
-  // useEffect(() => {
-  //   const urlParams = new URLSearchParams(window.location.search);
-  //   const uriToken = urlParams.get("token");
-  //   if (uriToken) {
-  //     localStorage.setItem("aToken", uriToken);
-  //     console.log(localStorage.getItem("aToken"));
-  //     return;
-  //   }
-  // });
   const handleLogResult = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault(); //dodano?!?!?!
     const formData = new FormData(e.target as HTMLFormElement);
@@ -65,15 +56,13 @@ const Register = () => {
         localStorage.setItem("aToken", token);
         console.log("Form submitted successfully", data);
         localStorage.setItem("expiresIn", expiresIn.toString());
-        navigate("/");
-        window.location.reload();
+        navigate("/register");
       } else {
         console.error("Failed to submit form");
       }
     } catch (error) {
       console.error("Error occurred during form submission", error);
     }
-    
   };
 
   const handleRegSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -120,7 +109,10 @@ const Register = () => {
   return (
     <div className={styles.container}>
       <div className={styles.form_contain}>
-        <h2>Newcomer or returning user?</h2>
+        <h2>
+          <span className={styles.blue}>Newcomer</span> or{" "}
+          <span className={styles.green}>returning</span> user?
+        </h2>
         <h3 className={styles.undertext}>Choose one</h3>
         <div className={styles.buttons}>
           <button
@@ -150,7 +142,7 @@ const Register = () => {
           }}
           className={styles.google_login_button}
         >
-          Sign in with Google
+          Google Sign in
         </button>
         {activeButton === "register" && (
           <form

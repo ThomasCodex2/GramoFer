@@ -24,6 +24,9 @@
   width: 100%;
   background-color: black;
 }
+h1 > span{
+  color: #6bb1bc;
+}
 .listing_form{
   background-color: #2F2D2E;
   color: white;
@@ -38,9 +41,7 @@
   text-align: center;
   grid-column: span 2;
 }
-h1 > span{
-  color: #6bb1bc;
-}
+
 .listing_form > div{
   display: flex;
   flex-direction: column;
@@ -139,4 +140,18 @@ h1 > span{
 }
 .desc{
   grid-column: span 2;
+}
+.adminButton{
+  color: white;
+  width: 150px;
+  height: fit-content;
+  background-color: #62a0aa;
+  margin-left: 0;
+  margin-bottom: 10px;
+}
+.red{
+  color: #b0423e;
+}
+.yellow{
+  color: #f2bf78ae;
 }

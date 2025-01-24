@@ -1,44 +1,81 @@
 import styles from "./Exchange.module.css";
+import { useNavigate } from "react-router-dom";
+interface ExchangeInterface {
+  albumname: string;
+  exchangeid: string;
+  isoffering: string[];
+  username: string;
+  outgoing: boolean;
+  history: boolean;
+}
 
-const Exchange = () => {
+const Exchange: React.FC<ExchangeInterface> = ({
+  albumname,
+  exchangeid,
+  isoffering,
+  username,
+  outgoing,
+  history,
+}) => {
+  const navigate = useNavigate();
+  const handleAccept = async () => {
+    const token = localStorage.getItem("aToken");
+    const id = parseInt(exchangeid);
+    try {
+      const response = await fetch(
+        `https://gramofer.work.gd/api/exchange/endexchange/${id}`,
+        {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      if (response.ok) {
+        alert("Exchange Deleted successfully!");
+        navigate("/my-exchanges");
+      } else {
+        alert("Failed to delete Exchange!");
+      }
+    } catch (error) {
+      console.error("Error deleting exchange:", error);
+      alert("An error occurred. Please try again.");
+    }
+  };
   return (
     <>
-      <div className={styles.e_container}>
-        <h3>Penguin123</h3>
-        <div className={styles.vinyl_container}>
-          <img src="/images/Wave.jpg" />
-          <img src="/images/84.jpg" />
-        </div>
-        <div className={styles.vinyl_container}>
-          <img src="/images/Beut.jpg" />
-          <img src="/images/DIA.jpg" />
-          <img src="/images/Duran.jpg" />
-        </div>
-        <div className={styles.exchange_buttons}>
-          <div>
-            <img src="/images/pencil_icon.png" alt="" />
+      <div className={history ? styles.history_container : styles.e_container}>
+        <h3 className={styles.list_element} data-full-text={username}>
+          {username}
+        </h3>
+        <h3
+          className={styles.list_element}
+          data-full-text={outgoing ? albumname : isoffering.join(", ")}
+        >
+          {outgoing ? albumname : isoffering.join(", ")}
+        </h3>
+        <h3
+          className={styles.list_element}
+          data-full-text={outgoing ? isoffering.join(", ") : albumname}
+        >
+          {outgoing ? isoffering.join(", ") : albumname}
+        </h3>
+        {!history ? (
+          <div className={styles.exchange_buttons}>
+            {!outgoing && (
+              <div>
+                <img
+                  src="/images/checkmark.webp"
+                  alt=""
+                  onClick={handleAccept}
+                />
+              </div>
+            )}
           </div>
-          <div>
-            <img src="/images/x_icon.png" alt="" />
-          </div>
-        </div>
-      </div>
-      <div className={styles.e_container}>
-        <h3>MusicLVR</h3>
-        <div className={styles.vinyl_container}>
-          <img src="/images/GT.jpg" />
-        </div>
-        <div className={styles.vinyl_container}>
-          <img src="/images/Haustor.jpg" />
-        </div>
-        <div className={styles.exchange_buttons}>
-          <div>
-            <img src="/images/pencil_icon.png" alt="" />
-          </div>
-          <div>
-            <img src="/images/x_icon.png" alt="" />
-          </div>
-        </div>
+        ) : (
+          <></>
+        )}
       </div>
     </>
   );

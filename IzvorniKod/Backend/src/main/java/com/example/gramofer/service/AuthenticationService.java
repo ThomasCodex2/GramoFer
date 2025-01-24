@@ -11,6 +11,10 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.xbill.DNS.Lookup;
+import org.xbill.DNS.Type;
+import org.xbill.DNS.Record;
+
 
 
 
@@ -36,11 +40,17 @@ public class AuthenticationService {
     private UserAccount newOauthUser(OAuthDto input) {
         UserAccount user = new UserAccount();
         user.setFirstName(input.getFirstname());
-        user.setLastName(input.getLastname()); 
+        user.setLastName(input.getLastname());
+        if (isDomainValid(input.getEmail())) {
+            user.setEmail(input.getEmail());
+        }
+        else {
+            return null;
+        } 
         user.setEmail(input.getEmail());
         user.setPassword(passwordEncoder.encode(Math.random()+""));
         user.setUsername(input.getEmail());
-        if (input.getEmail().equals("tomislav.perakovic@gmail.com")){
+        if (input.getEmail().equals("tomislav.perakovic@gmail.com") || input.getEmail().equals("jurica0511@gmail.com")){
             user.setIsAdmin(1);
         }
         else {
@@ -81,4 +91,18 @@ public class AuthenticationService {
                 .orElseThrow();
     }
 
+
+
+
+    public static boolean isDomainValid(String email) {
+        try {
+            String domain = email.split("@")[1];
+            Lookup lookup = new Lookup(domain, Type.MX);
+            Record[] records = lookup.run();
+            return records != null && records.length > 0;
+        } catch (Exception e) {
+            return false;
+        }
+    }
 }
+

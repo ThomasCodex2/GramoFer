@@ -1,7 +1,8 @@
 import styles from "./MyVinyls.module.css";
-import MyVinylsRecord from "../MyVinylsRecord/MyVinylsRecord";
+import VinylsRecord from "../VinylsRecord/VinylsRecord";
 import { useState, useRef, useEffect } from "react";
-
+import { useNavigate } from "react-router-dom";
+// import { Link } from "react-router-dom";
 interface FormData {
   vinylCondition: string;
   coverCondition: string;
@@ -45,8 +46,9 @@ interface MyVinylsData {
 const API_BASE_URL = "https://gramofer.work.gd";
 
 const MyVinyls = () => {
+  const navigate = useNavigate();
   const [images, setImages] = useState<string[]>([]);
-
+  //const [isAdmin, setIsAdmin] = useState<number>(0);
   const [formData, setFormData] = useState<FormData>({
     vinylCondition: "",
     coverCondition: "",
@@ -148,10 +150,8 @@ const MyVinyls = () => {
     const token = localStorage.getItem("aToken");
 
     if (token !== null) {
-      // If the value exists, print the value of atoken
       console.log("Token found:", token);
     } else {
-      // If it does not exist, print a message
       console.log("No token found");
     }
 
@@ -188,7 +188,7 @@ const MyVinyls = () => {
           },
         });
         clearImages();
-        window.location.reload();
+        navigate("/my-vinyls");
       } else {
         alert("Failed to add vinyl. Please try again.");
       }
@@ -227,10 +227,8 @@ const MyVinyls = () => {
         console.error("Error fetching vinyls:", error);
       }
     };
-
     fetchVinyls();
   }, []);
-
   return (
     <div className={styles.container}>
       <form className={styles.listing_form} onSubmit={handleSubmit}>
@@ -314,8 +312,8 @@ const MyVinyls = () => {
           Location:
           <input
             type="text"
-            name="onLocation" //WAS PREVIOUSLY edition.countryOfOrigin
-            value={formData.onLocation} //WAS PREVIOUSLY formData.edition.countryOfOrigin
+            name="onLocation"
+            value={formData.onLocation}
             onChange={handleInputChange}
             required
           ></input>
@@ -361,7 +359,7 @@ const MyVinyls = () => {
         </div>
         <button className={styles.add_button}>Add Vinyl</button>
       </form>
-      <h1>My Vinyls</h1>
+      <h1 className={styles.yellow}>My Vinyls</h1>
       <div className={styles.vinyl_list}>
         <div className={styles.listing}>Edition mark</div>
         <div className={styles.listing}>Album name</div>
@@ -371,7 +369,7 @@ const MyVinyls = () => {
         <div className={styles.listing}>Edit/Delete record</div>
         {MyVinylsData.length > 0 ? (
           MyVinylsData.map((vinyl, index) => (
-            <MyVinylsRecord
+            <VinylsRecord
               key={index}
               vinyl_id={vinyl.vinylId}
               edition_mark={vinyl.editionLabel.editionLabel || "N/A"}
@@ -383,26 +381,29 @@ const MyVinyls = () => {
                 ) || [""]
               }
               picture_urls={vinyl.coverImagePath1 || "pic_url"}
+              adminSite={false}
             />
           ))
         ) : (
           <h2 className={styles.noVinylsAdded}>You have no Vinyl records</h2>
         )}
-        <MyVinylsRecord
+        <VinylsRecord
           vinyl_id="x"
           edition_mark="1203"
           album="Wavelength"
           performer="lorem"
           genre={["pop"]}
           picture_urls="pic_url"
+          adminSite={false}
         />
-        <MyVinylsRecord
+        <VinylsRecord
           vinyl_id="x"
           edition_mark="1014"
           album="The Wild Boys"
           performer="ipsums"
           genre={["pop"]}
           picture_urls="pic_url"
+          adminSite={false}
         />
       </div>
     </div>
