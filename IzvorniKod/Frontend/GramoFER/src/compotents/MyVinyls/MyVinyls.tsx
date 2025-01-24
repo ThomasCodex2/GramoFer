@@ -372,7 +372,7 @@ const MyVinyls = () => {
         </div>
         <button className={styles.add_button}>Add Vinyl</button>
       </form>
-      <h1>My Vinyls</h1>
+      <h1 className={styles.yellow}>My Vinyls</h1>
       <div className={styles.vinyl_list}>
         <div className={styles.listing}>Edition mark</div>
         <div className={styles.listing}>Album name</div>

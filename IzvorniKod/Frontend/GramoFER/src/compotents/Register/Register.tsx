@@ -119,7 +119,10 @@ const Register = () => {
   return (
     <div className={styles.container}>
       <div className={styles.form_contain}>
-        <h2>Newcomer or returning user?</h2>
+        <h2>
+          <span className={styles.blue}>Newcomer</span> or{" "}
+          <span className={styles.green}>returning</span> user?
+        </h2>
         <h3 className={styles.undertext}>Choose one</h3>
         <div className={styles.buttons}>
           <button
@@ -149,7 +152,7 @@ const Register = () => {
           }}
           className={styles.google_login_button}
         >
-          Sign in with Google
+          Google Sign in
         </button>
         {activeButton === "register" && (
           <form
