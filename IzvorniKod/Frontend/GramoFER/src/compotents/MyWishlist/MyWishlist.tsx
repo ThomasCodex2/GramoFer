@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import styles from "./MyWishlist.module.css";
 import MyWishlistRecord from "./MyWishlistRecord/MyWishlistRecord";
+import { useNavigate } from "react-router-dom";
 interface Wish {
   artistName: string;
   albumName: string;
@@ -11,6 +12,7 @@ interface WishFormData {
   albumName: string;
 }
 const MyWishlist = () => {
+  const navigate = useNavigate();
   const [AllWishes, setAllWishes] = useState<Wish[]>([]);
   const [WishFormData, setWishFormData] = useState<WishFormData>({
     artistName: "",
@@ -44,7 +46,7 @@ const MyWishlist = () => {
           artistName: "",
           albumName: "",
         });
-        window.location.reload();
+        navigate("/my-wishlist");
       } else {
         alert("Failed to add wish. Please try again.");
       }
