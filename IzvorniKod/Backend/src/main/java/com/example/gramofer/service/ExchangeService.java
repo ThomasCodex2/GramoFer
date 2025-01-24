@@ -206,7 +206,7 @@ public class ExchangeService {
                 "- Vinyls that he wants to exchange: %s\n" + 
                 "- Your vinyl he wants: %s\n\n" +
                 "Best regards,\nGramofer Team",
-                exchange.getIsOfferingUser().getEmail(), listVinyl.toString(),
+                exchange.getUser().getEmail(), listVinyl.toString(),
                 exchange.getVinyl().getEditionLabel().getAlbumName()
         );
         message.setFrom(email1);
