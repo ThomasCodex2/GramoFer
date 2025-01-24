@@ -98,15 +98,15 @@ const VinylsRecord: React.FC<VinylsRecordProps> = ({
     setVinylEditPopupOpen({
       vinyl_id,
       edition_mark,
-      year_of_release: "Unknown", // Default value
+      year_of_release: "Unknown",
       performer,
       album_name: album,
-      goldmine_standard_vinyl: "Unknown", // Default value
-      goldmine_standard_wrap: "Unknown", // Default value
+      goldmine_standard_vinyl: "Unknown", 
+      goldmine_standard_wrap: "Unknown",
       genre,
-      location: "Unknown", // Default value
-      images: [], // Default value
-      description: "", // Default value
+      location: "Unknown", 
+      images: [], 
+      description: "", 
     });
   };
 
@@ -154,11 +154,11 @@ const VinylsRecord: React.FC<VinylsRecordProps> = ({
       {isVinylEditPopupOpen && (
         <div
           className={styles.popupBackground}
-          onClick={handleClose} // Closes the popup when the background is clicked
+          onClick={handleClose} 
         >
           <div
             className={styles.popupContent}
-            onClick={(e) => e.stopPropagation()} // Prevents closing when clicking inside the popup
+            onClick={(e) => e.stopPropagation()} 
           >
             <VinylEditPopup
               vinyl={isVinylEditPopupOpen}
