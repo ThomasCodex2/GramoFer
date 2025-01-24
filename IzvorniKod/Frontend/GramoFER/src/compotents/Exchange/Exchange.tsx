@@ -30,7 +30,6 @@ const Exchange: React.FC<ExchangeInterface> = ({
             "Content-Type": "application/json",
             Authorization: `Bearer ${token}`,
           },
-          //NOTHING TO SEND
         }
       );
       if (response.ok) {

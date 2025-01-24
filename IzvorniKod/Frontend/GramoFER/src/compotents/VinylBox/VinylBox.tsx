@@ -159,8 +159,6 @@ const VinylBox: React.FC<Vinyl_color> = ({
 
         const vinylsData: VinylRecord[] = await response.json();
 
-        //console.log("Vinyls data:", vinylsData);
-
         setVinylRecords(vinylsData);
       } catch (error) {
         console.error("Error fetching vinyls:", error);
@@ -228,7 +226,6 @@ const VinylBox: React.FC<Vinyl_color> = ({
 
   const handleVinylClick = (vinylId?: number) => {
     if (vinylId === 500) {
-      // Placeholder logic
       setSelectedVinyl({
         title: "Placeholder Title",
         url: "",
@@ -315,18 +312,14 @@ const VinylBox: React.FC<Vinyl_color> = ({
         <img src="/images/left.png" alt="" />
       </button>
       <div className={styles.filter_row} ref={scrollContainerRef}>
-        {
-          //!by_year && maybe change?
-          vinylRecords.map((vinyl) => (
-            <Vinyl
-              key={vinyl.vinylId}
-              //vinyl_genre={`vinylBox_${index}`}
-              title={vinyl.editionLabel.albumName}
-              url={vinyl.coverImagePath1 || "/images/placeholder_vinyl.jpg"}
-              onClick={() => handleVinylClick(parseInt(vinyl.vinylId))}
-            />
-          ))
-        }
+        {vinylRecords.map((vinyl) => (
+          <Vinyl
+            key={vinyl.vinylId}
+            title={vinyl.editionLabel.albumName}
+            url={vinyl.coverImagePath1 || "/images/placeholder_vinyl.jpg"}
+            onClick={() => handleVinylClick(parseInt(vinyl.vinylId))}
+          />
+        ))}
         {Array.from({ length: 5 }).map((_, index) => {
           const naslov =
             index < Naslovi.length ? Naslovi[index] : "Placeholder Title";
@@ -334,7 +327,6 @@ const VinylBox: React.FC<Vinyl_color> = ({
           return (
             <Vinyl
               key={index}
-              //vinyl_genre={`vinylBox_${number}`}
               title={naslov}
               url={url}
               onClick={() => handleVinylClick(500)}
@@ -434,10 +426,6 @@ const VinylBox: React.FC<Vinyl_color> = ({
                     }
                   }}
                   state={parseInt(selectedVinyl.vinylId)}
-                  // vinylRecords.find(
-                  //   (vinyl) =>
-                  //     parseInt(vinyl.vinylId) == parseInt(selectedVinyl.vinylId)
-                  // )
                 >
                   <button className={styles.buttonExtra}>Ponudi zamjenu</button>
                 </Link>

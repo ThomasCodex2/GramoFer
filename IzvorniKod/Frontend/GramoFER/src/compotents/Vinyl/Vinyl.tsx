@@ -1,6 +1,5 @@
 import styles from "./Vinyl.module.css";
 import React from "react";
-//removed color based on genre for now
 interface VinylProps {
   title: string;
   url: string;

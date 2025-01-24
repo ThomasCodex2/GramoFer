@@ -15,12 +15,11 @@ const AdminSiteUserElement: React.FC<AdminSiteUserElementProps> = ({
   email,
   firstName,
   lastName,
-  registrationDate, //not shown (show it?)
+  registrationDate,
 }) => {
   const navigate = useNavigate();
   const handleBan = async () => {
     const token = localStorage.getItem("aToken");
-    //const id = parseInt(userId);
     try {
       const response = await fetch(
         `https://gramofer.work.gd/api/admintable/user/${userId}`,
@@ -29,7 +28,6 @@ const AdminSiteUserElement: React.FC<AdminSiteUserElementProps> = ({
           headers: {
             Authorization: `Bearer ${token}`,
           },
-          //nothing to send again
         }
       );
       if (response.ok) {
