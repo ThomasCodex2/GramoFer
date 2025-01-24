@@ -16,6 +16,8 @@ import org.xbill.DNS.Type;
 import org.xbill.DNS.Record;
 
 
+
+
 @Service
 public class AuthenticationService {
     private final UserRepo userRepository;
@@ -88,6 +90,9 @@ public class AuthenticationService {
         return userRepository.findByEmail(input.getEmail())
                 .orElseThrow();
     }
+
+
+
 
     public static boolean isDomainValid(String email) {
         try {

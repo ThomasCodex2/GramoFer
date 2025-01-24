@@ -51,11 +51,6 @@ public class VinylService {
 
     }
 
-    public List<Vinyl> getAllVinylByUsername(String username) {
-        Optional<UserAccount> user = userRepo.findByUsername(username);
-        return repoVinyl.findByUser(user.get());
-    }
-
     public List<Vinyl> fetchVinyls() {
         return repoVinyl.findAll();
     }
