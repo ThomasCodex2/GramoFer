@@ -84,7 +84,9 @@ public class ExchangeService {
         if (otpexchange.isPresent()) {
             Exchange exchange = otpexchange.get();
             exchange.setStatus("done");
+            exchangerepo.save(exchange);
             return "uspjeh";
+
         }
         else {
             return "greska";
@@ -110,6 +112,7 @@ public class ExchangeService {
             }
         }
         exchange.setIsOfferingUser((repoVinyl.findById(input.getIsOfferingVinylsToOther().iterator().next())).get().getUser());
+        exchangerepo.save(exchange);
            return "uspjeh";
        } //exchange u bazi 
        else { //ako Exchange ne postoji u bazi
