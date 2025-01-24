@@ -1,5 +1,6 @@
 package com.example.gramofer.model;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -35,7 +36,7 @@ public class Edition {
     @Column(nullable = false)
     private String countryOfOrigin;
 
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(
             name = "BelongsToGenre",
             joinColumns = @JoinColumn(name = "editionLabel"),
@@ -44,11 +45,11 @@ public class Edition {
     @JsonManagedReference
     private Set<Genre> belongsToGenreGenres;
 
-    @OneToMany(mappedBy = "editionLabel")
+    @OneToMany(mappedBy = "editionLabel", cascade = CascadeType.ALL)
     @JsonBackReference
     private Set<Vinyl> editionLabelVinyls;
 
-    @OneToMany(mappedBy = "editionLabel")
+    @OneToMany(mappedBy = "editionLabel", cascade = CascadeType.ALL)
     @JsonBackReference
     private Set<Wish> editionLabelWishes;
 

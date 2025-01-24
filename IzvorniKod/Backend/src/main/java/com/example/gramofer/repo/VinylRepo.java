@@ -3,6 +3,8 @@ package com.example.gramofer.repo;
 import com.example.gramofer.model.UserAccount;
 import com.example.gramofer.model.Vinyl;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -13,4 +15,7 @@ public interface VinylRepo extends JpaRepository<Vinyl,Integer> {
     List<Vinyl> findByUser(UserAccount user);
 
     Optional<Vinyl> findById(Integer id);
+
+    @Query("SELECT v FROM Vinyl v WHERE v.available = :available")
+    List<Vinyl> findAllByAvailable(@Param("available") int available);
 }

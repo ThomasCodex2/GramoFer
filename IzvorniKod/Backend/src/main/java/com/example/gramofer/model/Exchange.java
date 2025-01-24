@@ -1,5 +1,6 @@
 package com.example.gramofer.model;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -40,22 +41,22 @@ public class Exchange {
     @Column(nullable = false)
     private LocalDate date;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id", nullable = false)
     @JsonBackReference
     private UserAccount user;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "is_offering_user_id", nullable = false)
     @JsonBackReference
     private UserAccount isOfferingUser;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "vinyl_id", nullable = false)
     @JsonBackReference
     private Vinyl vinyl;
 
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(
             name = "IncludesOffered",
             joinColumns = @JoinColumn(name = "exchangeId"),

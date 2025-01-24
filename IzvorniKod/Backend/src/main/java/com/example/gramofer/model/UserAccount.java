@@ -1,5 +1,6 @@
 package com.example.gramofer.model;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -62,23 +63,23 @@ public class UserAccount implements UserDetails {
     @Column(nullable = false)
     private Integer strikeCount;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     @JsonManagedReference
     private Set<Reports> userReportses;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     @JsonManagedReference
     private Set<Vinyl> userVinyls;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     @JsonManagedReference
     private Set<Exchange> userExchanges;
 
-    @OneToMany(mappedBy = "isOfferingUser")
+    @OneToMany(mappedBy = "isOfferingUser", cascade = CascadeType.ALL)
     @JsonManagedReference
     private Set<Exchange> isOfferingUserExchanges;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     @JsonManagedReference
     private Set<Wish> userWishes;
 
