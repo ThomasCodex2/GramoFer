@@ -237,7 +237,7 @@ const MyVinyls = () => {
     // };
     // checkAdmin();
     fetchVinyls();
-  }, []);
+  }, [MyVinylsData]); //add MyVinylsData?
   return (
     <div className={styles.container}>
       {/* <Link to="/admin-site">
