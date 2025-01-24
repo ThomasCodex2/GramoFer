@@ -39,6 +39,7 @@ const VinylsRecord: React.FC<VinylsRecordProps> = ({
 
   const handleDelete = async () => {
     const token = localStorage.getItem("aToken");
+    console.log("Token found:", token); 
     try {
       const response = await fetch(
         `https://gramofer.work.gd/api/vinyls/${vinyl_id}`,
@@ -64,6 +65,7 @@ const VinylsRecord: React.FC<VinylsRecordProps> = ({
 
   const handleAdminDelete = async () => {
     const token = localStorage.getItem("aToken");
+    console.log("Token found:", token); 
     try {
       const response = await fetch(
         `https://gramofer.work.gd/api/admintable/vinyl/${vinyl_id}`,
@@ -95,6 +97,7 @@ const VinylsRecord: React.FC<VinylsRecordProps> = ({
     genre: string[],
     picture_urls: string
   ) => {
+    console.log("Opening popup for vinyl:", vinyl_id); 
     setVinylEditPopupOpen({
       vinyl_id,
       edition_mark,
@@ -105,12 +108,13 @@ const VinylsRecord: React.FC<VinylsRecordProps> = ({
       goldmine_standard_wrap: "Unknown", 
       genre,
       location: "Unknown", 
-      images: [],
+      images: [], 
       description: "", 
     });
   };
 
   const handleClose = () => {
+    console.log("Closing popup"); 
     setVinylEditPopupOpen(null);
   };
 
@@ -147,25 +151,31 @@ const VinylsRecord: React.FC<VinylsRecordProps> = ({
           <img
             src="/images/x_icon.png"
             alt="Delete"
-            onClick={adminSite ? handleAdminDelete : handleDelete}
+            onClick={() => {
+              console.log("Admin site flag:", adminSite);  
+              adminSite ? handleAdminDelete() : handleDelete();
+            }}
           />
         </div>
       </div>
       {isVinylEditPopupOpen && (
-        <div
-          className={styles.popupBackground}
-          onClick={handleClose} 
-        >
+        <>
+          {console.log("Popup state is open:", isVinylEditPopupOpen)}  {/* Log the state when it's open */}
           <div
-            className={styles.popupContent}
-            onClick={(e) => e.stopPropagation()}
+            className={styles.popupBackground}
+            onClick={handleClose} 
           >
-            <VinylEditPopup
-              vinyl={isVinylEditPopupOpen}
-              onClose={handleClose}
-            />
+            <div
+              className={styles.popupContent}
+              onClick={(e) => e.stopPropagation()} 
+            >
+              <VinylEditPopup
+                vinyl={isVinylEditPopupOpen}
+                onClose={handleClose}
+              />
+            </div>
           </div>
-        </div>
+        </>
       )}
     </>
   );
