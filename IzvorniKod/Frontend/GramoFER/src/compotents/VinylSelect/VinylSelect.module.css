@@ -92,15 +92,22 @@ i{
   background-color: #2F2D2E;
 }
 .icon_contain{
+  display: flex;
   background-color: white;
   border-radius: 4px;
   height: 32.8px;
-  width: 32.8px;
+  width: fit-content;
   border: none;
-  padding: 0;
-  padding-top: 1.4px;
+  padding: 5px;
+  text-align: center;
+  align-items: center;
+  background-color:#7da05f;
+  color: white;
+  font-size: large;
+  font-family: Tahoma;
 }
 .icon_contain > img{
+  margin-left: 10px;
   height: 30px;
 }
 hr{

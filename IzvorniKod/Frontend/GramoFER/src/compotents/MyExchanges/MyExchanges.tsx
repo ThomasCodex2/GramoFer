@@ -137,14 +137,16 @@ const MyExchanges = () => {
                 <div>Action</div>
               </div>
               {OutgoingActiveExchanges.map((exchange) => {
-                <Exchange
-                  albumname={exchange.albumname}
-                  exchangeid={exchange.exchangeid}
-                  isoffering={exchange.isoffering}
-                  username={exchange.username}
-                  outgoing={true}
-                  history={false}
-                />;
+                return (
+                  <Exchange
+                    albumname={exchange.albumname}
+                    exchangeid={exchange.exchangeid}
+                    isoffering={exchange.isoffering}
+                    username={exchange.username}
+                    outgoing={true}
+                    history={false}
+                  />
+                );
               })}
               <Exchange
                 albumname={"albumName"}
@@ -170,14 +172,16 @@ const MyExchanges = () => {
                 <div>Action</div>
               </div>
               {IncomingActiveExchanges.map((exchange) => {
-                <Exchange
-                  albumname={exchange.albumname}
-                  exchangeid={exchange.exchangeid}
-                  isoffering={exchange.isoffering}
-                  username={exchange.username}
-                  outgoing={true}
-                  history={false}
-                />;
+                return (
+                  <Exchange
+                    albumname={exchange.albumname}
+                    exchangeid={exchange.exchangeid}
+                    isoffering={exchange.isoffering}
+                    username={exchange.username}
+                    outgoing={true}
+                    history={false}
+                  />
+                );
               })}
               <Exchange
                 albumname={"albumName"}
@@ -203,14 +207,16 @@ const MyExchanges = () => {
                 <div>For Your</div>
               </div>
               {OutgoingDoneExchanges.map((exchange) => {
-                <Exchange
-                  albumname={exchange.albumname}
-                  exchangeid={exchange.exchangeid}
-                  isoffering={exchange.isoffering}
-                  username={exchange.username}
-                  outgoing={true}
-                  history={false}
-                />;
+                return (
+                  <Exchange
+                    albumname={exchange.albumname}
+                    exchangeid={exchange.exchangeid}
+                    isoffering={exchange.isoffering}
+                    username={exchange.username}
+                    outgoing={true}
+                    history={false}
+                  />
+                );
               })}
               <Exchange
                 albumname={"albumName"}
@@ -235,14 +241,16 @@ const MyExchanges = () => {
                 <div>For Your</div>
               </div>
               {IncomingDoneExchanges.map((exchange) => {
-                <Exchange
-                  albumname={exchange.albumname}
-                  exchangeid={exchange.exchangeid}
-                  isoffering={exchange.isoffering}
-                  username={exchange.username}
-                  outgoing={true}
-                  history={false}
-                />;
+                return (
+                  <Exchange
+                    albumname={exchange.albumname}
+                    exchangeid={exchange.exchangeid}
+                    isoffering={exchange.isoffering}
+                    username={exchange.username}
+                    outgoing={true}
+                    history={false}
+                  />
+                );
               })}
               <Exchange
                 albumname={"albumName"}

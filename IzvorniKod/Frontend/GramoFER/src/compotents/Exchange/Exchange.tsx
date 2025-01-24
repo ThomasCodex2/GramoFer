@@ -23,7 +23,7 @@ const Exchange: React.FC<ExchangeInterface> = ({
     const id = parseInt(exchangeid);
     try {
       const response = await fetch(
-        `https://gramofer.work.gd/api/exchange/update/${id}`,
+        `https://gramofer.work.gd/api/exchange/endexchange/${id}`,
         {
           method: "DELETE",
           headers: {
