@@ -62,13 +62,7 @@ const Exchange: React.FC<ExchangeInterface> = ({
           {outgoing ? isoffering.join(", ") : albumname}
         </h3>
         {!history ? (
-          <div
-            className={
-              outgoing
-                ? styles.exchange_buttons_double
-                : styles.exchange_buttons
-            }
-          >
+          <div className={styles.exchange_buttons}>
             {!outgoing && (
               <div>
                 <img
@@ -78,12 +72,6 @@ const Exchange: React.FC<ExchangeInterface> = ({
                 />
               </div>
             )}
-            <div>
-              <img src="/images/pencil_icon.png" alt="" />
-            </div>
-            <div>
-              <img src="/images/x_icon.png" alt="" />
-            </div>
           </div>
         ) : (
           <></>
